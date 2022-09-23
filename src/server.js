@@ -1,25 +1,29 @@
-import express from "express";
+// Necessario per runnare assieme al client
 // import { handler } from "../client/build/handler.js";
-import mongoose from "mongoose";
+const express = require("express");
 const app = express();
-import env from './env.js'
+const env = require('./env.js');
+const userModel = require("./db/models/user.js");
+const {connectToDb} = require('./db/connection.js')
 
-const uri = `mongodb+srv://${env.db.usr}:${env.db.pwd}@${env.db.db}.nrnquyl.mongodb.net/?retryWrites=true&w=majority`;
-
-
-app.listen(env.port, () => {            //server starts listening for any attempts from a client to connect at port: {port}
-    console.log(`Now listening on port ${env.port}`); 
-});
-
+// necessario per runnare assieme al client
 // app.use(handler)
+
+
+
+connectToDb();
+
+app.use(express.urlencoded({ extent: false }));
+app.use(express.json());
 
 app.get("/pippo", async (req, res) => {
     
-    // await mongoose.connect(uri)
-    //     .then(resp => {
-    //         console.log(resp)
-    //     })
-    //     .catch(err => console.log(err))
-        
-    res.json({message: "pippooo!"})
+    const users = await userModel.find()
+    res.send(users);
 })
+
+
+
+app.listen(env.port, () => {
+    console.log(`Now listening on port ${env.port}`); 
+});

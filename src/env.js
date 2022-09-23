@@ -1,8 +1,9 @@
-export default {
+module.exports = {
     port: 3000,
     db: {
         usr : "admin",
         pwd : "admin",
-        db : "mongo01"
+        deploy: "mongo01",
+        db: "svelte-ecommerce"
     }
 };
