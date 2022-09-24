@@ -2,6 +2,21 @@ const express = require("express");
 const router = express.Router();
 const User = require('../db/models/user.js');
 
+router.post('/login', async (req, res) => {
+    try {
+        var user = await User.findOne({email: req.body.email, password: req.body.password})
+
+        if (user == null){
+            throw new Error(`User not founded`)
+        }
+
+        res.send(user);
+    } catch (err) {
+        res.status(400)
+        res.send({message: err.message})
+    }
+})
+
 // Get list all elements
 router.get('', async (req, res) => {
     try {
@@ -28,12 +43,20 @@ router.get('/:id', async (req, res) => {
 // Add new element
 router.post('', async (req, res) => {
     try {
+        // TODO: Aggiungi controllo sull'email
+
+        const userExist = await User.findOne({email: req.body.email})
+
+        if (userExist != null){
+            throw new Error(`User with email ${req.body.email} already exist`)
+        }
+
         const user = new User(req.body)
         await user.save()
-        res.send(user);
+        return res.send(user);
     } catch (err) {
         res.status(400)
-        res.send({message: err.message})
+        return res.send({message: err.message})
     }
 
 })
@@ -44,17 +67,16 @@ router.post('/:id', async (req, res) => {
         var user = await User.findOne({_id: req.params.id})
 
         if (user == null){
-            res.status(400)
-            res.send({message: `User with _id ${req.params.id} not founded!`})
-        } else {
-            user.name = req.body.name;
-            user.surname = req.body.surname;
-            user.email = req.body.email;
-            // user.password
-            user.address = []; // FIXME:
-            user.token = ""; // FIXME:
-            user.role = "admin"; // FIXME:
+            throw new Error(`User not founded`)
         }
+
+        user.name = req.body.name;
+        user.surname = req.body.surname;
+        user.email = req.body.email;
+        // user.password
+        user.address = []; // FIXME:
+        user.token = ""; // FIXME:
+        user.role = "admin"; // FIXME:
 
         await user.save()
         res.send(user);
@@ -66,10 +88,11 @@ router.post('/:id', async (req, res) => {
 
 })
 
+
 // TODO: recover password
 
 // TODO: edit password
 
-// TODO: login
+// TODO: add disable user
 
 module.exports = router;

@@ -3,29 +3,24 @@
 const express = require("express");
 const app = express();
 const env = require('./env.js');
-const userModel = require("./db/models/user.js");
 const {connectToDb} = require('./db/connection.js')
-const userRoute = require("./routes/users");
+const userRoute = require("./routes/users.js");
+const categoryRoute = require("./routes/categories.js");
+const productRoute = require("./routes/products.js");
+const orderRoute = require("./routes/orders.js");
 
 // necessario per runnare assieme al client
 // app.use(handler)
 
-connectToDb(() => {
-    console.log("This is a callback!")
-});
+connectToDb();
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 app.use("/users", userRoute);
-
-app.get("/pippo", async (req, res) => {
-    
-    const users = await userModel.find()
-    res.send(users);
-})
-
-
+app.use("/categories", categoryRoute);
+app.use("/products", productRoute);
+app.use("/orders", orderRoute);
 
 app.listen(env.port, () => {
-    console.log(`Now listening on port ${env.port}`); 
+    console.log(`Server listening on port ${env.port}`); 
 });

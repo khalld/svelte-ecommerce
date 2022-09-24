@@ -14,8 +14,8 @@ module.exports = {
             .then(callback)
             console.log("Database connected successfully!")
         } catch (error) {
-            console.log(error);
             console.log("Database connection failed!")
+            console.log(error);
         }
     },
 }
