@@ -6,7 +6,7 @@
 <div class="container">
 
     <form>
-        <h1 class="h3 mb-3 fw-normal">Register</h1>
+        <h1 class="h3 mb-3 fw-normal">Information</h1>
     
         <div class="form-floating">
             <input type="text" class="form-control" id="name" placeholder="Name" bind:value={$user.name}>
@@ -31,6 +31,6 @@
             <label for="surname">Address</label>
         </div>
     
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Edit</button>
     </form>
 </div>

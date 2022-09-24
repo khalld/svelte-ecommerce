@@ -9,7 +9,8 @@ const userSchema = new Schema({
     password: String,
     address: Array, // usa uno schema ?
     orders: Array,  // array dei soli id? forse può essere anche eliminato
-    token: String
+    token: String,
+    role: String
 })
 
 const userModel = mongoose.model("users", userSchema);

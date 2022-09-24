@@ -74,3 +74,4 @@ Using <a href="https://cloud.mongodb.com/">MongoDb Cloud</a>
 
 - Conviene runnare sia be che fe sulla stessa porta?
 - Conviene non usare module.exports perché bisogna mettere il type = modules per runnare entrambi i progetti su una sola porta? 
+- Rollup ??

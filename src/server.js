@@ -5,16 +5,18 @@ const app = express();
 const env = require('./env.js');
 const userModel = require("./db/models/user.js");
 const {connectToDb} = require('./db/connection.js')
+const userRoute = require("./routes/users");
 
 // necessario per runnare assieme al client
 // app.use(handler)
 
+connectToDb(() => {
+    console.log("This is a callback!")
+});
 
-
-connectToDb();
-
-app.use(express.urlencoded({ extent: false }));
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
+app.use("/users", userRoute);
 
 app.get("/pippo", async (req, res) => {
     
