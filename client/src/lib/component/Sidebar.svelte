@@ -8,7 +8,7 @@
   bottom: 0;
   /* rtl:remove */
   left: 0;
-  z-index: -1; /* Behind the navbar */
+  z-index: -1;
   padding: 48px 0 0; /* Height of navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }

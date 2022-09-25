@@ -1,7 +1,7 @@
-// store.js
-import { writable } from 'svelte/store';
+// Persist stores in localStorage
+import { writable} from '../../../node_modules/svelte-persistent-store/dist/local';
 
-const userStore = writable({ 
+const userStore = writable('user', { 
   loggedIn: false,
   user: {
     _id: null,

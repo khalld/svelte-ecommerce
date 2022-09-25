@@ -1,16 +1,14 @@
 <script>
-
+    export let headers = [];
 </script>
 
 <div class="table-responsive mt-2">
     <table class="table table-striped table-sm">
         <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Username</th>
-                <th scope="col">Email</th>
-                <th scope="col">Edit</th>
+                {#each headers as h }
+                    <th scope="col">{h}</th>
+                {/each}
             </tr>
         </thead>
         <tbody>

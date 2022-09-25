@@ -63,6 +63,7 @@
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div> -->
+        <p>Needs an account? Register <a href="/register">here</a>!</p>
         {#if error}
           <div class="alert alert-danger" role="alert">
             {error}

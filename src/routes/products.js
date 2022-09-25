@@ -33,12 +33,21 @@ router.get('/:id', async (req, res) => {
 // Add new element
 router.post('', async (req, res) => {
     try {
-        const product = new Product(req.body)
+        const product = new Product({
+            name: req.body.name,
+            description: req.body.description,
+            price: req.body.price,
+            vat: req.body.vat,
+            category: req.body.category,
+            photos: req.body.category,
+            quantity: req.body.quantity,
+            enabled: req.body.enabled
+        })
         await product.save()
         res.send(product);
     } catch (err) {
         res.status(400)
-        res.send({message: err.message})
+        res.send({message: err})
     }
 
 })
