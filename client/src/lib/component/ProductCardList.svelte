@@ -19,7 +19,5 @@
 		</p>
 		<button class="btn btn-success" on:click={() => goto(`/product/${p.id}`)}>Detail</button>
 		<button class="btn btn-success" on:click={() => addToCart(p.id)} >Add to cart</button>
-
-	
 	</div>
 </div>

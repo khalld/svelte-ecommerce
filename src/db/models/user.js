@@ -7,7 +7,7 @@ const userSchema = new Schema({
     surname: String,
     email: String,
     password: String,
-    address: Array, // usa uno schema ?
+    address: Object,
     orders: Array,  // array dei soli id? forse può essere anche eliminato
     token: String,
     role: String

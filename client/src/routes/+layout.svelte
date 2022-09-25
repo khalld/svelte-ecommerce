@@ -1,14 +1,18 @@
 <script>
 import Navbar from '../lib/component/Navbar.svelte';
-import Navbar2 from '../lib/component/Navbar2.svelte';
-
-// import { page } from '$app/stores';
+import Footer from '../lib/component/Footer.svelte';
 
 </script>
 
-<Navbar2 />
+<Navbar />
 
-<slot></slot>
+<div class="mx-4">
+    <slot></slot>
+</div>
+
+<!-- <slot></slot> -->
+
+<!-- <Footer /> -->
 
 <!-- {#if $page.url.pathname !== '/admin'}
 <div class="my-3 mx-3">

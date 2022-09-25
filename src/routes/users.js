@@ -1,13 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const User = require('../db/models/user.js');
+const bcrypt = require("bcrypt");
 
 router.post('/login', async (req, res) => {
     try {
-        var user = await User.findOne({email: req.body.email, password: req.body.password})
-
+        var user = await User.findOne({email: req.body.email})
+        
         if (user == null){
             throw new Error(`User not founded`)
+        }
+
+        const validPassword = await bcrypt.compare(req.body.password, user.password);
+        if(!validPassword) {
+            throw new Error(`Wrong password!`)
         }
 
         res.send(user);
@@ -31,8 +37,16 @@ router.get('', async (req, res) => {
 // Get specific element
 router.get('/:id', async (req, res) => {
     try {
-        const user = await User.findOne({_id: req.params.id})
-        res.send(user == null ? {} : user)
+        if (req.params.id == null){
+            throw new Error('Must pass a valid _id!')
+        }
+
+        const user = await User.findOne({_id: req.params.id}).select('-password')
+
+        if (user == null){
+            throw new Error(`User with _id ${req.params.id} not founded!`)
+        }
+        res.send(user)
     } catch (err) {
         res.status(400)
         res.send({message: err.message})
@@ -43,15 +57,28 @@ router.get('/:id', async (req, res) => {
 // Add new element
 router.post('', async (req, res) => {
     try {
-        // TODO: Aggiungi controllo sull'email
-
         const userExist = await User.findOne({email: req.body.email})
 
         if (userExist != null){
             throw new Error(`User with email ${req.body.email} already exist`)
         }
 
-        const user = new User(req.body)
+        const salt = await bcrypt.genSalt(10);
+
+        const cryptedPwd = await bcrypt.hash(req.body.password, salt);
+
+        const user = new User({
+            name: req.body.name,
+            surname: req.body.surname,
+            email: req.body.email,
+            password: cryptedPwd,
+            address: req.body.address,
+            orders: [],
+            token: null, // TODO:
+            role: "admin" // TODO:
+
+        });
+        
         await user.save()
         return res.send(user);
     } catch (err) {
