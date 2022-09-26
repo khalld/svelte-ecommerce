@@ -15,7 +15,11 @@
 
 <nav class="navbar navbar-expand-lg bg-dark mb-4">
   <div class="container-fluid">
+
     <a class="navbar-brand" href="/">Navbar</a>
+    <button class="navbar-toggler ms-4 d-md-none collapsed bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <button
       class="navbar-toggler"
       type="button"

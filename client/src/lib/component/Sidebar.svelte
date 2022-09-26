@@ -1,16 +1,23 @@
 <style>
+  
 .sidebar {
   position: fixed;
-  top: 100;
+  top: 0;
   /* rtl:raw:
   right: 0;
   */
   bottom: 0;
   /* rtl:remove */
   left: 0;
-  z-index: -1;
+  z-index: 100;
   padding: 48px 0 0; /* Height of navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    top: 5rem;
+  }
 }
 
 .sidebar-sticky {
@@ -28,6 +35,14 @@
   color: #2470dc;
 }
 
+.sidebar-heading {
+  font-size: .75rem;
+}
+
+/*
+ * Navbar
+ */
+
 </style>
 
 
@@ -37,7 +52,7 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar ">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="position-sticky pt-3 sidebar-sticky">
         <ul class="nav flex-column">
           <li class="nav-item">
@@ -106,10 +121,11 @@
           </li>
         </ul> -->
       </div>
-    </div>
+    </nav>
+
 
     <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-      <slot></slot>
+          <slot></slot>
     </div>
   </div>
 </div>
