@@ -1,6 +1,7 @@
 <script>
 import Navbar from '../lib/component/Navbar.svelte';
 import Footer from '../lib/component/Footer.svelte';
+import cartStore from '../lib/store/cartStore';
 
 </script>
 

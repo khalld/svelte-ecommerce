@@ -4,8 +4,9 @@
     export let addToCart;
     export let p = {
         url: '',
-        description: "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer."
+        description: "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
     };
+
 </script>
 
 <div class="col mt-2">
@@ -18,7 +19,8 @@
           <div class="btn-group">
             <button class="btn btn-success" on:click={() => goto(`/products/${p._id}`)}>Detail</button>
             <button class="btn btn-warning" on:click={() => addToCart(p._id)} >Add to cart</button>
-            <input type="number" placeholder="TODO: counter"/>
+            <!-- TODO: -->
+            <!-- <input type="number" bind:value={quantity} min=0 max=10/> -->
           </div>
           <small class="text-muted">9 mins</small>
         </div>

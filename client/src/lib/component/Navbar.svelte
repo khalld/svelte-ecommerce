@@ -1,10 +1,13 @@
 <script>
   import {get, writable} from 'svelte/store'
   import userStore from '../../lib/store/userStore.js';
+  import cartStore from '../store/cartStore.js';
   import { goto } from '$app/navigation';
 
   // $: console.log(get(userStore))
-  // $: console.log(get(userStore).loggedIn)
+  // $: console.log(get(cartStore))
+
+  let totalAmount = 0;
 
 	function logout(){
 		userStore.set({loggedIn: false, user: {}});
@@ -13,7 +16,7 @@
 
 </script>
 
-<nav class="navbar navbar-expand-lg bg-dark mb-4">
+<nav class="navbar navbar-expand-lg bg-primary mb-4">
   <div class="container-fluid">
 
     <a class="navbar-brand" href="/">Navbar</a>
@@ -51,16 +54,16 @@
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
+        <li class="nav-item me-4" >
+          <button type="button" class="btn position-relative" on:click={() => goto("/cart")}>
+            <i class="fa-solid fa-cart-shopping fa-xl" ></i>
+            <span class="position-absolute badge rounded-pill bg-danger">
+              {$cartStore.n_elem}
+            </span>
+          </button>
+        </li>
 
         {#if $userStore.loggedIn == true}
-          <li class="nav-item me-4" >
-            <button type="button" class="btn position-relative" on:click={() => goto("/cart")}>
-              <i class="fa-solid fa-cart-shopping fa-xl" ></i>
-              <span class="position-absolute badge rounded-pill bg-danger">
-                99+
-              </span>
-            </button>
-          </li>
           <li class="nav-item dropstart">
             <button type="button" class="btn position-relative" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fa-solid fa-user fa-xl" ></i>
