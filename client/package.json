@@ -16,6 +16,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@beyonk/svelte-notifications": "^4.2.0",
 		"bootstrap": "^5.2.1",
 		"svelte-persistent-store": "^0.1.6"
 	}

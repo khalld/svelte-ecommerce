@@ -7,8 +7,7 @@
     "bcrypt": "^5.0.1",
     "crypto-js": "^4.1.1",
     "express": "^4.18.1",
-    "mongoose": "^6.6.1",
-    "svelte-notifications": "^0.9.97"
+    "mongoose": "^6.6.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
