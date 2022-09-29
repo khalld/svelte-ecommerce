@@ -4,11 +4,12 @@
 
     export let data;
 
+    console.log(data.orders)
 </script>
 
 <h1>Users</h1>
 
-<Table headers={['id', 'Name', 'Email', '#']}>
+<Table headers={['id', 'Customer email', 'Amount', '#']}>
     {#if data.orders.length == 0}
         <div class="spinner-border mt-2">
             <span class="visually-hidden">Loading...</span>
@@ -16,10 +17,10 @@
     {:else}
         {#each data.orders as o}
             <Tr>
-                <!-- <td>{u._id}</td>
-                <td>{u.name}</td>
-                <td>{u.email}</td>
-                <td><i class="fas fa-edit" /> <i class="fa fa-trash" aria-hidden="true" /> </td> -->
+                <td>{o._id}</td>
+                <td>{o.email}</td>
+                <td>{o.amount} €</td>
+                <td><i class="fas fa-edit" /> <i class="fa fa-trash" aria-hidden="true" /> </td>
             </Tr>
         {/each}
     {/if}
