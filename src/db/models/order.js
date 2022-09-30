@@ -9,7 +9,9 @@ const orderSchema = new Schema({
     amount: Number,
     // TODO: add codice sconto
     // TODO: data
-    
+    tracking: Object,
+    notes: String,
+    data: Date,
     status: String
 
 })

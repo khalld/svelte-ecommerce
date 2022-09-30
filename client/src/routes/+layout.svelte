@@ -1,26 +1,26 @@
 <script>
 import Navbar from '../lib/component/Navbar.svelte';
 import Footer from '../lib/component/Footer.svelte';
-import cartStore from '../lib/store/cartStore';
 import { NotificationDisplay } from '@beyonk/svelte-notifications'
+import { page } from '$app/stores';
+
+// export let data;
+
+var currPath = [];
+$: currPath = $page.url.pathname.split("/")
 
 </script>
 
-<Navbar />
+<style>
+    @import '../../static/custom.css';
+</style>
+
 <NotificationDisplay />
 
-<div class="mx-4">
+<Navbar />
+<div class="d-flex flex-column min-vh-100 {$page.url.pathname != "/" ? "mx-4 " : "" } mb-2">
     <slot></slot>
 </div>
 
-<!-- <slot></slot> -->
 
-<!-- <Footer /> -->
-
-<!-- {#if $page.url.pathname !== '/admin'}
-<div class="my-3 mx-3">
-    <slot></slot>
-</div>
-{:else}
-    <slot></slot>
-{/if} -->
+<Footer></Footer>

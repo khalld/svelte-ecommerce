@@ -1,4 +1,4 @@
-import env from '../../../lib/store/env.js';
+// import env from '../../../lib/store/env.js';
 
 
 // TODO: AGGiungi LOAD! + prendi l'id del prodotto dal server (credo ??)

@@ -6,6 +6,7 @@ const Category = require('../db/models/category.js');
 router.get('', async (req, res) => {
     try {
         const categories = await Category.find()
+        console.log(categories)
         res.send(categories)
     } catch (err) {
         res.status(400)

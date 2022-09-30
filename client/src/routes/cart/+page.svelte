@@ -5,9 +5,7 @@
   import { onMount } from 'svelte';
   import { notifier } from '@beyonk/svelte-notifications';
   import env from "../../lib/store/env";
-
-  export let obj;
-
+  
 	var currCart = {};
   var userDet = {};
 
@@ -38,6 +36,10 @@
       products: currCart.products,
       amount: currCart.amount,
       status: "PENDING",
+      tracking: {},
+      provider: null,
+      notes: null,
+      data: +Date.now(),
       address: ""
     }
 
