@@ -1,9 +1,14 @@
 <script>
-    import Table from '../../../lib/component/Table.svelte';
+    import Modal from '../../../lib/component/Modal.svelte';
+import Table from '../../../lib/component/Table.svelte';
     import Tr from '../../../lib/component/Tr.svelte';
     import {detail, del} from '../../../lib/js/tableutils.js';
 
     export let data;
+
+    async function deleteProd(){
+        console.log("£AA")
+    }
 
 </script>
 
@@ -25,8 +30,13 @@
                 <td>{p.name}</td>
                 <td>{p.description}</td>
                 <td>{p.quantity}</td>
-                <td><i class="tb-sel fas fa-edit" on:click={() => detail(p._id, 'warehouse/detail')} /> <i class="tb-sel fa fa-trash" aria-hidden="true" on:click={() => del(p._id)}/> </td>
+                <td>
+                    <i class="tb-sel fas fa-edit" on:click={() => detail(p._id, 'warehouse/detail')} />
+                    <i class="tb-sel fa fa-trash" aria-hidden="true" data-bs-target="#exampleModal" data-bs-toggle="modal"/>
+                    <Modal id="exampleModal" labeledby="exampleModalLabel" confirm={() => deleteProd(p._id)}/>
+                </td>
             </Tr>
         {/each}
     {/if}
 </Table>
+

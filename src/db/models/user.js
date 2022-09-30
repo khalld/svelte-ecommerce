@@ -10,7 +10,8 @@ const userSchema = new Schema({
     address: Object,
     orders: Array,  // array dei soli id? forse può essere anche eliminato
     token: String,
-    role: String
+    role: String,
+    enabled: Boolean
 })
 
 const userModel = mongoose.model("users", userSchema);

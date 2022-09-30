@@ -1,8 +1,10 @@
 <script>
     import Table from '../../../lib/component/Table.svelte';
     import Tr from '../../../lib/component/Tr.svelte';
+    import {goto} from '$app/navigation';
 
     export let data;
+
 </script>
 
 <h1>Users</h1>
@@ -18,7 +20,7 @@
                 <td>{u._id}</td>
                 <td>{u.name}</td>
                 <td>{u.email}</td>
-                <td><i class="fas fa-edit" /> <i class="fa fa-trash" aria-hidden="true" /> </td>
+                <td><i class="fas fa-edit tb-sel" on:click={() => goto(`/admin/users/detail/${u._id}`)} /> <i class="fa fa-trash" aria-hidden="true" /> </td>
             </Tr>
         {/each}
     {/if}

@@ -6,7 +6,6 @@ const saleSchema = new Schema({
     code: String,
     startAt: Date,
     expireAt: Date
-    
 })
 
 const productModel = mongoose.model("sales", saleSchema);
