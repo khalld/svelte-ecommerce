@@ -1,6 +1,5 @@
 
 <script>
-  // import {get, writable} from 'svelte/store'
   import env from '../../lib/store/env.js';
   import userStore from '../../lib/store/userStore.js';
 	import { goto } from '$app/navigation';
@@ -13,7 +12,6 @@
   export let error = null;
 
   async function submitLogin() {
-
     await fetch(`${env.host}/users/login`, {
       method: 'POST',
       headers: {
@@ -29,13 +27,9 @@
     .then(data => {
       userStore.set({
         loggedIn: true,
-        user: {
-          _id: data._id,
-          email: data.email,
-          role: data.role
-        }
+        _id: data._id,
+        role: data.role
       })
-      // console.log(data)
     })
     .then(() => {
       goto("/products");

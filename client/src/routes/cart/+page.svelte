@@ -138,7 +138,7 @@
     </div>
     <div class="col-md-7 col-lg-8">
       <h4 class="mb-3">Please insert your information for checkout</h4>
-      <form class="needs-validation" novalidate>
+      <form class="needs-validation" novalidate> <!-- TODO: che signfica ??-->
         <div class="row g-3">
           <div class="col-sm-6">
             <VertInput id="name" label="Name" value={customer.name} placeholder="Please insert your name"/>
@@ -185,27 +185,3 @@
     </div>
   </div>
 </div>
-<!-- 
-{#if $cartStore.products.length == 0}
-	<div class="alert alert-danger text-center" role="alert">Empty cart!</div>
-{:else}
-  <div class="container-fluid">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-10">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
-          <p class="mb-0">You have {$cartStore.products.length} items in your cart</p>
-        </div>        
-          
-        {#each $cartStore.products as elem}
-          <CheckoutProduct product={elem} /> 
-        {/each}
-
-        <div class="d-flex justify-content-center">
-          <button type="button" class="btn btn-warning btn-block btn-lg" on:click={order}>Proceed to Pay</button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-{/if} -->

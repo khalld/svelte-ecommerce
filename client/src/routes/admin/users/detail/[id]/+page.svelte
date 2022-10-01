@@ -1,14 +1,14 @@
 <script>
-    import InfoPanel from "../../../../../lib/component/InfoPanel.svelte";
-    import InfoPanelHeader from "../../../../../lib/component/InfoPanelHeader.svelte";
+    import InfoPanelAdmin from "../../../../../lib/component/InfoPanelAdmin.svelte";
+    import InfoPanelAdminHeader from "../../../../../lib/component/InfoPanelAdminHeader.svelte";
     import VertInput from "../../../../../lib/component/VertInput.svelte";  
     
     export let data;
 </script>
 
-<InfoPanel>
-    <InfoPanelHeader text="Detail of {data.user._id}" />
+<InfoPanelAdmin>
+    <InfoPanelAdminHeader text="Detail of {data.user._id}" />
     <VertInput />
     <VertInput />
 
-</InfoPanel>
+</InfoPanelAdmin>

@@ -1,53 +1,65 @@
 <script>
-    import userStore from '../../lib/store/userStore.js';
+    import VertInput from "../../lib/component/VertInput.svelte";
+    import Select from "../../lib/component/Select.svelte";
+    import utils from "../../lib/store/utils";
+    import InfoPanel from "../../lib/component/InfoPanel.svelte";
+
     export let data;
+    export let changePassword = {};
+
+
+    // TODO: fetch per modifica campi
 
 </script>
 
 
 <div class="container">
-
-
-    <form>
-        <h1 class="h3 mb-3 fw-normal">Profile page</h1>
-    
-        <div class="form-floating">
-            <input type="text" class="form-control" id="name" placeholder="Name" bind:value={data.user.name}>
-            <label for="name">Name</label>
+    <InfoPanel>
+        <div class="row g-3">
+            <div class="col-sm-6">
+                <VertInput id="name" label="Name" value={data.user.name} placeholder="Please insert your name"/>
+            </div>
+            <div class="col-sm-6">
+                <VertInput id="surname" label="Surname" value={data.user.surname} placeholder="Please insert your surname"/>
+            </div>
+            <div class="col-12">
+                <VertInput id="email" label="Email" value={data.user.email} placeholder="Please insert your email" type="email"/>
+            </div>
+            <div class="col-12">
+                <VertInput id="address" label="Address" value={data.user.address.address} placeholder="Please insert your shipping address"/>
+            </div>
+            <div class="col-12">
+                <VertInput id="address2" value={data.user.address.address2} placeholder="Apartment or suite"/>
+            </div>
+            <div class="col-md-4">
+                <Select id="select-country" label="Country" arialabel="select country" value={data.user.address.country} elements={utils.countries}/>
+            </div>
+            <div class="col-md-4">
+                <Select id="select-country" label="Region" arialabel="select region" value={data.user.address.region} elements={utils.regions}/>
+            </div>
+            <div class="col-md-4">
+                <VertInput id="zip" label="ZIP" value={data.user.address.zip} placeholder="ZIP code" type="number"/>
+            </div>
         </div>
+    </InfoPanel>
 
-        <div class="form-floating mt-2">
-            <input type="text" class="form-control" id="surname" placeholder="Surname" bind:value={data.user.surname}>
-            <label for="surname">Surname</label>
+    <!-- TODO: Implementa! -->
+    <InfoPanel title="Change password">
+        <div class="col-12">
+            <VertInput id="password" label="Old password" value={changePassword.oldPassword} placeholder="Please insert your old password" type="password"/>
         </div>
-
-        <div class="form-floating mt-2">
-            <input type="email" class="form-control" id="email" placeholder="Email" bind:value={data.user.email}>
-            <label for="email">Email address</label>
+        <div class="col-12">
+            <VertInput id="password" label="New Password" value={changePassword.newPassword} placeholder="Please insert your new password" type="password"/>
         </div>
-
-        <div class="form-floating mt-2">
-            <input type="text" class="form-control" id="street" placeholder="street" bind:value={data.user.address.street}>
-            <label for="street">Street Address</label>
+        <div class="col-12">
+            <VertInput id="password-conf" label="Confirm password" value={changePassword.passwordConf} placeholder="Please confirm your new password" type="password"/>
         </div>
-    
-        <div class="form-floating mt-2">
-            <input type="number" class="form-control" id="zip" placeholder="ZIP" bind:value={data.user.address.zip}>
-            <label for="zip">ZIP or postal code</label>
-        </div>
+    </InfoPanel>
 
-        <div class="form-floating mt-2">
-            <input type="text" class="form-control" id="city" placeholder="City" bind:value={data.user.address.city}>
-            <label for="city">City</label>
-        </div>
+    <!-- TODO: Implementa! -->
+    <InfoPanel title="Orders list">
+        Under costruction...
+    </InfoPanel>
 
-        <div class="form-floating mt-2 mb-2">
-            <input type="text" class="form-control" id="country" placeholder="Country" bind:value={data.user.address.country}>
-            <label for="country">Country</label>
-        </div>
-
-        <!-- <ErrorComponent str={error} /> -->
-
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Edit</button>
-    </form>
 </div>
+

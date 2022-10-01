@@ -3,15 +3,8 @@ import { writable} from '../../../node_modules/svelte-persistent-store/dist/loca
 
 const userStore = writable('user', { 
   loggedIn: false,
-  user: {
-    _id: null,
-    email: null,
-    role: null,
-  },
-  cart: {
-    products: [],
-    amount: 0.0
-  } 
+  _id: null,
+  role: null
 });
 
 export default userStore;

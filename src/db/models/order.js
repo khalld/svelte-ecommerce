@@ -4,7 +4,13 @@ const Schema = mongoose.Schema;
 const orderSchema = new Schema({
     userId: String, //FIXME: type object id
     email: String,
-    address: String,
+    address: {
+        address: String,
+        address2: String,
+        country: String,
+        region: String,
+        zip: Number,
+    },
     customerName: String,
     products: Array, // FIXME: products
     amount: Number,

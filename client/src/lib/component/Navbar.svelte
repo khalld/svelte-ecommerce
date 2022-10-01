@@ -10,7 +10,7 @@
   // $: console.log($page.url.pathname)
 
 	function logout(){
-		userStore.set({loggedIn: false, user: {}});
+		userStore.set({loggedIn: false, _id: null, role: null});
 		goto("/login");
 	}
 
@@ -83,7 +83,7 @@
           </button>
         {/if}
 
-        {#if $userStore.user.role === "admin"}
+        {#if $userStore.role === "admin"}
           <li class="nav-item dropstart">
             <a
               class="nav-link dropdown-toggle"

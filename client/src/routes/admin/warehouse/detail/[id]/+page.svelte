@@ -1,7 +1,7 @@
 <script>
     import HorzInput from "../../../../../lib/component/HorzInput.svelte";
-    import InfoPanel from "../../../../../lib/component/InfoPanel.svelte";
-    import InfoPanelHeader from "../../../../../lib/component/InfoPanelHeader.svelte";
+    import InfoPanelAdmin from "../../../../../lib/component/InfoPanelAdmin.svelte";
+    import InfoPanelAdminHeader from "../../../../../lib/component/InfoPanelAdminHeader.svelte";
     import InputFile from "../../../../../lib/component/InputFile.svelte";
     import VertInput from "../../../../../lib/component/VertInput.svelte";
     
@@ -18,8 +18,8 @@
 	}
 </script>
 
-<InfoPanel on:click={handleClick}>
-    <InfoPanelHeader text="Detail of product {data.product._id}" />
+<InfoPanelAdmin on:click={handleClick}>
+    <InfoPanelAdminHeader text="Detail of product {data.product._id}" />
     <HorzInput id="name" label="Name" value={data.product.name} type="text" />
     <VertInput id="price" label="Price" value={data.product.price} type="number" />
 
@@ -40,4 +40,4 @@
 
     </div>
 
-</InfoPanel>
+</InfoPanelAdmin>

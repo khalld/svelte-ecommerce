@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -7,7 +6,13 @@ const userSchema = new Schema({
     surname: String,
     email: String,
     password: String,
-    address: Object,
+    address: {
+        address: String,
+        address2: String,
+        country: String,
+        region: String,
+        zip: Number,
+    },
     orders: Array,  // array dei soli id? forse può essere anche eliminato
     token: String,
     role: String,

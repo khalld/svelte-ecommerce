@@ -1,28 +1,33 @@
 <script>
     import Hint from "../../lib/component/Hint.svelte";
     import env from '../../lib/store/env.js';
+    import utils from '../../lib/store/utils.js';
     import { goto } from '$app/navigation';
+    import VertInput from "../../lib/component/VertInput.svelte";
+    import Select from "../../lib/component/Select.svelte";
 
     let error;
 
     // FIXME: put all to NULL
     let user = {
-        name: "Name",
-        surname: "Surname",
-        email: "admin@email.it",
+        name: "Mimmo",
+        surname: "Lucifora",
+        email: "user01@email.it",
         password: "password01",
         passwordConf: "password01",
         address: {
-            street: "Street",
-            zip: 95032,
-            city: "City",
-            country: "Italy"
-        }
+            address: "Via alcide de Gaspari",
+            address2: "N 23, interno 45",
+            country: "Italy",
+            region: "Abruzzo",
+            zip: 9999,
+        },
+        role: "admin"
     }
-
 
     async function submit() {
         try {
+            // Check that all fields are mandatory!
             Object.values(user).forEach((element, index, array) => {
                 if (element === null) {
                     throw new Error('All fields are mandatory!');
@@ -55,14 +60,10 @@
                 }
             })
             .catch(err => error = err.message)
-
         } catch (e) {
             error = e;
         }
     }
-
-
-
 </script>
 
 
@@ -70,53 +71,38 @@
 
     <form on:submit|preventDefault={submit}>
         <h1 class="h3 mb-3 fw-normal">Register</h1>
-    
-        <div class="form-floating">
-            <input type="text" class="form-control" id="name" placeholder="Name" bind:value={user.name}>
-            <label for="name">Name</label>
+        <div class="row g-3">
+            <div class="col-sm-6">
+                <VertInput id="name" label="Name" value={user.name} placeholder="Please insert your name"/>
+            </div>
+            <div class="col-sm-6">
+                <VertInput id="surname" label="Surname" value={user.surname} placeholder="Please insert your surname"/>
+            </div>
+            <div class="col-12">
+                <VertInput id="email" label="Email" value={user.email} placeholder="Please insert your email" type="email"/>
+            </div>
+            <div class="col-12">
+                <VertInput id="password" label="Password" value={user.password} placeholder="Please insert your password" type="password"/>
+            </div>
+            <div class="col-12">
+                <VertInput id="password-conf" label="Password confirm" value={user.passwordConf} placeholder="Please confirm your password" type="password"/>
+            </div>
+            <div class="col-12">
+                <VertInput id="address" label="Address" value={user.address.address} placeholder="Please insert your shipping address"/>
+            </div>
+            <div class="col-12">
+                <VertInput id="address2" value={user.address.address2} placeholder="Apartment or suite"/>
+            </div>
+            <div class="col-md-4">
+                <Select id="select-country" label="Country" arialabel="select country" value={user.address.country} elements={utils.countries}/>
+            </div>
+            <div class="col-md-4">
+                <Select id="select-country" label="State/Region" arialabel="select region" value={user.address.region} elements={utils.regions}/>
+            </div>
+            <div class="col-md-4">
+                <VertInput id="zip" label="ZIP" value={user.address.zip} placeholder="ZIP code" type="number"/>
+            </div>
         </div>
-
-        <div class="form-floating mt-2">
-            <input type="text" class="form-control" id="surname" placeholder="Surname" bind:value={user.surname}>
-            <label for="surname">Surname</label>
-        </div>
-
-        <div class="form-floating mt-2">
-            <input type="email" class="form-control" id="email" placeholder="Email" bind:value={user.email}>
-            <label for="email">Email address</label>
-        </div>
-
-        <div class="form-floating mt-2">
-            <input type="password" class="form-control" id="password" placeholder="Password" bind:value={user.password}>
-            <label for="password">Password</label>
-        </div>
-
-        <div class="form-floating mt-2">
-            <input type="password" class="form-control" id="password-conf" placeholder="Password" bind:value={user.passwordConf}>
-            <label for="password-conf">Confirm password</label>
-        </div>
-
-        <div class="form-floating mt-2">
-            <input type="text" class="form-control" id="street" placeholder="street" bind:value={user.address.street}>
-            <label for="street">Street Address</label>
-        </div>
-    
-        <div class="form-floating mt-2">
-            <input type="number" class="form-control" id="zip" placeholder="ZIP" bind:value={user.address.zip}>
-            <label for="zip">ZIP or postal code</label>
-        </div>
-
-        <div class="form-floating mt-2">
-            <input type="text" class="form-control" id="city" placeholder="City" bind:value={user.address.city}>
-            <label for="city">City</label>
-        </div>
-
-        <!-- TODO: Sostituisci con select -->
-        <div class="form-floating mt-2 mb-2">
-            <input type="text" class="form-control" id="country" placeholder="Country" bind:value={user.address.country}>
-            <label for="country">Country</label>
-        </div>
-
         <Hint str={error} />
 
         <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
