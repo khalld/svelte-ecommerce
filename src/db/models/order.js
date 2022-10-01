@@ -2,8 +2,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
-    userId: String, //FIXME: type object id
-    email: String,
+    data: Date,
+    products: Array, // FIXME: products
+    sales: [],
+    customer: {
+        _id: String, //FIXME: type object id
+        email: String,
+        name: String,
+        surname: String,
+    },
     address: {
         address: String,
         address2: String,
@@ -11,15 +18,13 @@ const orderSchema = new Schema({
         region: String,
         zip: Number,
     },
-    customerName: String,
-    products: Array, // FIXME: products
+    tracking: {
+        id: String,
+        provider: String,
+    },
     amount: Number,
-    discount: Object,
-    tracking: Object,
     notes: String,
-    data: Date,
     status: String
-
 })
 
 const orderModel = mongoose.model("orders", orderSchema);

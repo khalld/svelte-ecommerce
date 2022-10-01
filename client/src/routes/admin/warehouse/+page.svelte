@@ -7,7 +7,7 @@ import Table from '../../../lib/component/Table.svelte';
     export let data;
 
     async function deleteProd(){
-        console.log("£AA")
+        
     }
 
 </script>

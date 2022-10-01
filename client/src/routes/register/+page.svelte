@@ -5,7 +5,9 @@
     import { goto } from '$app/navigation';
     import VertInput from "../../lib/component/VertInput.svelte";
     import Select from "../../lib/component/Select.svelte";
-
+    import {onMount} from "svelte";
+    
+    export let data;
     let error;
 
     // FIXME: put all to NULL
@@ -24,6 +26,12 @@
         },
         role: "admin"
     }
+
+    onMount( async () => {
+        if (data.redirect != undefined){
+            goto(data.redirect)
+        }
+    })
 
     async function submit() {
         try {
@@ -73,34 +81,34 @@
         <h1 class="h3 mb-3 fw-normal">Register</h1>
         <div class="row g-3">
             <div class="col-sm-6">
-                <VertInput id="name" label="Name" value={user.name} placeholder="Please insert your name"/>
+                <VertInput id="name" label="Name" bind:value={user.name} placeholder="Please insert your name"/>
             </div>
             <div class="col-sm-6">
-                <VertInput id="surname" label="Surname" value={user.surname} placeholder="Please insert your surname"/>
+                <VertInput id="surname" label="Surname" bind:value={user.surname} placeholder="Please insert your surname"/>
             </div>
             <div class="col-12">
-                <VertInput id="email" label="Email" value={user.email} placeholder="Please insert your email" type="email"/>
+                <VertInput id="email" label="Email" bind:value={user.email} placeholder="Please insert your email" type="email"/>
             </div>
             <div class="col-12">
-                <VertInput id="password" label="Password" value={user.password} placeholder="Please insert your password" type="password"/>
+                <VertInput id="password" label="Password" bind:value={user.password} placeholder="Please insert your password" type="password"/>
             </div>
             <div class="col-12">
-                <VertInput id="password-conf" label="Password confirm" value={user.passwordConf} placeholder="Please confirm your password" type="password"/>
+                <VertInput id="password-conf" label="Password confirm" bind:value={user.passwordConf} placeholder="Please confirm your password" type="password"/>
             </div>
             <div class="col-12">
-                <VertInput id="address" label="Address" value={user.address.address} placeholder="Please insert your shipping address"/>
+                <VertInput id="address" label="Address" bind:value={user.address.address} placeholder="Please insert your shipping address"/>
             </div>
             <div class="col-12">
-                <VertInput id="address2" value={user.address.address2} placeholder="Apartment or suite"/>
+                <VertInput id="address2" bind:value={user.address.address2} placeholder="Apartment or suite"/>
             </div>
             <div class="col-md-4">
-                <Select id="select-country" label="Country" arialabel="select country" value={user.address.country} elements={utils.countries}/>
+                <Select id="select-country" label="Country" arialabel="select country" bind:value={user.address.country} elements={utils.countries}/>
             </div>
             <div class="col-md-4">
-                <Select id="select-country" label="State/Region" arialabel="select region" value={user.address.region} elements={utils.regions}/>
+                <Select id="select-country" label="State/Region" arialabel="select region" bind:value={user.address.region} elements={utils.regions}/>
             </div>
             <div class="col-md-4">
-                <VertInput id="zip" label="ZIP" value={user.address.zip} placeholder="ZIP code" type="number"/>
+                <VertInput id="zip" label="ZIP" bind:value={user.address.zip} placeholder="ZIP code" type="number"/>
             </div>
         </div>
         <Hint str={error} />

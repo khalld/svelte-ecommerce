@@ -14,15 +14,15 @@
         <label for={id} class="col-sm-2 col-form-label"><b>{label}</b></label>
     {/if}
     {#if type === "text"}
-        <input type="text" {readonly} class={inputClass} id={id} bind:value={value} placeholder={placeholder}>
+        <input type="text" {readonly} class={inputClass} id={id} bind:value placeholder={placeholder}>
     {:else if type === "email"}
-        <input type="email" {readonly} class={inputClass} id={id} bind:value={value} placeholder={placeholder}>
+        <input type="email" {readonly} class={inputClass} id={id} bind:value placeholder={placeholder}>
     {:else if type === "textarea"}
-        <textarea class={inputClass} id={id} rows="3" bind:value={value}></textarea>
+        <textarea class={inputClass} id={id} rows="3" bind:value placeholder={placeholder}></textarea>
     {:else if type === "password"}
-        <input type="password" {readonly} class={inputClass} id={id} bind:value={value} placeholder={placeholder}>
+        <input type="password" {readonly} class={inputClass} id={id} bind:value placeholder={placeholder}>
     {:else if type === "number"}
-        <input type="number" {readonly} class={inputClass} id={id} bind:value={value} placeholder={placeholder}>
+        <input type="number" {readonly} class={inputClass} id={id} bind:value placeholder={placeholder}>
     {/if}
 </div>
 

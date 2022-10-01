@@ -27,14 +27,14 @@
         <div class="card my-3 p-3 bg-body rounded shadow-sm">
             <h6 class="border-bottom pb-2 mb-0">User information</h6>
 
-            <HorizInput id="custInfo" label="Customer info" value={data.order.customerName} inputClass="form-controls-plaintext mt-2" readonly="readonly" />
+            <HorizInput id="custInfo" label="Customer info" bind:value={data.order.customerName} inputClass="form-controls-plaintext mt-2" readonly="readonly" />
 
-            <HorizInput id="email" label="Customer email" value={data.order.email} inputClass="form-controls-plaintext mt-2" readonly="readonly" />
-            <HorizInput id="address" label="Address" value={data.order.address} inputClass="form-controls-plaintext mt-2" readonly="readonly" />
+            <HorizInput id="email" label="Customer email" bind:value={data.order.email} inputClass="form-controls-plaintext mt-2" readonly="readonly" />
+            <HorizInput id="address" label="Address" bind:value={data.order.address} inputClass="form-controls-plaintext mt-2" readonly="readonly" />
 
 
             {#if data.order.notes != null}
-                <HorizInput id="notes" label="Notes" value={data.order.notes} inputClass="form-controls-plaintext mt-2" readonly="readonly" />
+                <HorizInput id="notes" label="Notes" bind:value={data.order.notes} inputClass="form-controls-plaintext mt-2" readonly="readonly" />
             {:else}
                 <i>No additional notes for expedition</i>
             {/if}
@@ -48,12 +48,12 @@
                     <!-- TODO: sistema questo border bottom -->
                     <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                         <span class="d-block">Product code: <b>{prod.code}</b></span>
-                        <span class="d-block">Single price: <b>{prod.singlePrice}</b></span>
+                        <span class="d-block">Single price: <b>{prod.price}</b></span>
                         <span class="d-block">Quantity: <b>{prod.quantity}</b> </span>
 
                         <div class="d-flex justify-content-between">
                             <span>Amount</span>
-                            <span>{prod.singlePrice * prod.quantity} €</span>
+                            <span>{prod.price * prod.quantity} €</span>
                         </div>
                     </div>
                 </div>
@@ -85,8 +85,8 @@
             <div class="d-flex text-muted pt-3">
                 <div class="pb-3 mb-0 lh-sm w-100">
                     
-                    <HorizInput id="trackId" label="Tracking id" value={orderConf.trackId} type="number"/>
-                    <HorizInput id="trackProv" label="Tracking provider" value={orderConf.trackProv}/>
+                    <HorizInput id="trackId" label="Tracking id" bind:value={orderConf.trackId} type="number"/>
+                    <HorizInput id="trackProv" label="Tracking provider" bind:value={orderConf.trackProv}/>
                                             
                     <div class="mb-3 mt-2 row">
                         <label for="status-select" class="col-sm-2 col-form-label"><b>Current status</b></label>

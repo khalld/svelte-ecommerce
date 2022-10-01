@@ -1,30 +1,33 @@
 <script>
   import cartStore from "../store/cartStore";
   import { notifier } from '@beyonk/svelte-notifications';
-  import { element } from "svelte/internal";
 
   export let product;
 
   function deletefromCart(){
     var currentCart = [];
     var amount = 0.0
+    let elements_num = 0;
+
     cartStore.subscribe((cart) => {
       currentCart = cart.products;
       currentCart = currentCart.filter(o => o._id !== product._id)
     });
-    currentCart.map((price) => {
-      amount += price.price;
+    
+    currentCart.forEach((element) => {
+      // aggiorno l'amount totale dei prodotti
+      amount += (element.price * element.quantity)
+      // aggiorno il numero di elementi da visualizzare nel tooltip
+      elements_num += element.quantity 
     })
-    let elements_num = 0;
-    for (let i = 0; i < currentCart.length; i++){
-      elements_num += currentCart[i].quantity 
-    }
+
     cartStore.set({products: currentCart, amount: amount, n_elem: elements_num})
   }
 
   function addElement(id){
     var currentCart = [];
     var amount = 0.0;
+    let elements_num = 0;
 
     cartStore.subscribe((cart) => {
       currentCart = cart.products;
@@ -40,17 +43,14 @@
     } else {
       notifier.warning('E che sei pazzo?? su chiò assai di cheddi ca avimu!!')
     }
-    
-    // aggiorno l'amount totale dei prodotti
-    currentCart.map((price) => {
-      amount += price.price;
+
+    currentCart.forEach((element) => {
+      // aggiorno l'amount totale dei prodotti
+      amount = amount + (element.price * element.quantity)
+      // aggiorno il numero di elementi da visualizzare nel tooltip
+      elements_num += element.quantity 
     })
 
-    // aggiorno il numero di elementi da visualizzare nel tooltip
-    let elements_num = 0;
-    for (let i = 0; i < currentCart.length; i++){
-      elements_num += currentCart[i].quantity 
-    }
 
     cartStore.set({products: currentCart, amount: amount, n_elem: elements_num})
   }
@@ -75,22 +75,17 @@
       notifier.warning('Minimum requested quantity')
     }
 
-
-    // aggiorno l'amount totale dei prodotti
-    currentCart.map((price) => {
-      amount += price.price;
+    let elements_num = 0;
+  
+    currentCart.forEach((element) => {
+      // aggiorno l'amount totale dei prodotti
+      amount += (element.price * element.quantity)
+      // aggiorno il numero di elementi da visualizzare nel tooltip
+      elements_num += element.quantity 
     })
 
-    // aggiorno il numero di elementi da visualizzare nel tooltip
-    let elements_num = 0;
-    for (let i = 0; i < currentCart.length; i++){
-      elements_num += currentCart[i].quantity 
-    }
-    
     cartStore.set({products: currentCart, amount: amount, n_elem: elements_num})
   }
-
-  // TODO: Aggiungi handlers per + e - !
 
 
 </script>
@@ -99,7 +94,7 @@
 <li class="list-group-item d-flex justify-content-between lh-sm">
   <div>
     <h6 class="my-0">{product.name}</h6>
-    <small class="text-muted">{product.description}</small>
+    <small class="text-muted">Quantity</small>
     <!-- <small class="text-muted p-2">Quantity</small> -->
 
     <div class="d-flex flex-row">
@@ -114,5 +109,5 @@
       </div>
     </div>
   </div>
-  <span class="text-muted">{product.singlePrice * product.quantity} € <i class="fas fa-trash-alt tb-sel" on:click={deletefromCart}/></span>  
+  <span class="text-muted">{product.price * product.quantity} € <i class="fas fa-trash-alt tb-sel" on:click={deletefromCart}/></span>  
 </li>

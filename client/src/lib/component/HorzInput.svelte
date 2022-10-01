@@ -11,11 +11,11 @@
     <label for={id} class="col-sm-2 col-form-label"><b>{label}</b></label>
     <div class="col-sm-10">
         {#if type === "text"}
-            <input type="text" {readonly} class={inputClass} id={id} bind:value={value}>
+            <input type="text" {readonly} class={inputClass} id={id} bind:value>
         {:else if type === "password"}
-            <input type="password" {readonly} class={inputClass} id={id} bind:value={value}>
+            <input type="password" {readonly} class={inputClass} id={id} bind:value>
         {:else if type === "number"}
-            <input type="number" {readonly} class={inputClass} id={id} bind:value={value}>
+            <input type="number" {readonly} class={inputClass} id={id} bind:value>
         {/if}
     </div>
 </div>

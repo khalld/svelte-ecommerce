@@ -20,20 +20,20 @@
 
 <InfoPanelAdmin on:click={handleClick}>
     <InfoPanelAdminHeader text="Detail of product {data.product._id}" />
-    <HorzInput id="name" label="Name" value={data.product.name} type="text" />
-    <VertInput id="price" label="Price" value={data.product.price} type="number" />
+    <HorzInput id="name" label="Name" bind:value={data.product.name} type="text" />
+    <VertInput id="price" label="Price" bind:value={data.product.price} type="number" />
 
-    <VertInput id="description" label="Description" value={data.product.description} type="textarea" />
+    <VertInput id="description" label="Description" bind:value={data.product.description} type="textarea" />
 
     <div class="mb-3 mt-2 row">
         <div class="col-4">
-            <VertInput id="price" label="Price" value={data.product.price} type="number" />
+            <VertInput id="price" label="Price" bind:value={data.product.price} type="number" />
         </div>
         <div class="col-4">
-            <VertInput id="vat" label="VAT" value={data.product.vat} type="number" />
+            <VertInput id="vat" label="VAT" bind:value={data.product.vat} type="number" />
         </div>
         <div class="col-4">
-            <VertInput id="totalprice" label="Total" value={totPrice} type="number" />
+            <VertInput id="totalprice" label="Total" bind:value={totPrice} type="number" />
         </div>
 
         <InputFile />

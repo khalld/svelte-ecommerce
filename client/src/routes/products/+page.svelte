@@ -5,24 +5,10 @@
 	export let data;
 
 	function addToCart (p) {
-
 		var currentCart = [];
-		const selProd = {
-			_id: p._id,
-			name: p.name,
-			code: p.code,
-			description: p.description,
-			photo_cart: '',
-			quantity: 1,
-			singlePrice: p.price,
-			maxQuantity: p.quantity
-		}
-
-		let currentAmount = 0.0;
 
 		cartStore.subscribe((cart) => {
 			currentCart = cart.products;
-			currentAmount = cart.amount + (selProd.singlePrice * selProd.quantity);
 		});
 
 		let filteredCart = currentCart.filter(o => o._id === p._id)
@@ -31,11 +17,18 @@
 		if(filteredCart.length > 0){			
 			currentCart.forEach((element, idx, arr) => {
 				if(element._id === filteredCart[0]._id){
-					element.quantity += selProd.quantity
+					element.quantity += 1
 				}
 			})
 		} else {
-			currentCart.push(selProd);
+			currentCart.push({
+				_id: p._id,
+				name: p.name,
+				code: p.code,
+				quantity: 1,
+				price: p.price,
+				maxQuantity: p.quantity
+			});
 		}
 
 		var elements_num = 0;
@@ -44,7 +37,7 @@
 			elements_num += currentCart[i].quantity 
 		}
 
-		cartStore.set({products: currentCart, amount: currentAmount, n_elem: elements_num})
+		cartStore.set({products: currentCart, amount: 0.0, n_elem: elements_num})
 
 	}
 
