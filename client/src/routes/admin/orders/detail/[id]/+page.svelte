@@ -84,25 +84,23 @@
             <h6 class="border-bottom pb-2 mb-0">Confirm order</h6>
             <div class="d-flex text-muted pt-3">
                 <div class="pb-3 mb-0 lh-sm w-100">
-                        
-                        <HorizInput id="trackId" label="Tracking id" value={orderConf.trackId} type="number"/>
-                        <HorizInput id="trackProv" label="Tracking provider" value={orderConf.trackProv}/>
-
-                                                
-                        <div class="mb-3 mt-2 row">
-                            <label for="status-select" class="col-sm-2 col-form-label"><b>Current status</b></label>
-                            <div class="col-sm-10">
-                                <select class="form-select" aria-label="Default select example" bind:value={data.order.status} >
-                                    {#each status as s}
-                                        <option value={s}>
-                                            {s}
-                                        </option>
-                                    {/each}
-                                </select>
-                            </div>
+                    
+                    <HorizInput id="trackId" label="Tracking id" value={orderConf.trackId} type="number"/>
+                    <HorizInput id="trackProv" label="Tracking provider" value={orderConf.trackProv}/>
+                                            
+                    <div class="mb-3 mt-2 row">
+                        <label for="status-select" class="col-sm-2 col-form-label"><b>Current status</b></label>
+                        <div class="col-sm-10">
+                            <select class="form-select" aria-label="Default select example" bind:value={data.order.status} >
+                                {#each status as s}
+                                    <option value={s}>
+                                        {s}
+                                    </option>
+                                {/each}
+                            </select>
                         </div>
-
-                        <button class="w-100 btn btn-lg bg-success" on:click={submit}>Send</button>
+                    </div>
+                    <button class="w-100 btn btn-lg bg-success" on:click={submit}>Send</button>
 
                 </div>
             </div>

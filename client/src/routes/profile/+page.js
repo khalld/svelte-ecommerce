@@ -5,8 +5,8 @@ import env from '../../lib/store/env.js';
 var currentUser = null;
 
 export async function load(event) {
-    console.log("---load---")
-    console.log(get(userStore))
+    // console.log("---load---")
+    // console.log(get(userStore))
 
     var userInfo = null;
 
