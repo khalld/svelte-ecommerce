@@ -1,6 +1,7 @@
 <script>
   import cartStore from "../store/cartStore";
   import { notifier } from '@beyonk/svelte-notifications';
+  import { goto } from '$app/navigation';
 
   export let product;
 
@@ -93,7 +94,7 @@
 
 <li class="list-group-item d-flex justify-content-between lh-sm">
   <div>
-    <h6 class="my-0">{product.name}</h6>
+    <h6 class="my-0 tb-sel" on:click={() => goto(`/products/${product._id}`)}>{product.name}</h6>
     <small class="text-muted">Quantity</small>
     <!-- <small class="text-muted p-2">Quantity</small> -->
 

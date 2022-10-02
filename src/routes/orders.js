@@ -43,7 +43,7 @@ router.post('', async (req, res) => {
 
 })
 
-// Edit an existing element
+// Edit an existing element. Is possible change only status and tracking information
 router.post('/:id', async (req, res) => {
     try {
         var order = await Order.findOne({_id: req.params.id})
@@ -52,11 +52,8 @@ router.post('/:id', async (req, res) => {
             throw new Error(`Order with _id ${req.params.id} not founded!`)
         }
 
-        order.userId = req.body.userId;
-        order.address = req.body.address;
-        order.products = req.body.products;
-        order.totalAmount = req.body.totalAmount;
         order.status = req.body.status;
+        order.tracking = req.body.tracking;
 
         await order.save()
         res.send(order);

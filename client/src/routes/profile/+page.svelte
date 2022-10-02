@@ -10,7 +10,6 @@
     export let changePassword = {};
 
     onMount( async () => {
-        console.log(data)
         if (data.redirect != undefined){
             goto(data.redirect)
         }

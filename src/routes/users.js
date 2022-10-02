@@ -11,6 +11,10 @@ router.post('/login', async (req, res) => {
             throw new Error(`User not founded`)
         }
 
+        if (user.enabled === false){
+            throw new Error('User is disabled!')
+        }
+
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if(!validPassword) {
             throw new Error(`Wrong password!`)
@@ -18,8 +22,14 @@ router.post('/login', async (req, res) => {
 
         res.send(user);
     } catch (err) {
-        res.status(400)
-        res.send({message: err.message})
+        if (err.message === 'User is disabled!'){
+            res.status(409)
+            res.send({message: err.message})
+        } else {
+            res.status(400)
+            res.send({message: err.message})
+        }
+
     }
 })
 
@@ -75,6 +85,7 @@ router.post('', async (req, res) => {
             address: req.body.address,
             orders: [],
             token: null, // TODO:
+            enabled: false,
             role: "admin" // TODO:
 
         });

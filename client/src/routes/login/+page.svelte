@@ -28,7 +28,10 @@
       body: JSON.stringify(user)
     }).then(res => {
       if (res.status == 400){
-        throw new Error('User not founded')
+        throw new Error('User not founded or password is not correct')
+      }
+      if (res.status == 409){
+        throw new Error('User is disabled')
       }
       return res.json();
     })

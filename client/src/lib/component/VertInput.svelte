@@ -9,9 +9,9 @@
     export let placeholder;
 </script>
 
-<div class="mb-3 mt-2 {colClass}">
+<div class="mt-2 {colClass}">
     {#if label != null}
-        <label for={id} class="col-sm-2 col-form-label"><b>{label}</b></label>
+        <label for={id} class="mb-1"><b>{label}</b></label>
     {/if}
     {#if type === "text"}
         <input type="text" {readonly} class={inputClass} id={id} bind:value placeholder={placeholder}>

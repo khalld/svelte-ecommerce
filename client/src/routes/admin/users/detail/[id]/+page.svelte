@@ -1,14 +1,46 @@
 <script>
     import InfoPanelAdmin from "../../../../../lib/component/InfoPanelAdmin.svelte";
-    import InfoPanelAdminHeader from "../../../../../lib/component/InfoPanelAdminHeader.svelte";
+    import InfoPanel from "../../../../../lib/component/InfoPanel.svelte";
+    import InfoPanelHeader from "../../../../../lib/component/InfoPanelHeader.svelte";
     import VertInput from "../../../../../lib/component/VertInput.svelte";  
-    
+    import Select from "../../../../../lib/component/Select.svelte";
+    import utils from "../../../../../lib/store/utils";
+
+
+
     export let data;
 </script>
 
-<InfoPanelAdmin>
-    <InfoPanelAdminHeader text="Detail of {data.user._id}" />
-    <VertInput />
-    <VertInput />
+<InfoPanel title="User detail">
+    <div class="row g-3">
+        <div class="col-sm-6">
+            <VertInput id="name" label="Name" bind:value={data.user.name} placeholder="Please insert your name" readonly/>
+        </div>
+        <div class="col-sm-6">
+            <VertInput id="surname" label="Surname" bind:value={data.user.surname} placeholder="Please insert your surname" readonly/>
+        </div>
+        <div class="col-12">
+            <VertInput id="email" label="Email" bind:value={data.user.email} placeholder="Please insert your email" type="email" readonly/>
+        </div>
+        <div class="col-12">
+            <VertInput id="address" label="Address" bind:value={data.user.address.address} placeholder="Please insert your shipping address" readonly/>
+        </div>
+        <div class="col-12">
+            <VertInput id="address2" bind:value={data.user.address.address2} placeholder="Apartment or suite" readonly/>
+        </div>
+        <div class="col-md-4">
+            <Select id="select-country" label="Country" arialabel="select country" bind:value={data.user.address.country} elements={utils.countries} readonly/>
+        </div>
+        <div class="col-md-4">
+            <Select id="select-country" label="Region" arialabel="select region" bind:value={data.user.address.region} elements={utils.regions} readonly/>
+        </div>
+        <div class="col-md-4">
+            <VertInput id="zip" label="ZIP" bind:value={data.user.address.zip} placeholder="ZIP code" type="number" readonly/>
+        </div>
+    </div>
+</InfoPanel>
 
-</InfoPanelAdmin>
+<!-- TODO: Implementa! -->
+<InfoPanel title="Orders list">
+    Under costruction...
+</InfoPanel>

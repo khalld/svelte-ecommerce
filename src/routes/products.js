@@ -33,21 +33,18 @@ router.get('/:id', async (req, res) => {
 // Add new element
 router.post('', async (req, res) => {
     try {
-        const product = new Product({
-            name: req.body.name,
-            description: req.body.description,
-            price: req.body.price,
-            vat: req.body.vat,
-            category: req.body.category,
-            photos: req.body.category,
-            quantity: req.body.quantity,
-            enabled: req.body.enabled
-        })
+        const productExist = await Product.findOne({email: req.body.code})
+
+        if (productExist != null){
+            throw new Error(`Product with code ${req.body.code} already exist`)
+        }
+        
+        const product = new Product(req.body)
         await product.save()
         res.send(product);
     } catch (err) {
-        res.status(400)
-        res.send({message: err})
+        res.status(409)
+        res.send({message: err.message})
     }
 
 })
@@ -62,11 +59,13 @@ router.post('/:id', async (req, res) => {
         }
 
         product.name = req.body.name;
+        product.code = req.body.code;
         product.description = req.body.description;
         product.price = req.body.price;
         product.vat = req.body.vat;
         product.category = req.body.category;
         product.photos = req.body.photos;
+        product.quantity = req.body.quantity;
         product.enabled = req.body.enabled;
 
         await product.save()
@@ -79,6 +78,20 @@ router.post('/:id', async (req, res) => {
 
 })
 
-// TODO: add delete
+// Delete an existing element
+router.delete('/:id', async (req, res) => {
+    try {
+        var product = await Product.findOneAndRemove({_id: req.params.id})
 
+        if (product == null){
+            throw new Error(`Product with _id ${req.params.id} not founded!`)
+        }
+        res.send({message: 'Product deleted successfully!'});
+
+    } catch (err) {
+        res.status(400)
+        res.send({message: err.message})
+    }
+
+})
 module.exports = router;
