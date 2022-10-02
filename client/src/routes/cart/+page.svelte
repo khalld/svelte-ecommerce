@@ -18,7 +18,7 @@
   //   startAt: null
   // }]
 
-  $: console.log("data", data)
+  // $: console.log("data", data)
 
   // TODO: se l'utente non è registrato customerId sarà nullo!
 

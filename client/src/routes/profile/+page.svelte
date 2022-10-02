@@ -3,19 +3,9 @@
     import Select from "../../lib/component/Select.svelte";
     import utils from "../../lib/store/utils";
     import InfoPanel from "../../lib/component/InfoPanel.svelte";
-    import {onMount} from 'svelte';
-    import { goto } from '$app/navigation';
 
     export let data;
     export let changePassword = {};
-
-    onMount( async () => {
-        if (data.redirect != undefined){
-            goto(data.redirect)
-        }
-    })
-
-
     // TODO: fetch per modifica campi
 
 </script>

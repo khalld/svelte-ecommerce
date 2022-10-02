@@ -5,9 +5,7 @@
     import { goto } from '$app/navigation';
     import VertInput from "../../lib/component/VertInput.svelte";
     import Select from "../../lib/component/Select.svelte";
-    import {onMount} from "svelte";
     
-    export let data;
     let error;
 
     // FIXME: put all to NULL
@@ -26,12 +24,6 @@
         },
         role: "admin"
     }
-
-    onMount( async () => {
-        if (data.redirect != undefined){
-            goto(data.redirect)
-        }
-    })
 
     async function submit() {
         try {

@@ -5,8 +5,6 @@
     import VertInput from '../../../../../lib/component/VertInput.svelte';
     import HorzInput from '../../../../../lib/component/HorzInput.svelte';
     import InfoPanel from '../../../../../lib/component/InfoPanel.svelte';
-
-    const status = ["PENDING", "REJECTED", "SHIPPED"];
     
     export let data;
 
@@ -70,6 +68,7 @@
 
             <h6 class="border-bottom pb-2 mb-0 mt-4">Order detail</h6>
             
+            <!-- TODO: fai diventare componente e unificalo dove utilizzato -->
             {#each data.order.products as prod}
                 <div class="d-flex text-muted pt-3">
                     <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
@@ -125,7 +124,7 @@
                         <label for="status-select" class="col-sm-2 col-form-label"><b>Current status</b></label>
                         <div class="col-sm-10">
                             <select class="form-select" aria-label="Default select example" bind:value={data.order.status} >
-                                {#each status as s}
+                                {#each env.status as s}
                                     <option value={s}>
                                         {s}
                                     </option>

@@ -3,11 +3,15 @@ import Navbar from '../lib/component/Navbar.svelte';
 import Footer from '../lib/component/Footer.svelte';
 import { NotificationDisplay } from '@beyonk/svelte-notifications'
 import { page } from '$app/stores';
+import {get} from 'svelte/store'
 
 // export let data;
 
 var currPath = [];
 $: currPath = $page.url.pathname.split("/")
+import userStore from '../lib/store/userStore';
+
+// $: console.log(get(userStore))
 
 </script>
 

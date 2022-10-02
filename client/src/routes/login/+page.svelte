@@ -3,21 +3,13 @@
   import env from '../../lib/store/env.js';
   import userStore from '../../lib/store/userStore.js';
 	import { goto } from '$app/navigation';
-  import { onMount } from 'svelte';
 
   let user = {
     email: 'admin@email.it',
     password: 'password01'
   }
 
-  export let data;
   export let error = null;
-
-  onMount( async () => {
-    if (data.redirect != undefined){
-      goto(data.redirect)
-    }
-  })
 
   async function submitLogin() {
     await fetch(`${env.host}/users/login`, {
