@@ -33,11 +33,12 @@ router.get('/:id', async (req, res) => {
 // Add new element
 router.post('', async (req, res) => {
     try {
-        const productExist = await Product.findOne({email: req.body.code})
+        // TODO: Devi fixare
+        // const productExist = await Product.findOne({email: req.body.code})
 
-        if (productExist != null){
-            throw new Error(`Product with code ${req.body.code} already exist`)
-        }
+        // if (productExist != null){
+        //     throw new Error(`Product with code ${req.body.code} already exist`)
+        // }
         
         const product = new Product(req.body)
         await product.save()

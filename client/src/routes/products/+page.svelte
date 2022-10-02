@@ -1,8 +1,13 @@
 <script>
 	import Product from "../../lib/component/Product.svelte";
 	import cartStore from '../../lib/store/cartStore.js';
+	import Searchbar from "../../lib/component/Searchbar.svelte";
+	import Hint from "../../lib/component/Hint.svelte";
 
 	export let data;
+	let searchbar = "";
+	let results = [];
+	let isSearch = false;
 
 	function addToCart (p) {
 		var currentCart = [];
@@ -41,12 +46,42 @@
 
 	}
 
+
+	// execute the function every time searchbar value change
+	$: filterOverProducts(searchbar)
+
+	function filterOverProducts(value){
+		results = data.products.filter((prod, idx) => {
+		// console.log("filter", prod, idx)
+			return searchbar.split("").every(internalItem => {
+				return prod.name.toLowerCase().indexOf(internalItem.toLowerCase()) !== -1
+			})
+		})
+	}
+
+	$: console.log("res",results, results.length)
+
 </script>
 
+
 <div class="row">
-	{#each data.products as prod}
-		<Product p={prod} addToCart={() => addToCart(prod)}/>
-	{/each}
-	
+	<Searchbar placeholder="Filter over available products" bind:value={searchbar} bind:isSearching={isSearch}/>
+</div>
+
+<div class="row">
+	{#if isSearch}
+		{#if results.length === 0}
+			<Hint str="Sorry bro! Anything founded" classes="mt-5 text-center"/>
+		{:else}
+			{#each results as prod}
+				<Product p={prod} addToCart={() => addToCart(prod)}/>
+			{/each}
+		{/if}
+	{:else}
+		{#each data.products as prod}
+			<Product p={prod} addToCart={() => addToCart(prod)}/>
+		{/each}
+	{/if}
+
 </div>
 
