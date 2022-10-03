@@ -3,10 +3,61 @@
     import Select from "../../lib/component/Select.svelte";
     import utils from "../../lib/store/utils";
     import InfoPanel from "../../lib/component/InfoPanel.svelte";
+    import env from "../../lib/store/env";
+    import Hint from "../../lib/component/Hint.svelte";
+    import { text } from "svelte/internal";
+    import { notifier } from "@beyonk/svelte-notifications";
 
     export let data;
-    export let changePassword = {};
+    let error;
+    let pwd = {
+        oldPassword: 'password012345',
+        newPassword: 'password02',
+        passwordConf: 'password02'
+    }
+
+    $: console.log("data",data)
+    
     // TODO: fetch per modifica campi
+
+    async function changePwd(){
+        try {
+
+            if (pwd.passwordConf != pwd.newPassword){
+                throw new Error("Passwords are not the same")
+            }
+
+            if (pwd.passwordConf === pwd.oldPassword){
+                throw new Error("New password is the same of the old!")
+            }
+
+            if(pwd.newPassword.length < 8){
+                throw new Error('Password must be at least of 8 character!')
+            }
+
+            await fetch(`${env.host}/users/changepwd/`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: data.user.email,
+                    oldPassword: pwd.oldPassword,
+                    newPassword: pwd.newPassword
+                })
+            })
+            .then(data => {
+                console.log("data from fetch", data)
+                notifier.success('Password cambiata con successo!')
+                pwd = {}
+            })
+            .catch(err => error = err.message)
+
+        } catch (e){
+            error = e;
+        }
+
+    }
 
 </script>
 
@@ -43,15 +94,19 @@
 
     <!-- TODO: Implementa! -->
     <InfoPanel title="Change password">
-        <div class="col-12">
-            <VertInput id="password" label="Old password" bind:value={changePassword.oldPassword} placeholder="Please insert your old password" type="password"/>
-        </div>
-        <div class="col-12">
-            <VertInput id="password" label="New Password" bind:value={changePassword.newPassword} placeholder="Please insert your new password" type="password"/>
-        </div>
-        <div class="col-12">
-            <VertInput id="password-conf" label="Confirm password" bind:value={changePassword.passwordConf} placeholder="Please confirm your new password" type="password"/>
-        </div>
+        <form on:submit|preventDefault={changePwd}>
+            <div class="col-12">
+                <VertInput id="password" label="Old password" bind:value={pwd.oldPassword} placeholder="Please insert your old password" type="password"/>
+            </div>
+            <div class="col-12">
+                <VertInput id="password" label="New Password" bind:value={pwd.newPassword} placeholder="Please insert your new password" type="password"/>
+            </div>
+            <div class="col-12">
+                <VertInput id="password-conf" label="Confirm password" bind:value={pwd.passwordConf} placeholder="Please confirm your new password" type="password"/>
+            </div>
+            <button class="w-100 btn btn-primary btn-lg mt-2" type="submit">Change password</button>
+        </form>
+        <Hint str={error} />
     </InfoPanel>
 
     <!-- TODO: Implementa! -->
