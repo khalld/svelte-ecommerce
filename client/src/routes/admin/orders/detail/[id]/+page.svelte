@@ -122,7 +122,7 @@
                     <Input labelAlign="horizontal" id="trackId" label="Tracking id" bind:value={data.order.tracking.id} type="number" />
                     <Input labelAlign="horizontal" id="trackProv" label="Tracking provider" bind:value={data.order.tracking.provider} />
                     
-                    <!-- <Select labelAlign="horizontal" id="status-select" label="Current status" arialabel="Default select example" bind:value={data.order.status} elements={env.status} /> -->
+                    <Select labelAlign="horizontal" id="status-select" label="Current status" arialabel="Default select example" bind:value={data.order.status} elements={env.status} />
 
                     <button class="w-100 btn btn-lg bg-success" on:click={submit}>Send</button>
 

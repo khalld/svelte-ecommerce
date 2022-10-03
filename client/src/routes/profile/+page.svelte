@@ -67,7 +67,7 @@
 
 
 <div class="container">
-    <InfoPanel>
+    <InfoPanel redirect="/profile/myorders" redirectText="Go to your orders">
         <div class="row g-3">
             <div class="col-sm-6">
                 <Input id="name" label="Name" bind:value={data.user.name} placeholder="Please insert your name"/>
@@ -112,11 +112,5 @@
         </form>
         <Hint str={error} />
     </InfoPanel>
-
-    <!-- TODO: Implementa! -->
-    <InfoPanel title="Orders list">
-        Under costruction...
-    </InfoPanel>
-
 </div>
 

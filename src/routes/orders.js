@@ -59,13 +59,13 @@ router.get('/code/:code', async (req, res) => {
 // Get specific element by userId
 router.get('/user/:id', async (req, res) => {
     try {
-        const order = await Order.findOne({customer: { _id: req.params.id }})
+        const orders = await Order.find({'customer._id': req.params.id} )
 
-        if (order === null){
+        if (orders === null){
             throw new Error(`Not found`)
         }
 
-        res.send(order)
+        res.send(orders)
     } catch (err) {
         if (err.message === 'Not found'){
             res.status(404)

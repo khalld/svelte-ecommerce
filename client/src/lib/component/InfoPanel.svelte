@@ -1,6 +1,7 @@
 <script>
     export let title;
-
+    export let redirect;
+    export let redirectText;
 </script>
 
 <div class="container">
@@ -13,6 +14,13 @@
             {/if}
         </div>
         <slot></slot>
+
+        {#if redirect != null}
+            <hr class="my-1">
+            <small class="d-block text-end mt-3">
+                <a href={redirect} target="_blank">{redirectText}</a>
+            </small>
+        {/if}
     </div>
 
 </div>

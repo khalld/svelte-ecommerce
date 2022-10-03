@@ -4,7 +4,7 @@ import { error, redirect } from '@sveltejs/kit';
 
 export async function load(event) {
     if(get(userStore).loggedIn){
-        throw redirect(307, '/products')
+        throw redirect(307, `/profile/myorders/`)
     }
 
 }

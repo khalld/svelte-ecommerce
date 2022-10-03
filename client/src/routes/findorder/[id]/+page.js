@@ -1,12 +1,9 @@
 import {get} from 'svelte/store'
 import { error, redirect } from '@sveltejs/kit';
 import env from '../../../lib/store/env.js';
+import userStore from '../../../lib/store/userStore.js';
 
 export async function load({url}) {
-
-    if(get(userStore).loggedIn){
-        throw redirect(307, '/profile/myorders')
-    }
 
     const code = url.pathname.split("/")[url.pathname.split("/").length - 1]
 
@@ -24,6 +21,10 @@ export async function load({url}) {
     })
     .catch(err => console.log(err))
 
+    if(get(userStore).loggedIn && get(userStore)._id != order.customer._id){
+        throw redirect(307, '/profile/myorders')
+    }
+    
     return {
         order: order
     };
