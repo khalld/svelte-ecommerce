@@ -7,7 +7,6 @@
   import utils from "../../lib/store/utils";
   import Input from "../../lib/component/Input.svelte";
   import Select from "../../lib/component/Select.svelte";
-  
   export let data;
   
   // TODO: sostiuisci con fetch ?
@@ -29,11 +28,16 @@
 		});
 
     data.order.products.forEach((element) => {
-      // aggiorno l'amount totale dei prodotti, calcolando prima il prezzo totale sommate le tasse
-      amount += (((element.vat / 100 ) * element.price)+ element.price) * element.quantity
+      // aggiorno l'amount totale dei prodotti, il prodotto con VAT è già calcolato nello store
+      console.log(element.price)
+      amount += (element.price * element.quantity)
       nElem += element.quantity
       // aggiorno il numero di elementi da visualizzare nel tooltip
     })
+
+    amount = amount.toFixed(2)
+
+    console.log(amount)
 
     cartStore.set({products: data.order.products, amount: amount, n_elem: nElem})
 

@@ -6,12 +6,13 @@
     import Checkbox from "../../../../../lib/component/Checkbox.svelte";
     import env from "../../../../../lib/store/env.js";
     import { notifier } from '@beyonk/svelte-notifications';
-  import Carousel from "../../../../../lib/component/Carousel.svelte";
+    import Carousel from "../../../../../lib/component/Carousel.svelte";
+    import calculateVat from "../../../../../lib/js/utils";
 
     export let data;
     let totPrice = 0.0;
     console.log("data", data)
-    $: totPrice = ((data.product.vat / 100 ) * data.product.price)+ data.product.price
+    $: totPrice =  calculateVat(data.product.price, data.product.vat)
     
 	async function submit() {
         await fetch(`${env.host}/products/${data.product._id}`, {

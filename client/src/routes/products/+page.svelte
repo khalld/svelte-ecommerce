@@ -3,6 +3,7 @@
 	import cartStore from '../../lib/store/cartStore.js';
 	import Searchbar from "../../lib/component/Searchbar.svelte";
 	import Hint from "../../lib/component/Hint.svelte";
+	import calculateVat from '../../lib/js/utils.js';
 
 	export let data;
 	let searchbar = "";
@@ -31,7 +32,7 @@
 				name: p.name,
 				code: p.code,
 				quantity: 1,
-				price: p.price,
+				price: calculateVat(p.price, p.vat),
 				maxQuantity: p.quantity
 			});
 		}

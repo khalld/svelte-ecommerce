@@ -52,6 +52,7 @@
       elements_num += element.quantity 
     })
 
+    amount = amount.toFixed(2)
 
     cartStore.set({products: currentCart, amount: amount, n_elem: elements_num})
   }

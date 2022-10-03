@@ -9,6 +9,7 @@
     import env from "../../../../lib/store/env.js";
     import { goto } from '$app/navigation';    
     import { notifier } from '@beyonk/svelte-notifications';
+    import calculateVat from '../../../../lib/js/utils.js';
 
     let product = {
         name: "Product 1",
@@ -46,7 +47,7 @@
     
     let totPrice = 0.0;
 
-    $: totPrice = (((product.vat / 100 ) * product.price)+ product.price).toFixed(2)
+    $: totPrice = calculateVat(product.price, product.vat)
 
     async function submit() {
 
@@ -78,7 +79,6 @@
             photosArray.push({ idx: photosArray.length +1, pic: currentPhoto})
             currentPhoto = ''
         }
-        console.log("photosArray", photosArray)
     }
 
 </script>
