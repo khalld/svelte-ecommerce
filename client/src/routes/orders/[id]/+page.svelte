@@ -2,9 +2,9 @@
     import { text } from "svelte/internal";
     import InfoPanel from "../../../lib/component/InfoPanel.svelte";
     import InfoPanelHeader from "../../../lib/component/InfoPanelHeader.svelte";
-    import HorzInput from "../../../lib/component/HorzInput.svelte";
-    import VertInput from "../../../lib/component/VertInput.svelte";
+    import Input from "../../../lib/component/Input.svelte";
     import env from "../../../lib/store/env.js";
+    import Select from "../../../lib/component/Select.svelte";
 
 
     export let data;
@@ -16,31 +16,31 @@
 
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12">
-            <HorzInput id="name" bind:value={data.order.customer.name} type="text" readonly/>
+            <Input labelAlign="horizontal"  id="name" bind:value={data.order.customer.name} type="text" readonly/>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
-            <HorzInput id="surname" bind:value={data.order.customer.surname} type="text" readonly/>
+            <Input labelAlign="horizontal"  id="surname" bind:value={data.order.customer.surname} type="text" readonly/>
         </div>
     </div>
 
-    <HorzInput id="email" label="Email" bind:value={data.order.customer.email} readonly="readonly" type="email"/>
+    <Input labelAlign="horizontal"  id="email" label="Email" bind:value={data.order.customer.email} readonly="readonly" type="email"/>
 
-    <VertInput id="address" label="Address" bind:value={data.order.address.address} readonly="readonly" />
-    <VertInput id="address2" bind:value={data.order.address.address2} readonly="readonly" />
+    <Input id="address" label="Address" bind:value={data.order.address.address} readonly="readonly" />
+    <Input id="address2" bind:value={data.order.address.address2} readonly="readonly" />
     <div class="row">
         <div class="col-4">
-            <VertInput id="country" bind:value={data.order.address.country} readonly="readonly" />
+            <Input id="country" bind:value={data.order.address.country} readonly="readonly" />
         </div>
         <div class="col-4">
-            <VertInput id="region" bind:value={data.order.address.region} readonly="readonly" />
+            <Input id="region" bind:value={data.order.address.region} readonly="readonly" />
         </div>
         <div class="col-4">
-            <VertInput id="zip" bind:value={data.order.address.zip} readonly="readonly" />
+            <Input id="zip" bind:value={data.order.address.zip} readonly="readonly" />
         </div>
     </div>
 
     {#if data.order.notes != null}
-        <HorzInput id="notes" label="Notes" bind:value={data.order.notes} readonly="readonly" type="textarea"/>
+        <Input labelAlign="horizontal"  id="notes" label="Notes" bind:value={data.order.notes} readonly="readonly" type="textarea"/>
     {:else}
         <i>No additional notes for expedition</i>
     {/if}
@@ -99,21 +99,9 @@
     <div class="d-flex text-muted pt-3">
         <div class="pb-3 mb-0 lh-sm w-100">
             
-            <HorzInput id="trackId" label="Tracking id" bind:value={data.order.tracking.id} type="number" readonly/>
-            <HorzInput id="trackProv" label="Tracking provider" bind:value={data.order.tracking.provider} readonly/>
-            
-            <div class="mb-3 row">
-                <label for="status-select" class="col-sm-2 col-form-label"><b>Current status</b></label>
-                <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example" bind:value={data.order.status} disabled>
-                        {#each env.status as s}
-                            <option value={s}>
-                                {s}
-                            </option>
-                        {/each}
-                    </select>
-                </div>
-            </div>
+            <Input labelAlign="horizontal"  id="trackId" label="Tracking id" bind:value={data.order.tracking.id} type="number" readonly/>
+            <Input labelAlign="horizontal"  id="trackProv" label="Tracking provider" bind:value={data.order.tracking.provider} readonly/>
+            <Select labelAlign="horizontal" id="status-select" label="Current status" arialabel="Select status" bind:value={data.order.status} elements={env.status} />
 
         </div>
     </div>

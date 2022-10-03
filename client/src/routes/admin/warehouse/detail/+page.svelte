@@ -1,9 +1,8 @@
 <script>
-    import HorzInput from "../../../../lib/component/HorzInput.svelte";
     import InfoPanelAdmin from "../../../../lib/component/InfoPanelAdmin.svelte";
     import InfoPanelHeader from "../../../../lib/component/InfoPanelHeader.svelte";
     import InputFile from "../../../../lib/component/InputFile.svelte";
-    import VertInput from "../../../../lib/component/VertInput.svelte";
+    import Input from "../../../../lib/component/Input.svelte";
     import Checkbox from "../../../../lib/component/Checkbox.svelte";
     import env from "../../../../lib/store/env.js";
     import { goto } from '$app/navigation';    
@@ -55,29 +54,29 @@
 
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12">
-            <HorzInput id="name" label="Name" bind:value={product.name} type="text" />
+            <Input labelAlign="horizontal"  id="name" label="Name" bind:value={product.name} type="text" />
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12">
-            <HorzInput id="code" label="Code" bind:value={product.code} type="text" />
+            <Input labelAlign="horizontal"  id="code" label="Code" bind:value={product.code} type="text" />
         </div>
     </div>
 
     <Checkbox id="enabled" bind:value={product.enabled} label="Enable" />
 
-    <VertInput id="description" label="Description" bind:value={product.description} type="textarea" />
+    <Input id="description" label="Description" bind:value={product.description} type="textarea" />
 
     <div class="mb-3 mt-2 row">
         <div class="col-3">
-            <VertInput id="quantity" label="Quantity" bind:value={product.quantity} type="number" />
+            <Input id="quantity" label="Quantity" bind:value={product.quantity} type="number" />
         </div>
         <div class="col-3">
-            <VertInput id="price" label="Price" bind:value={product.price} type="number" />
+            <Input id="price" label="Price" bind:value={product.price} type="number" />
         </div>
         <div class="col-3">
-            <VertInput id="vat" label="VAT" bind:value={product.vat} type="number" />
+            <Input id="vat" label="VAT" bind:value={product.vat} type="number" />
         </div>
         <div class="col-3">
-            <VertInput id="totalprice" label="Total" bind:value={totPrice} type="number" />
+            <Input id="totalprice" label="Total" bind:value={totPrice} type="number" />
         </div>
         <InputFile />
     </div>

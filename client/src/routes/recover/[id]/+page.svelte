@@ -1,7 +1,7 @@
 
 <script>
     import Hint from '../../../lib/component/Hint.svelte';
-    import VertInput from '../../../lib/component/VertInput.svelte';
+    import Input from '../../../lib/component/Input.svelte';
     import env from '../../../lib/store/env.js';
     import { goto } from '$app/navigation';
 
@@ -57,8 +57,8 @@
         <h1 class="h3 mb-3 fw-normal">Recover password</h1>
 
 
-        <VertInput id="password" placeholder="Please insert your new password" bind:value={user.password} type="password" />
-        <VertInput id="passwordConf" placeholder="Please confirm your new password" bind:value={user.passwordConf} type="password" />
+        <Input id="password" placeholder="Please insert your new password" bind:value={user.password} type="password" />
+        <Input id="passwordConf" placeholder="Please confirm your new password" bind:value={user.passwordConf} type="password" />
 
         <Hint str={error} />
         <Hint str={info} type="success"/>

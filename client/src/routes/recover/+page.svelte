@@ -1,7 +1,7 @@
 
 <script>
     import env from '../../lib/store/env.js';
-    import VertInput from '../../lib/component/VertInput.svelte';
+    import Input from '../../lib/component/Input.svelte';
     import Hint from '../../lib/component/Hint.svelte';
 
     let user = {
@@ -21,7 +21,6 @@
             },
             body: JSON.stringify(user)
         }).then(res => {
-            console.log("response", res)
             if (res.status == 409){
                 throw new Error('User disabled. Contact us for more information')
             } 
@@ -44,7 +43,7 @@
     <form on:submit|preventDefault={submit}>
         <h1 class="h3 mb-3 fw-normal">Recover password</h1>
 
-        <VertInput id="email" placeholder="Please insert your email address" bind:value={user.email} type="email" />
+        <Input id="email" placeholder="Please insert your email address" bind:value={user.email} type="email" />
         
         <Hint str={error} />
         <Hint str={info} type="success" />

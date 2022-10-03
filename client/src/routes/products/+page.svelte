@@ -52,14 +52,11 @@
 
 	function filterOverProducts(value){
 		results = data.products.filter((prod, idx) => {
-		// console.log("filter", prod, idx)
 			return searchbar.split("").every(internalItem => {
 				return prod.name.toLowerCase().indexOf(internalItem.toLowerCase()) !== -1
 			})
 		})
 	}
-
-	// $: console.log("res",results, results.length)
 
 </script>
 

@@ -9,8 +9,6 @@ import { page } from '$app/stores';
 var currPath = [];
 $: currPath = $page.url.pathname.split("/")
 
-// $: console.log(get(userStore))
-
 </script>
 
 <style>

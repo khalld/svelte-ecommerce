@@ -5,7 +5,7 @@
   import { notifier } from '@beyonk/svelte-notifications';
   import env from "../../lib/store/env";
   import utils from "../../lib/store/utils";
-  import VertInput from "../../lib/component/VertInput.svelte";
+  import Input from "../../lib/component/Input.svelte";
   import Select from "../../lib/component/Select.svelte";
   
   export let data;
@@ -17,8 +17,6 @@
   //   startAt: null,
   //   startAt: null
   // }]
-
-  // $: console.log("data", data)
 
   // TODO: se l'utente non è registrato customerId sarà nullo!
 
@@ -118,27 +116,27 @@
       <form on:submit|preventDefault={sendOrder} class="needs-validation" novalidate> <!-- TODO: che signfica ?? -->
         <div class="row g-3">
           <div class="col-sm-6">
-            <VertInput id="name" label="Name" bind:value={data.order.customer.name} placeholder="Please insert your name"/>
+            <Input id="name" label="Name" bind:value={data.order.customer.name} placeholder="Please insert your name"/>
           </div>
 
           <div class="col-sm-6">
-            <VertInput id="surname" label="Surname" bind:value={data.order.customer.surname} placeholder="Please insert your surname"/>
+            <Input id="surname" label="Surname" bind:value={data.order.customer.surname} placeholder="Please insert your surname"/>
           </div>
 
           <div class="col-12">
-            <VertInput id="email" label="Email" bind:value={data.order.customer.email} placeholder="Please insert your email" type="email"/>
+            <Input id="email" label="Email" bind:value={data.order.customer.email} placeholder="Please insert your email" type="email"/>
           </div>
 
           <div class="col-12">
-            <VertInput id="address" label="Address" bind:value={data.order.address.address} placeholder="Please insert your shipping address"/>
+            <Input id="address" label="Address" bind:value={data.order.address.address} placeholder="Please insert your shipping address"/>
           </div>
 
           <div class="col-12">
-            <VertInput id="address2" bind:value={data.order.address.address2} placeholder="Apartment or suite"/>
+            <Input id="address2" bind:value={data.order.address.address2} placeholder="Apartment or suite"/>
           </div>
 
           <div class="col-12">
-            <VertInput id="additional-notes" label="Notes" bind:value={data.order.notes} placeholder="Write additional notes for the expedition" type="textarea" />
+            <Input id="additional-notes" label="Notes" bind:value={data.order.notes} placeholder="Write additional notes for the expedition" type="textarea" />
           </div>
 
           <div class="col-md-4">
@@ -150,7 +148,7 @@
           </div>
 
           <div class="col-md-4">
-            <VertInput id="zip" label="ZIP" bind:value={data.order.address.zip} placeholder="ZIP code" type="number"/>
+            <Input id="zip" label="ZIP" bind:value={data.order.address.zip} placeholder="ZIP code" type="number"/>
           </div>
           
         </div>

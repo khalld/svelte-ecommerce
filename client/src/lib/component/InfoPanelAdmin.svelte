@@ -4,8 +4,6 @@
     import { goto } from '$app/navigation';
     import { page } from '$app/stores';
 
-    // $: console.log($page.url)
-
     function goBack(){
 
         var listPage = $page.url.href.slice(0, $page.url.href.lastIndexOf('/') )

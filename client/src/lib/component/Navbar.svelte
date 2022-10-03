@@ -1,15 +1,10 @@
 <script>
-  import {get, writable} from 'svelte/store'
   import userStore from '../../lib/store/userStore.js';
   import cartStore from '../store/cartStore.js';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
 
-  // $: console.log(get(userStore))
-  // $: console.log(get(cartStore))
-  // $: console.log($page.url.pathname)
-
-	function logout(){
+  function logout(){
 		userStore.set({loggedIn: false, _id: null, role: null});
 		goto("/login");
 	}

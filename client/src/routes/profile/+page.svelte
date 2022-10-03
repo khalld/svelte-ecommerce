@@ -1,5 +1,5 @@
 <script>
-    import VertInput from "../../lib/component/VertInput.svelte";
+    import Input from "../../lib/component/Input.svelte";
     import Select from "../../lib/component/Select.svelte";
     import utils from "../../lib/store/utils";
     import InfoPanel from "../../lib/component/InfoPanel.svelte";
@@ -15,8 +15,6 @@
         passwordConf: 'password02'
     }
 
-    $: console.log("data",data)
-    
     // TODO: fetch per modifica campi
 
     async function changePwd(){
@@ -46,9 +44,16 @@
                 })
             })
             .then(data => {
-                console.log("data from fetch", data)
-                notifier.success('Password cambiata con successo!')
+                if (data.status == 409 || data.status == 404 || data.status == 401 || data.status == 400){
+                    notifier.danger('Something wrong happened!')
+                } 
+
+                if (data.status == 202){
+                    notifier.success('Password changes successfully')
+                }
+                
                 pwd = {}
+
             })
             .catch(err => error = err.message)
 
@@ -65,19 +70,19 @@
     <InfoPanel>
         <div class="row g-3">
             <div class="col-sm-6">
-                <VertInput id="name" label="Name" bind:value={data.user.name} placeholder="Please insert your name"/>
+                <Input id="name" label="Name" bind:value={data.user.name} placeholder="Please insert your name"/>
             </div>
             <div class="col-sm-6">
-                <VertInput id="surname" label="Surname" bind:value={data.user.surname} placeholder="Please insert your surname"/>
+                <Input id="surname" label="Surname" bind:value={data.user.surname} placeholder="Please insert your surname"/>
             </div>
             <div class="col-12">
-                <VertInput id="email" label="Email" bind:value={data.user.email} placeholder="Please insert your email" type="email"/>
+                <Input id="email" label="Email" bind:value={data.user.email} placeholder="Please insert your email" type="email"/>
             </div>
             <div class="col-12">
-                <VertInput id="address" label="Address" bind:value={data.user.address.address} placeholder="Please insert your shipping address"/>
+                <Input id="address" label="Address" bind:value={data.user.address.address} placeholder="Please insert your shipping address"/>
             </div>
             <div class="col-12">
-                <VertInput id="address2" bind:value={data.user.address.address2} placeholder="Apartment or suite"/>
+                <Input id="address2" bind:value={data.user.address.address2} placeholder="Apartment or suite"/>
             </div>
             <div class="col-md-4">
                 <Select id="select-country" label="Country" arialabel="select country" bind:value={data.user.address.country} elements={utils.countries}/>
@@ -86,7 +91,7 @@
                 <Select id="select-country" label="Region" arialabel="select region" bind:value={data.user.address.region} elements={utils.regions}/>
             </div>
             <div class="col-md-4">
-                <VertInput id="zip" label="ZIP" bind:value={data.user.address.zip} placeholder="ZIP code" type="number"/>
+                <Input id="zip" label="ZIP" bind:value={data.user.address.zip} placeholder="ZIP code" type="number"/>
             </div>
         </div>
     </InfoPanel>
@@ -95,13 +100,13 @@
     <InfoPanel title="Change password">
         <form on:submit|preventDefault={changePwd}>
             <div class="col-12">
-                <VertInput id="password" label="Old password" bind:value={pwd.oldPassword} placeholder="Please insert your old password" type="password"/>
+                <Input id="password" label="Old password" bind:value={pwd.oldPassword} placeholder="Please insert your old password" type="password"/>
             </div>
             <div class="col-12">
-                <VertInput id="password" label="New Password" bind:value={pwd.newPassword} placeholder="Please insert your new password" type="password"/>
+                <Input id="password" label="New Password" bind:value={pwd.newPassword} placeholder="Please insert your new password" type="password"/>
             </div>
             <div class="col-12">
-                <VertInput id="password-conf" label="Confirm password" bind:value={pwd.passwordConf} placeholder="Please confirm your new password" type="password"/>
+                <Input id="password-conf" label="Confirm password" bind:value={pwd.passwordConf} placeholder="Please confirm your new password" type="password"/>
             </div>
             <button class="w-100 btn btn-primary btn-lg mt-2" type="submit">Change password</button>
         </form>
