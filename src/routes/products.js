@@ -9,7 +9,7 @@ router.get('', async (req, res) => {
         res.send(users)
     } catch (err) {
         res.status(400)
-        res.send({message: err.message})
+        res.send({message: err.message, type: 'error'})
     }
 })
 
@@ -18,14 +18,18 @@ router.get('/:id', async (req, res) => {
     try {
         const product = await Product.findOne({_id: req.params.id})
 
-        if (product == null){
-            throw new Error(`Product with _id ${req.params.id} not founded!`)
+        if (product === null){
+            throw new Error(`Not found`)
         }
 
         res.send(product)
     } catch (err) {
-        res.status(400)
-        res.send({message: err.message})
+        if (err.message === 'Not found'){
+            res.status(404)
+        } else {
+            res.status(400)
+        }
+        res.send({message: err.message, type: 'error'})
     }
 
 })
@@ -33,19 +37,24 @@ router.get('/:id', async (req, res) => {
 // Add new element
 router.post('', async (req, res) => {
     try {
-        // TODO: Devi fixare
-        // const productExist = await Product.findOne({email: req.body.code})
+        const all = await Product.find({});
 
-        // if (productExist != null){
-        //     throw new Error(`Product with code ${req.body.code} already exist`)
-        // }
+        all.forEach(element => {
+            if (element.code === req.body.code)
+                throw new Error('Product code already used')
+        });
         
         const product = new Product(req.body)
-        await product.save()
+        
+        // await product.save()
         res.send(product);
     } catch (err) {
-        res.status(409)
-        res.send({message: err.message})
+        if (err.message === 'Product code already used'){
+            res.status(409)
+        } else {
+            res.status(400)
+        }
+        res.send({message: err.message, type: 'error'})
     }
 
 })
@@ -55,8 +64,8 @@ router.post('/:id', async (req, res) => {
     try {
         var product = await Product.findOne({_id: req.params.id})
 
-        if (product == null){
-            throw new Error(`Product with _id ${req.params.id} not founded!`)
+        if (product === null){
+            throw new Error(`Not found`)
         }
 
         product.name = req.body.name;
@@ -73,8 +82,12 @@ router.post('/:id', async (req, res) => {
         res.send(product);
 
     } catch (err) {
-        res.status(400)
-        res.send({message: err.message})
+        if (err.message === 'Not found'){
+            res.status(404)
+        } else {
+            res.status(400)
+        }
+        res.send({message: err.message, type: 'error'})
     }
 
 })
@@ -85,13 +98,17 @@ router.delete('/:id', async (req, res) => {
         var product = await Product.findOneAndRemove({_id: req.params.id})
 
         if (product == null){
-            throw new Error(`Product with _id ${req.params.id} not founded!`)
+            throw new Error('Not found')
         }
         res.send({message: 'Product deleted successfully!'});
 
     } catch (err) {
-        res.status(400)
-        res.send({message: err.message})
+        if (err.message === 'Not found'){
+            res.status(404)
+        } else {
+            res.status(400)
+        }
+        res.send({message: err.message, type: 'error'})
     }
 
 })

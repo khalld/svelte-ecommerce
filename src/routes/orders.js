@@ -8,8 +8,8 @@ router.get('', async (req, res) => {
         const orders = await Order.find()
         res.send(orders)
     } catch (err) {
-        res.status(400)
-        res.send({message: err.message})
+        res.status(404)
+        res.send({message: err.message, type: 'error'})
     }
 })
 
@@ -18,14 +18,18 @@ router.get('/:id', async (req, res) => {
     try {
         const order = await Order.findOne({_id: req.params.id})
 
-        if (order == null){
-            throw new Error(`Order with _id ${req.params.id} not founded!`)
+        if (order === null){
+            throw new Error(`Not found`)
         }
 
         res.send(order)
     } catch (err) {
-        res.status(400)
-        res.send({message: err.message})
+        if (err.message === 'Not found'){
+            res.status(404)
+        } else {
+            res.status(400)
+        }
+        res.send({message: err.message, type: 'error'})
     }
 
 })
@@ -38,7 +42,7 @@ router.post('', async (req, res) => {
         res.send(order);
     } catch (err) {
         res.status(400)
-        res.send({message: err.message})
+        res.send({message: err.message, type: 'error'})
     }
 
 })
@@ -48,8 +52,8 @@ router.post('/:id', async (req, res) => {
     try {
         var order = await Order.findOne({_id: req.params.id})
 
-        if (order == null){
-            throw new Error(`Order with _id ${req.params.id} not founded!`)
+        if (order === null){
+            throw new Error(`Not found`)
         }
 
         order.status = req.body.status;
@@ -59,14 +63,14 @@ router.post('/:id', async (req, res) => {
         res.send(order);
 
     } catch (err) {
-        res.status(400)
-        res.send({message: err.message})
+        if (err.message === 'Not found'){
+            res.status(404)
+        } else {
+            res.status(400)
+        }
+        res.send({message: err.message, type: 'error'})
     }
 
 })
-
-// TODO: add delete
-
-
 
 module.exports = router;

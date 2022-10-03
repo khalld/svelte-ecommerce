@@ -5,7 +5,6 @@ const app = express();
 const env = require('./env.js');
 const {connectToDb} = require('./db/connection.js')
 const userRoute = require("./routes/users.js");
-const categoryRoute = require("./routes/categories.js");
 const productRoute = require("./routes/products.js");
 const orderRoute = require("./routes/orders.js");
 
@@ -17,7 +16,6 @@ connectToDb();
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 app.use("/users", userRoute);
-app.use("/categories", categoryRoute);
 app.use("/products", productRoute);
 app.use("/orders", orderRoute);
 

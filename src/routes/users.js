@@ -9,28 +9,31 @@ router.post('/login', async (req, res) => {
         var user = await User.findOne({email: req.body.email})
         
         if (user == null){
-            throw new Error(`User not founded`)
+            throw new Error(`Not found`)
         }
 
         if (user.enabled === false){
-            throw new Error('User is disabled!')
+            throw new Error('Disabled')
         }
 
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if(!validPassword) {
-            throw new Error(`Wrong password!`)
+            throw new Error(`Wrong password`)
         }
 
         res.send(user);
     } catch (err) {
-        if (err.message === 'User is disabled!'){
+        if (err.message === 'Disabled'){
             res.status(409)
-            res.send({message: err.message})
+        } else if (err.message === 'Not found') {
+            res.status(404)
+        } else if (err.message === 'Wrong password') {
+            res.status(401)
         } else {
             res.status(400)
-            res.send({message: err.message})
         }
-
+        
+        res.send({message: err.message, type: 'error'})
     }
 })
 
@@ -40,11 +43,11 @@ router.post('/changepwd', async (req, res) => {
         var user = await User.findOne({email: req.body.email})
         
         if (user == null){
-            throw new Error(`User not founded`)
+            throw new Error(`Not found`)
         }
 
         if (user.enabled === false){
-            throw new Error('User is disabled!')
+            throw new Error('Disabled')
         }
 
         const validPassword = await bcrypt.compare(req.body.oldPassword, user.password);
@@ -52,7 +55,7 @@ router.post('/changepwd', async (req, res) => {
         console.log(validPassword)
 
         if(!validPassword) {
-            throw new Error(`Wrong password!`)
+            throw new Error(`Wrong password`)
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -63,18 +66,19 @@ router.post('/changepwd', async (req, res) => {
         await user.save()
 
         res.status(202);
-        res.send(user);
+        res.send({message: 'Password changed successfully', type: 'info'});
     } catch (err) {
-        if (err.message === 'User is disabled!'){
+        if (err.message === 'Disabled'){
             res.status(409)
-            res.send({message: err.message})
-        } else if (err.message === 'Wrong password'){
-            res.status(404);
-            res.send({message: err.message})
+        } else if (err.message === 'Not found') {
+            res.status(404)
+        } else if (err.message === 'Wrong password') {
+            res.status(401)
         } else {
             res.status(400)
-            res.send({message: err.message})
         }
+        
+        res.send({message: err.message, type: 'error'})
 
     }
 })
@@ -84,11 +88,11 @@ router.post('/recoverpwd', async (req, res) => {
         var user = await User.findOne({email: req.body.email})
         
         if (user == null){
-            throw new Error(`User not founded`)
+            throw new Error(`Not found`)
         }
 
         if (user.enabled === false){
-            throw new Error('User is disabled!')
+            throw new Error('Disabled')
         }
         const token = uuidv4();
         user.token = token;
@@ -97,10 +101,17 @@ router.post('/recoverpwd', async (req, res) => {
         await user.save()
 
         res.status(202)
-        res.send({message: "Added token successfully!"});
+        res.send({message: 'Success', type: 'info'});
     } catch (err) {
-        res.status(400)
-        res.send({message: err.message})
+        if (err.message === 'Disabled'){
+            res.status(409)
+        } else if (err.message === 'Not found') {
+            res.status(404)
+        } else {
+            res.status(400)
+        }
+        
+        res.send({message: err.message, type: 'error'})
     }
 })
 
@@ -108,13 +119,13 @@ router.post('/recoverpwd/:token', async (req, res) => {
     try {
 
         if (req.params.token == null){
-            throw new Error('Must pass a token!')
+            throw new Error('Token required')
         }
 
         var user = await User.findOne({token: req.params.token, enabled: false})
 
         if (user == null){
-            throw new Error(`User not founded`)
+            throw new Error(`Not found`)
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -127,16 +138,17 @@ router.post('/recoverpwd/:token', async (req, res) => {
         await user.save();
 
         res.status(202)
-        res.send({message: 'Password changed successfully! Try to login!'});
+        res.send({message: 'Password recovered', type: 'info'});
     } catch (err) {
-        if (err.message === 'User is disabled!'){
-            res.status(409)
-            res.send({message: err.message})
+        if (err.message === 'Not found') {
+            res.status(404)
+        } else if (err.message === 'Token required') {
+            res.status(401)
         } else {
             res.status(400)
-            res.send({message: err.message})
         }
-
+        
+        res.send({message: err.message, type: 'error'})
     }
 })
 
@@ -155,18 +167,23 @@ router.get('', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         if (req.params.id == null){
-            throw new Error('Must pass a valid _id!')
+            throw new Error('Id required')
         }
 
         const user = await User.findOne({_id: req.params.id}).select('-password')
 
         if (user == null){
-            throw new Error(`User with _id ${req.params.id} not founded!`)
+            throw new Error(`Not found`)
         }
         res.send(user)
     } catch (err) {
-        res.status(400)
-        res.send({message: err.message})
+        if (err.message === 'Not found') {
+            res.status(404)
+        } else {
+            res.status(400)
+        }
+        
+        res.send({message: err.message, type: 'error'})
     }
 
 })
@@ -177,7 +194,7 @@ router.post('', async (req, res) => {
         const userExist = await User.findOne({email: req.body.email})
 
         if (userExist != null){
-            throw new Error(`User with email ${req.body.email} already exist`)
+            throw new Error(`Email already used`)
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -191,17 +208,21 @@ router.post('', async (req, res) => {
             password: cryptedPwd,
             address: req.body.address,
             orders: [],
-            token: null, // TODO:
-            enabled: false,
-            role: "admin" // TODO:
-
+            token: null,
+            enabled: true,
+            role: "user"
         });
         
         await user.save()
         return res.send(user);
     } catch (err) {
-        res.status(400)
-        return res.send({message: err.message})
+        if (err.message === 'Email already used'){
+            res.status(409)
+        } else {
+            res.status(400)
+        }
+
+        return res.send({message: err.message, type: 'error'})
     }
 
 })
@@ -212,32 +233,26 @@ router.post('/:id', async (req, res) => {
         var user = await User.findOne({_id: req.params.id})
 
         if (user == null){
-            throw new Error(`User not founded`)
+            throw new Error(`Not found`)
         }
 
         user.name = req.body.name;
         user.surname = req.body.surname;
         user.email = req.body.email;
-        // user.password
-        user.address = []; // FIXME:
-        user.token = ""; // FIXME:
-        user.role = "admin"; // FIXME:
+        user.address = req.body.address;
 
         await user.save()
         res.send(user);
 
     } catch (err) {
-        res.status(400)
-        res.send({message: err.message})
+        if (err.message === 'Not found'){
+            res.status(404)
+        } else {
+            res.status(400)
+        }
+        res.send({message: err.message, type: 'error'})
     }
 
 })
-
-
-// TODO: recover password
-
-// TODO: edit password
-
-// TODO: add disable user
 
 module.exports = router;
