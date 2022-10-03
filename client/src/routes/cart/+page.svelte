@@ -56,9 +56,9 @@
       return res.json();
     })
     .then(() => {
-      notifier.success('processato correttamente!')
+      notifier.success('Order submitted successfully!')
       cartStore.set({products: [], amount: 0.0, n_elem: 0})
-      // TODO: Pulisci il form o rimanda ad un altra pagina
+      // TODO: rimanda al dettaglio dell'ordine (?)
     })
     .catch(err => notifier.danger(err.message))
   }

@@ -5,7 +5,6 @@
     import InfoPanel from "../../lib/component/InfoPanel.svelte";
     import env from "../../lib/store/env";
     import Hint from "../../lib/component/Hint.svelte";
-    import { text } from "svelte/internal";
     import { notifier } from "@beyonk/svelte-notifications";
 
     export let data;

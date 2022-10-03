@@ -62,19 +62,3 @@ Using <a href="https://cloud.mongodb.com/">MongoDb Cloud</a>
 #### Models
 
 ...
-
-
-
-### TODOS:
-
-- Al momento per lavorare più agilmente lavorerai con il run del server e del client su porte separate (hot-reaload abilitato, altrimenti si impazzisce)
-- AL MOMENTO hai disabilitato il running unico di client e server quindi puoi usare module.exports ... poi in caso cambi tutto dopo
-- Configurare .env con le variabili globali
-- Crittografia delle password
-
-
-## Chiarimenti prof
-
-- Conviene runnare sia be che fe sulla stessa porta?
-- Conviene non usare module.exports perché bisogna mettere il type = modules per runnare entrambi i progetti su una sola porta? 
-- Rollup ??

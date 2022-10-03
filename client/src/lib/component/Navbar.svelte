@@ -33,7 +33,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto ">
-        <!-- TODO: fetch delle categories -->
+        <!-- TODO: categories -->
         <!-- <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
@@ -51,7 +51,6 @@
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li> -->
-
 
         <li class="nav-item me-4" >
           <button type="button" class="btn btn-primary position-relative {$page.url.pathname == "/cart" ? "active" : "" }" on:click={() => goto("/cart")}>

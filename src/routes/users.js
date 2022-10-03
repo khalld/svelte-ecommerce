@@ -214,15 +214,17 @@ router.post('', async (req, res) => {
         });
         
         await user.save()
-        return res.send(user);
+        res.status(201);
+        res.send(user);
     } catch (err) {
+        
         if (err.message === 'Email already used'){
             res.status(409)
         } else {
             res.status(400)
         }
 
-        return res.send({message: err.message, type: 'error'})
+        res.send({message: err.message, type: 'error'})
     }
 
 })

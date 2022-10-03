@@ -34,16 +34,16 @@
             body: JSON.stringify(product)
         }).then(res => {
             if (res.status == 400){
-                throw new Error('Something wrong happened')
+                throw new Error('Something wrong happened!')
             }
             if (res.status == 409){
-                throw new Error('Product code already exist!')
+                throw new Error('Product code already used!')
             }
             return res.json();
         })
         .then(() => {
+            notifier.success('New product added!')
             goto('/admin/warehouse')
-            notifier.success('processato correttamente!')
         })
         .catch(err => notifier.danger(err.message))
 	}

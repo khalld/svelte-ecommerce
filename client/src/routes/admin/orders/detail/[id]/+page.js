@@ -19,6 +19,11 @@ export async function load({ url, event }) {
         if (res.status == 400){
             throw new Error('Something wrong happened')
         }
+
+        if (res.status == 404){
+            throw redirect(307, '/')
+        }
+        
         return res.json();
     })
     .then(data => {

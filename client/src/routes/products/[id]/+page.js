@@ -1,27 +1,28 @@
-// import env from '../../../lib/store/env.js';
+import env from '../../../lib/store/env.js'
+import {get} from 'svelte/store'
+import { error, redirect } from '@sveltejs/kit';
 
+export async function load({ url, event }) { 
 
-// TODO: AGGiungi LOAD! + prendi l'id del prodotto dal server (credo ??)
+    const id = url.pathname.split("/")[url.pathname.split("/").length - 1]
+    var product = {};
 
+    await fetch(`${env.host}/products/${id}`)
+    .then(res => {
+        if (res.status == 400){
+            throw new Error('Something wrong happened')
+        }
+        if (res.status == 404){
+            throw redirect(307, '/')
+        }
+        return res.json();
+    })
+    .then(data => {
+        product = data;
+    })
+    .catch(err => console.log(err))
 
-
-// export async function load(event) {
-//     var orders = [];
-
-//     await fetch(`${env.host}/products/${_ID_}`)
-//     .then(res => {
-//         if (res.status == 400){
-//             throw new Error('Something wrong happened')
-//         }
-//         return res.json();
-//     })
-//     .then(data => {
-//         orders = data;
-//     })
-//     .catch(err => console.log(err))
-
-
-//     return {
-//         product: product
-//     };
-// }
+    return {
+        product: product
+    };
+}

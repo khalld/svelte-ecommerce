@@ -14,7 +14,7 @@ export async function load(event) {
 
     await fetch(`${env.host}/orders`)
     .then(res => {
-        if (res.status == 400){
+        if (res.status == 404){
             throw new Error('Something wrong happened')
         }
         return res.json();

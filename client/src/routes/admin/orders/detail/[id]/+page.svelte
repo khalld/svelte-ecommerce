@@ -16,13 +16,13 @@
             },
             body: JSON.stringify(data.order)
         }).then(res => {
-            if (res.status == 400){
+            if (res.status == 400 || res.status == 404){
                 throw new Error('Something wrong happened')
             }
             return res.json();
         })
         .then(() => {
-            notifier.success('processato correttamente!')
+            notifier.success('Info submitted successfully')
         })
         .catch(err => notifier.danger(err.message))
 

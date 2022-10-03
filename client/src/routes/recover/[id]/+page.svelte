@@ -1,6 +1,6 @@
 
 <script>
-    import { json } from '@sveltejs/kit';
+    import Hint from '../../../lib/component/Hint.svelte';
     import VertInput from '../../../lib/component/VertInput.svelte';
     import env from '../../../lib/store/env.js';
     import { goto } from '$app/navigation';
@@ -10,7 +10,9 @@
         passwordConf: "password01"
     }
 
-    export let error = null;
+    let error = null;
+    let info = null;
+
     export let data;
 
     async function submit() {
@@ -31,10 +33,16 @@
                 },
                 body: JSON.stringify(user)
             })
-            .then(data => {
-                if (data.status == 200){
-                    goto("/login");
-                }            
+            .then(res => {
+                
+                if (res.status == 404 || res.status == 401 || res.status == 400){
+                    error = "Something wrong happened"
+                }
+
+                if (res.status == 202){
+                    user = {}
+                    info = "Password recovered successfully"
+                }
             })
             .catch(err => error = err.message)
         } catch (e){
@@ -52,11 +60,9 @@
         <VertInput id="password" placeholder="Please insert your new password" bind:value={user.password} type="password" />
         <VertInput id="passwordConf" placeholder="Please confirm your new password" bind:value={user.passwordConf} type="password" />
 
-        {#if error}
-            <div class="alert alert-danger" role="alert">
-                {error}
-            </div>
-        {/if}
+        <Hint str={error} />
+        <Hint str={info} type="success"/>
+
         <button class="w-100 btn btn-primary mt-2" type="submit">Send</button>
 
     </form>

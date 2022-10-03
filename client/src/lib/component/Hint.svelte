@@ -1,11 +1,10 @@
 <script>
     export let str;
-    export const type = "danger";
-    export let classes;
+    export let type = "danger";
 </script>
 
 {#if str}
-    <div class="alert alert-{type} {classes}" role="alert">
+    <div class="alert alert-{type} mt-3 text-center" role="alert">
         {str}
     </div>
 {/if}

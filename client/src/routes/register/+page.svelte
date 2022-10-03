@@ -7,8 +7,7 @@
     import Select from "../../lib/component/Select.svelte";
     
     let error;
-
-    // FIXME: put all to NULL
+    let info;
     let user = {
         name: "Mimmo",
         surname: "Lucifora",
@@ -21,8 +20,7 @@
             country: "Italy",
             region: "Abruzzo",
             zip: 9999,
-        },
-        role: "admin"
+        }
     }
 
     async function submit() {
@@ -34,7 +32,6 @@
                 } 
             })
 
-            // TODO: Aggiungi una regex per migliorare
             if(user.password.length < 8){
                 throw new Error('Password must be at least of 8 character!')
             }
@@ -51,12 +48,15 @@
                 body: JSON.stringify(user)
             })
             .then(res => {
-                if (res.status == 400){
-                    throw new Error('Email already used!')
+                if (res.status == 409){
+                    throw new Error('Email is already used')
                 }
-                if (res.status == 200){
-                    goto("/login")
-                    .then(() => alert("Register successfull! Now you can login!"))
+                if (res.status == 400){
+                    throw new Error('Something wrong happened')
+                }
+                if (res.status == 201){
+                    info = 'Registered successfully! Now you can login'
+                    user = { address: {}}
                 }
             })
             .catch(err => error = err.message)
@@ -104,7 +104,7 @@
             </div>
         </div>
         <Hint str={error} />
-
+        <Hint str={info} type="success"/>
         <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
     </form>
 </div>

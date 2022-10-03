@@ -2,15 +2,18 @@
 <script>
     import env from '../../lib/store/env.js';
     import VertInput from '../../lib/component/VertInput.svelte';
+    import Hint from '../../lib/component/Hint.svelte';
 
     let user = {
         email: 'admin@email.it'
     }
 
-    export let error = null;
-
+    let error = null;
+    let info = null;
+    
     async function submit() {
-        
+        error = null;
+        info = null;
         await fetch(`${env.host}/users/recoverpwd`, {
             method: 'POST',
             headers: {
@@ -19,14 +22,18 @@
             body: JSON.stringify(user)
         }).then(res => {
             console.log("response", res)
-            if (res.status == 400){
+            if (res.status == 409){
+                throw new Error('User disabled. Contact us for more information')
+            } 
+            if (res.status == 404){
                 throw new Error('User not founded')
+            } 
+            if (res.status == 400){
+                throw new Error('Something wrong happened')
             }
-            return res.json();
-        })
-        .then(data => {
-            console.log("data from fetch", data)
-            error = data.message;
+            if (res.status == 202){
+                info = "Check your email to complete the process";
+            }
         })
         .catch(err => error = err.message)
     }
@@ -37,14 +44,11 @@
     <form on:submit|preventDefault={submit}>
         <h1 class="h3 mb-3 fw-normal">Recover password</h1>
 
-
         <VertInput id="email" placeholder="Please insert your email address" bind:value={user.email} type="email" />
+        
+        <Hint str={error} />
+        <Hint str={info} type="success" />
 
-        {#if error}
-            <div class="alert alert-danger" role="alert">
-                {error}
-            </div>
-        {/if}
         <button class="w-100 btn btn-primary mt-2" type="submit">Send</button>
 
     </form>

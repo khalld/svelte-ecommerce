@@ -71,7 +71,7 @@
 <div class="row">
 	{#if isSearch}
 		{#if results.length === 0}
-			<Hint str="Sorry bro! Anything founded" classes="mt-5 text-center"/>
+			<Hint str="Sorry bro! Anything founded"/>
 		{:else}
 			{#each results as prod}
 				<Product p={prod} addToCart={() => addToCart(prod)}/>

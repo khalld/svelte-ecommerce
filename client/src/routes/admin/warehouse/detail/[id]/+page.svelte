@@ -23,10 +23,13 @@
             if (res.status == 400){
                 throw new Error('Something wrong happened')
             }
+            if (res.status == 404){
+                throw new Error('Product not exist')
+            }
             return res.json();
         })
         .then(() => {
-            notifier.success('processato correttamente!')
+            notifier.success('Product edited')
         })
         .catch(err => notifier.danger(err.message))
 	}
