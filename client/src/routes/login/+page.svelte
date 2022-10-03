@@ -22,8 +22,14 @@
       if (res.status == 400){
         throw new Error('User not founded or password is not correct')
       }
+      if (res.status == 401){
+        throw new Error('Wrong password')
+      }
       if (res.status == 409){
         throw new Error('User is disabled')
+      }
+      if (res.status == 404){
+        throw new Error('Something wrong happened')
       }
       return res.json();
     })
@@ -38,6 +44,7 @@
       goto("/products");
     })
     .catch(err => error = err.message)
+
   }
 
 </script>

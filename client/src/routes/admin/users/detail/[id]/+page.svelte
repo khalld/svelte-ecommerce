@@ -29,10 +29,10 @@
             <VertInput id="address2" bind:value={data.user.address.address2} placeholder="Apartment or suite" readonly/>
         </div>
         <div class="col-md-4">
-            <Select id="select-country" label="Country" arialabel="select country" bind:value={data.user.address.country} elements={utils.countries} readonly/>
+            <Select id="select-country" label="Country" arialabel="select country" bind:value={data.user.address.country} elements={utils.countries} disabled/>
         </div>
         <div class="col-md-4">
-            <Select id="select-country" label="Region" arialabel="select region" bind:value={data.user.address.region} elements={utils.regions} readonly/>
+            <Select id="select-country" label="Region" arialabel="select region" bind:value={data.user.address.region} elements={utils.regions} disabled/>
         </div>
         <div class="col-md-4">
             <VertInput id="zip" label="ZIP" bind:value={data.user.address.zip} placeholder="ZIP code" type="number" readonly/>

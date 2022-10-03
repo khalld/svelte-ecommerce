@@ -8,6 +8,8 @@ router.post('/login', async (req, res) => {
     try {
         var user = await User.findOne({email: req.body.email})
         
+        console.log(user)
+
         if (user == null){
             throw new Error(`Not found`)
         }
@@ -23,6 +25,7 @@ router.post('/login', async (req, res) => {
 
         res.send(user);
     } catch (err) {
+        console.log(err)
         if (err.message === 'Disabled'){
             res.status(409)
         } else if (err.message === 'Not found') {
