@@ -6,17 +6,49 @@
     import env from "../../lib/store/env";
     import Hint from "../../lib/component/Hint.svelte";
     import { notifier } from "@beyonk/svelte-notifications";
+    import userStore from "../../lib/store/userStore";
+    import {get} from 'svelte/store';
 
     export let data;
     let error;
     let pwd = {
-        oldPassword: 'password012345',
-        newPassword: 'password02',
-        passwordConf: 'password02'
+        // oldPassword: 'password012345',
+        // newPassword: 'password02',
+        // passwordConf: 'password02'
     }
 
-    // TODO: fetch per modifica campi
+    async function updateProfile(){
+        try {
 
+            await fetch(`${env.host}/users/${get(userStore)._id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: data.user.name,
+                    surname: data.user.surname,
+                    email: data.user.email,
+                    address: data.user.address
+                })
+            })
+            .then(res => {
+                console.log(res)
+                if (res.status == 400 || res.status == 404 ){
+                    notifier.danger('Something wrong happened!')
+                } 
+
+                if (res.status == 200){
+                    notifier.success('Information update')
+                }
+
+            })
+            .catch(err => error = err.message)
+        } catch (e){
+            error = e;
+        }
+    }
+    
     async function changePwd(){
         try {
 
@@ -67,36 +99,40 @@
 
 
 <div class="container">
-    <InfoPanel redirect="/profile/myorders" redirectText="Go to your orders">
-        <div class="row g-3">
-            <div class="col-sm-6">
-                <Input id="name" label="Name" bind:value={data.user.name} placeholder="Please insert your name"/>
+    <form on:submit|preventDefault={updateProfile}>
+        <InfoPanel redirect="/profile/myorders" redirectText="Go to your orders">
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <Input id="name" label="Name" bind:value={data.user.name} placeholder="Please insert your name"/>
+                </div>
+                <div class="col-sm-6">
+                    <Input id="surname" label="Surname" bind:value={data.user.surname} placeholder="Please insert your surname"/>
+                </div>
+                <div class="col-12">
+                    <Input id="email" label="Email" bind:value={data.user.email} placeholder="Please insert your email" type="email"/>
+                </div>
+                <div class="col-12">
+                    <Input id="address" label="Address" bind:value={data.user.address.address} placeholder="Please insert your shipping address"/>
+                </div>
+                <div class="col-12">
+                    <Input id="address2" bind:value={data.user.address.address2} placeholder="Apartment or suite"/>
+                </div>
+                <div class="col-md-4">
+                    <Select id="select-country" label="Country" arialabel="select country" bind:value={data.user.address.country} elements={utils.countries}/>
+                </div>
+                <div class="col-md-4">
+                    <Select id="select-country" label="Region" arialabel="select region" bind:value={data.user.address.region} elements={utils.regions}/>
+                </div>
+                <div class="col-md-4">
+                    <Input id="zip" label="ZIP" bind:value={data.user.address.zip} placeholder="ZIP code" type="number"/>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <Input id="surname" label="Surname" bind:value={data.user.surname} placeholder="Please insert your surname"/>
-            </div>
-            <div class="col-12">
-                <Input id="email" label="Email" bind:value={data.user.email} placeholder="Please insert your email" type="email"/>
-            </div>
-            <div class="col-12">
-                <Input id="address" label="Address" bind:value={data.user.address.address} placeholder="Please insert your shipping address"/>
-            </div>
-            <div class="col-12">
-                <Input id="address2" bind:value={data.user.address.address2} placeholder="Apartment or suite"/>
-            </div>
-            <div class="col-md-4">
-                <Select id="select-country" label="Country" arialabel="select country" bind:value={data.user.address.country} elements={utils.countries}/>
-            </div>
-            <div class="col-md-4">
-                <Select id="select-country" label="Region" arialabel="select region" bind:value={data.user.address.region} elements={utils.regions}/>
-            </div>
-            <div class="col-md-4">
-                <Input id="zip" label="ZIP" bind:value={data.user.address.zip} placeholder="ZIP code" type="number"/>
-            </div>
-        </div>
-    </InfoPanel>
+            <button class="w-100 btn btn-primary btn-lg mt-2" type="submit">Update profile</button>
 
-    <!-- TODO: Implementa! -->
+        </InfoPanel>
+
+    </form>
+
     <InfoPanel title="Change password">
         <form on:submit|preventDefault={changePwd}>
             <div class="col-12">
