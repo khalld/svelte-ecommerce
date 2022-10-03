@@ -2,6 +2,8 @@
     import InfoPanelAdmin from "../../../../lib/component/InfoPanelAdmin.svelte";
     import InfoPanelHeader from "../../../../lib/component/InfoPanelHeader.svelte";
     import InputFile from "../../../../lib/component/InputFile.svelte";
+    import Hint from "../../../../lib/component/Hint.svelte";
+
     import Input from "../../../../lib/component/Input.svelte";
     import Checkbox from "../../../../lib/component/Checkbox.svelte";
     import env from "../../../../lib/store/env.js";
@@ -10,21 +12,44 @@
 
     let product = {
         name: "Product 1",
-        code: "PD1",
+        code: "PD1" + Math.random(),
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut lobortis velit, volutpat porta ante. Vestibulum neque mauris, efficitur in dapibus eget, semper et elit",
         quantity: 100,
         price: 10.89,
         vat: 21,
         category: [],
-        photos: [],
+        photos: [
+            {
+                id: 1,
+                src: 'https://www.cameraegg.org/wp-content/uploads/2015/06/canon-powershot-g3-x-sample-images-1.jpg'
+            },
+            {
+                id: 2,
+                src: 'https://www.cameraegg.org/wp-content/uploads/2015/06/canon-powershot-g3-x-sample-images-1.jpg'
+            },
+            {
+                id: 3,
+                src: 'https://www.cameraegg.org/wp-content/uploads/2015/06/canon-powershot-g3-x-sample-images-1.jpg'
+            },
+            {
+                id: 4,
+                src: 'https://www.cameraegg.org/wp-content/uploads/2015/06/canon-powershot-g3-x-sample-images-1.jpg'
+            },
+            {
+                id: 5,
+                src: 'https://www.cameraegg.org/wp-content/uploads/2015/06/canon-powershot-g3-x-sample-images-1.jpg'
+            },
+        ],
         enabled: false
     };
 
+    
     let totPrice = 0.0;
 
     $: totPrice = (((product.vat / 100 ) * product.price)+ product.price).toFixed(2)
-    
-	async function submit() {
+
+    async function submit() {
+
         await fetch(`${env.host}/products/`, {
             method: 'POST',
             headers: {
@@ -46,6 +71,15 @@
         })
         .catch(err => notifier.danger(err.message))
 	}
+
+    async function addImage(){
+
+        if (currentPhoto != null && currentPhoto.length > 0){
+            photosArray.push({ idx: photosArray.length +1, pic: currentPhoto})
+            currentPhoto = ''
+        }
+        console.log("photosArray", photosArray)
+    }
 
 </script>
 
@@ -78,7 +112,17 @@
         <div class="col-3">
             <Input id="totalprice" label="Total" bind:value={totPrice} type="number" />
         </div>
-        <InputFile />
     </div>
+
+    {#each product.photos as photo}
+        <div class="col-6">
+            <Input type="text" bind:value={photo.src} id="input-pic-{photo.id}" label="Pic n°{photo.id}"/>
+        </div>
+        {#if photo.src.length > 0}
+        <div class="col-6">
+            <img src={photo.src} class="rounded mx-auto d-block w-25" alt="pic-n-{photo.id}" >
+        </div>
+        {/if}
+    {/each}
 
 </InfoPanelAdmin>

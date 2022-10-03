@@ -29,14 +29,13 @@
 		});
 
     data.order.products.forEach((element) => {
-      // aggiorno l'amount totale dei prodotti
-      amount += (element.price * element.quantity)
+      // aggiorno l'amount totale dei prodotti, calcolando prima il prezzo totale sommate le tasse
+      amount += (((element.vat / 100 ) * element.price)+ element.price) * element.quantity
       nElem += element.quantity
       // aggiorno il numero di elementi da visualizzare nel tooltip
     })
 
     cartStore.set({products: data.order.products, amount: amount, n_elem: nElem})
-
 
 	});
 

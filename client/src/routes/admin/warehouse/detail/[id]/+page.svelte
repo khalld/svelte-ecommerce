@@ -5,10 +5,12 @@
     import Input from "../../../../../lib/component/Input.svelte";
     import Checkbox from "../../../../../lib/component/Checkbox.svelte";
     import env from "../../../../../lib/store/env.js";
+    import { notifier } from '@beyonk/svelte-notifications';
+  import Carousel from "../../../../../lib/component/Carousel.svelte";
 
     export let data;
     let totPrice = 0.0;
-
+    console.log("data", data)
     $: totPrice = ((data.product.vat / 100 ) * data.product.price)+ data.product.price
     
 	async function submit() {
@@ -64,7 +66,19 @@
         <div class="col-3">
             <Input id="totalprice" label="Total" bind:value={totPrice} type="number" />
         </div>
-        <InputFile />
+    </div>
+
+    <div class="d-flex flex-column justify-content-between mb-3">
+        <div class="p-2 order-2">
+            {#each data.product.photos as photo}
+                    <Input type="text" bind:value={photo.src} id="input-pic-{photo.id}" label="Pic n°{photo.id}" labelAlign='horizontal'/>
+            {/each}</div>
+        <div class="order-1">
+            <div class="container w-50 mt-2">
+                <InfoPanelHeader text="Preview"/>
+                <Carousel id="carousel-product" pics={data.product.photos} />
+            </div>
+        </div>
     </div>
 
 </InfoPanelAdmin>

@@ -2,7 +2,6 @@
     import Modal from '../../../lib/component/Modal.svelte';
     import Table from '../../../lib/component/Table.svelte';
     import Tr from '../../../lib/component/Tr.svelte';
-    // import {detail} from '../../../lib/js/tableutils.js';
     import env from '../../../lib/store/env.js';
     import {notifier} from '@beyonk/svelte-notifications';
     import { goto } from '$app/navigation';
@@ -24,8 +23,11 @@
             }
         })
         .then(() => {
-            notifier.success('Deleted successfully')
-            goto('/admin')
+            const indexOfObject = data.products.findIndex(object => {
+                return object._id === id;
+            });
+            data.products = data.products.splice(indexOfObject, 1);
+            notifier.success('Product deleted successfully')
         })
         .catch(err => notifier.danger(err.message))
 

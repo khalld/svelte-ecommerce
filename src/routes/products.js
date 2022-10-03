@@ -44,9 +44,9 @@ router.post('', async (req, res) => {
                 throw new Error('Product code already used')
         });
         
-        const product = new Product(req.body)
+        var product = new Product(req.body)
         
-        // await product.save()
+        await product.save()
         res.send(product);
     } catch (err) {
         if (err.message === 'Product code already used'){

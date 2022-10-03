@@ -31,9 +31,6 @@
             <div class="col-3">
                 <button class="btn btn-success btn" on:click>Confirm</button>
             </div>
-            <div class="col-3">
-                <button class="btn btn-warning btn" on:click={() => goNew()}>Create new</button>
-            </div>
         </div>
     </div>
 
