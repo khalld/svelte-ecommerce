@@ -13,7 +13,6 @@ const userSchema = new Schema({
         region: String,
         zip: Number,
     },
-    orders: Array,  // array dei soli id? forse può essere anche eliminato
     token: String,
     role: String,
     enabled: Boolean
