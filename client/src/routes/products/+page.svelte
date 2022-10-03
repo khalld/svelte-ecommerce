@@ -59,7 +59,7 @@
 		})
 	}
 
-	$: console.log("res",results, results.length)
+	// $: console.log("res",results, results.length)
 
 </script>
 
