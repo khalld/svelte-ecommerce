@@ -32,8 +32,7 @@
 				name: p.name,
 				code: p.code,
 				quantity: 1,
-				price: calculateVat(p.price, p.vat),
-				maxQuantity: p.quantity
+				price: p.price
 			});
 		}
 

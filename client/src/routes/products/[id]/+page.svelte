@@ -34,8 +34,7 @@
 				name: data.product.name,
 				code: data.product.code,
 				quantity: 1,
-				price: data.product.price,
-				maxQuantity: data.product.quantity
+				price: data.product.price
 			});
 		}
 
@@ -57,12 +56,20 @@
 
     <div class="mb-3 mt-2 row">
         <div class="col-3">
-            <Input id="quantity" label="Available quantity" bind:value={data.product.quantity} type="number" readonly/>
+			{#if data.product.quantity <= 0}
+            	<Input id="quantity" label="Available quantity" value="0" type="number" disabled/>
+
+			{:else}
+            	<Input id="quantity" label="Available quantity" bind:value={data.product.quantity} type="number" readonly/>
+			{/if}
         </div>
         <div class="col-3">
             <Input id="totalprice" label="Total" bind:value={totPrice} type="number" readonly />
         </div>
     </div>
-    <button class="btn btn-primary mt-2" on:click={() => addToCart()}>Add to cart</button>
-
+	{#if data.product.quantity <= 0}
+    	<button class="btn btn-primary mt-2" disabled>Add to cart</button>
+	{:else}
+    	<button class="btn btn-primary mt-2" on:click={() => addToCart()}>Add to cart</button>
+	{/if}
 </InfoPanel>

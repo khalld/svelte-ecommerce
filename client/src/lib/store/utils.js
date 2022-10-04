@@ -273,10 +273,5 @@ export default {
         "Zambia",
         "Zimbabwe",
         "Åland Islands"
-    ],
-    shipping: {
-        text: "Shipment",
-        amount: 6.99,
-        description: "Custom description"
-    }
+    ]
 }

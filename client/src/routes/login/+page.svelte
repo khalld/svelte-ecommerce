@@ -6,7 +6,7 @@
 
   let user = {
     email: 'admin@email.it',
-    password: 'password01'
+    password: 'password02'
   }
 
   export let error = null;

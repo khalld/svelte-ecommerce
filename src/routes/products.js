@@ -13,10 +13,65 @@ router.get('', async (req, res) => {
     }
 })
 
+// Return only available products
+router.get('/enabled', async (req, res) => {
+    try {
+        const users = await Product.find({enabled: true})
+        res.send(users)
+    } catch (err) {
+        res.status(400)
+        res.send({message: err.message, type: 'error'})
+    }
+})
+
 // Get specific element
 router.get('/:id', async (req, res) => {
     try {
         const product = await Product.findOne({_id: req.params.id})
+
+        if (product === null){
+            throw new Error(`Not found`)
+        }
+
+        res.send(product)
+    } catch (err) {
+        if (err.message === 'Not found'){
+            res.status(404)
+        } else {
+            res.status(400)
+        }
+        res.send({message: err.message, type: 'error'})
+    }
+
+})
+
+
+// Dopo un'ordine è necessario aggiornare la quantità dei prodotti
+router.post('/updatequantity/:id', async (req, res) => {
+    try {
+        var product = await Product.findOne({_id: req.params.id})
+
+        if (product === null){
+            throw new Error(`Not found`)
+        }
+        product.quantity -= req.body.quantity
+        await product.save()
+        res.send({message: 'Quantity updated', type: 'info'})
+    } catch (err) {
+        if (err.message === 'Not found'){
+            res.status(404)
+        } else {
+            res.status(400)
+        }
+        res.send({message: err.message, type: 'error'})
+    }
+})
+
+
+// Get detail of specific element
+router.get('/enabled/:id', async (req, res) => {
+    try {
+        const product = await Product.findOne({_id: req.params.id, enabled: true})
 
         if (product === null){
             throw new Error(`Not found`)

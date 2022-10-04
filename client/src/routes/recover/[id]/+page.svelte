@@ -6,8 +6,8 @@
     import { goto } from '$app/navigation';
 
     let user = {
-        password: "password01",
-        passwordConf: "password01"
+        password: "password02",
+        passwordConf: "password02"
     }
 
     let error = null;

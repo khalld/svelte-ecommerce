@@ -5,8 +5,19 @@
     import InfoPanel from '../../../../../lib/component/InfoPanel.svelte';
     import Select from '../../../../../lib/component/Select.svelte';
     import InfoPanelHeader from '../../../../../lib/component/InfoPanelHeader.svelte';
+  import { onMount } from 'svelte';
     
     export let data;
+
+    let isNewOrder = data.order.status === "PENDING" ? true : false;
+
+    // onMount(async() => {
+    //     isNewOrder = data.order.status === "PENDING" ? true : false
+    // })
+
+    $: console.log(isNewOrder)
+
+    // $: console.log(initialStatus)
 
     async function submit() {
         await fetch(`${env.host}/orders/${data.order._id}`, {
@@ -25,6 +36,35 @@
             notifier.success('Info submitted successfully')
         })
         .catch(err => notifier.danger(err.message))
+
+
+        if (isNewOrder && data.order.status === "SHIPPED"){
+            console.log(data.order.products)
+
+            data.order.products.forEach(async element => {
+                await fetch(`${env.host}/products/updatequantity/${element._id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({quantity: element.quantity})
+                })
+                .then(res => {
+                    if (res.status == 400 || res.status == 404){
+                        throw new Error('Something wrong happened')
+                    }
+                })
+                .then(() => {
+                    notifier.success(`Quantity of ${element.code} updated successfully`)
+                })
+                .catch(err => notifier.danger(err.message))
+            });
+        }
+
+
+
+
+        // TODO: dopo aver passato SHIPPED gestisci la quantità di oggetti nel warehouse
 
     }
 

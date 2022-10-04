@@ -22,11 +22,15 @@
       <div class="card-footer d-flex justify-content-between align-items-center">
         <div class="btn-group">
           <button class="btn btn-success" on:click={() => goto(`/products/${p._id}`)}>Detail</button>
-          <button class="btn btn-warning" on:click={() => addToCart(p._id)} >Add to cart</button>
+          {#if p.quantity <= 0}
+            <button class="btn btn-warning" disabled>Add to cart</button>
+          {:else}
+            <button class="btn btn-warning" on:click={() => addToCart(p._id)} >Add to cart</button>
+          {/if}
         </div>
-        {#if p.quantity === 0}
+        {#if p.quantity <= 0}
           <span class="badge bg-danger rounded-pill">On stock</span>
-        {:else if p.quantity < 20}
+        {:else if p.quantity < 5}
           <span class="badge bg-warning rounded-pill">Only {p.quantity} left</span>
         {/if}
 

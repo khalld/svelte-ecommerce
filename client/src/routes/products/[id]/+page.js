@@ -7,7 +7,7 @@ export async function load({ url, event }) {
     const id = url.pathname.split("/")[url.pathname.split("/").length - 1]
     var product = {};
 
-    await fetch(`${env.host}/products/${id}`)
+    await fetch(`${env.host}/products/enabled/${id}`)
     .then(res => {
         if (res.status == 400){
             throw new Error('Something wrong happened')
@@ -21,6 +21,10 @@ export async function load({ url, event }) {
         product = data;
     })
     .catch(err => console.log(err))
+
+    if (Object.keys(product).length === 0){
+        throw redirect(307, '/products')
+    }
 
     return {
         product: product

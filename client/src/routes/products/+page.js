@@ -3,7 +3,7 @@ import env from '../../lib/store/env.js'
 export async function load(event) {
     var products = [];
 
-    await fetch(`${env.host}/products`)
+    await fetch(`${env.host}/products/enabled`)
     .then(res => {
         if (res.status == 400){
             throw new Error('Something wrong happened')

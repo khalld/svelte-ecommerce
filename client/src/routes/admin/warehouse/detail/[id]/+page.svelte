@@ -61,12 +61,6 @@
         <div class="col-3">
             <Input id="price" label="Price" bind:value={data.product.price} type="number" />
         </div>
-        <div class="col-3">
-            <Input id="vat" label="VAT" bind:value={data.product.vat} type="number" />
-        </div>
-        <div class="col-3">
-            <Input id="totalprice" label="Total" bind:value={totPrice} type="number" />
-        </div>
     </div>
 
     <div class="d-flex flex-column justify-content-between mb-3">

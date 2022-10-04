@@ -34,16 +34,12 @@
       currentCart = cart.products;
     });
 
-    if (product.maxQuantity >= product.quantity+1) {
-      // filtro l'array di oggetti ed aumento di 1 la quantità del prodotto selezionato
-      currentCart.forEach(element => {
-        if (element._id === id){
-          element.quantity = element.quantity + 1;
-        }
-      });
-    } else {
-      notifier.warning('E che sei pazzo?? su chiò assai di cheddi ca avimu!!')
-    }
+    // filtro l'array di oggetti ed aumento di 1 la quantità del prodotto selezionato
+    currentCart.forEach(element => {
+      if (element._id === id){
+        element.quantity = element.quantity + 1;
+      }
+    });
 
     currentCart.forEach((element) => {
       // aggiorno l'amount totale dei prodotti

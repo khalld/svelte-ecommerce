@@ -17,7 +17,6 @@
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut lobortis velit, volutpat porta ante. Vestibulum neque mauris, efficitur in dapibus eget, semper et elit",
         quantity: 100,
         price: 10.89,
-        vat: 21,
         category: [],
         photos: [
             {
@@ -45,9 +44,9 @@
     };
 
     
-    let totPrice = 0.0;
+    //let totPrice = 0.0;
 
-    $: totPrice = calculateVat(product.price, product.vat)
+    //$: totPrice = calculateVat(product.price, product.vat)
 
     async function submit() {
 
@@ -106,12 +105,7 @@
         <div class="col-3">
             <Input id="price" label="Price" bind:value={product.price} type="number" />
         </div>
-        <div class="col-3">
-            <Input id="vat" label="VAT" bind:value={product.vat} type="number" />
-        </div>
-        <div class="col-3">
-            <Input id="totalprice" label="Total" bind:value={totPrice} type="number" />
-        </div>
+        <!-- TODO: Aggiungi 'simulatore del prezzo' -->
     </div>
 
     {#each product.photos as photo}

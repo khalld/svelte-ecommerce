@@ -9,16 +9,6 @@
   import Select from "../../lib/component/Select.svelte";
   export let data;
   
-  // TODO: sostiuisci con fetch ?
-  // const promoCodes = [{
-  //   code: "WELCOME10",
-  //   amount: 0.20,
-  //   startAt: null,
-  //   startAt: null
-  // }]
-
-  // TODO: se l'utente non è registrato customerId sarà nullo!
-
 	onMount(async () => {
     let nElem = 0;
     let amount = 0;
@@ -29,39 +19,95 @@
 
     data.order.products.forEach((element) => {
       // aggiorno l'amount totale dei prodotti, il prodotto con VAT è già calcolato nello store
-      console.log(element.price)
-      amount += (element.price * element.quantity)
-      nElem += element.quantity
+      amount += element.price * element.quantity;
+      nElem += element.quantity;
       // aggiorno il numero di elementi da visualizzare nel tooltip
     })
-
+    
     amount = amount.toFixed(2)
-
-    console.log(amount)
 
     cartStore.set({products: data.order.products, amount: amount, n_elem: nElem})
 
 	});
 
   async function sendOrder() {
-    await fetch(`${env.host}/orders`, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(data.order)
-    }).then(res => {
-      if (res.status == 400){
-        throw new Error('Something wrong happened')
+    // TODO: controlla che la quantità dei prodotti che hai sia disponibile! Altrimenti rimanda un errore 
+    try {
+
+      var mandatoryFields = data.order;
+      
+      // delete mandatoryFields.tracking
+      // delete mandatoryFields.sales
+      delete mandatoryFields.notes
+      delete mandatoryFields.customer._id
+      delete mandatoryFields.address.address2
+
+      Object.values(mandatoryFields.address).forEach((element, index, array) => {
+        if (element === null || element.length === 0) {
+          throw new Error('Please insert all information required for address');
+        } 
+      })
+
+      Object.values(mandatoryFields.customer).forEach((element, index, array) => {
+        if (element === null || element.length === 0) {
+          throw new Error('Please insert all information for user');
+        } 
+      })
+
+      if (data.order.products.length === 0){
+        throw new Error('How do you want to order witouth products?')
       }
-      return res.json();
-    })
-    .then(() => {
-      notifier.success('Order submitted successfully!')
-      cartStore.set({products: [], amount: 0.0, n_elem: 0})
-      // TODO: rimanda al dettaglio dell'ordine (?)
-    })
-    .catch(err => notifier.danger(err.message))
+
+      var products = []
+
+      await fetch(`${env.host}/products/enabled`)
+      .then(res => {
+          if (res.status == 400){
+              throw new Error('No available products founded!')
+          }
+          return res.json();
+      })
+      .then(data => {
+          products = data;
+      })
+      .catch(err => console.log(err))
+
+      console.log(products)
+
+      data.order.products.forEach((element) => {
+        const indexOfObject = products.findIndex(object => {
+          return object._id === element._id;
+        });
+
+        if (products[indexOfObject].quantity < element.quantity){
+          throw new Error(`max available quantity of ${element.name} : ${products[indexOfObject].quantity}`)
+        }
+
+      })
+
+      await fetch(`${env.host}/orders`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data.order)
+      }).then(res => {
+        if (res.status == 400){
+          throw new Error('Something wrong happened')
+        }
+        return res.json();
+      })
+      .then(() => {
+        notifier.success('Order submitted successfully!')
+        cartStore.set({products: [], amount: 0.0, n_elem: 0})
+        // TODO: rimanda al dettaglio dell'ordine (?)
+      })
+      .catch(err => notifier.danger(err.message))
+
+    } catch (e) {
+      notifier.danger(e.message)
+    }
+
   }
 </script>
 
