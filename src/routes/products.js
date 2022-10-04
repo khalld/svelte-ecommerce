@@ -126,6 +126,7 @@ router.post('/:id', async (req, res) => {
         product.name = req.body.name;
         product.code = req.body.code;
         product.description = req.body.description;
+        product.longDescription = req.body.longDescription;
         product.price = req.body.price;
         product.vat = req.body.vat;
         product.category = req.body.category;

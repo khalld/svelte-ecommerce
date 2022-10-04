@@ -10,30 +10,45 @@
     import calculateVat from "../../../../../lib/js/utils";
 
     export let data;
-    let totPrice = 0.0;
-    console.log("data", data)
-    $: totPrice =  calculateVat(data.product.price, data.product.vat)
     
 	async function submit() {
-        await fetch(`${env.host}/products/${data.product._id}`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(data.product)
-        }).then(res => {
-            if (res.status == 400){
-                throw new Error('Something wrong happened')
-            }
-            if (res.status == 404){
-                throw new Error('Product not exist')
-            }
-            return res.json();
-        })
-        .then(() => {
-            notifier.success('Product edited')
-        })
-        .catch(err => notifier.danger(err.message))
+
+        try {
+            // FIXME:
+            let mandatory = data.product
+            delete mandatory.category,
+            delete mandatory.photos,
+
+            Object.values(mandatory).forEach((element, index, array) => {
+                if (element === null || element.length === 0) {
+                    throw new Error('All fields are mandatory!');
+                } 
+            })
+            
+            await fetch(`${env.host}/products/${data.product._id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(data.product)
+            }).then(res => {
+                if (res.status == 400){
+                    throw new Error('Something wrong happened')
+                }
+                if (res.status == 404){
+                    throw new Error('Product not exist')
+                }
+                return res.json();
+            })
+            .then(() => {
+                notifier.success('Product edited')
+            })
+            .catch(err => notifier.danger(err.message))
+            
+        } catch (e){
+            console.error(e)
+        }
+
 	}
 
 </script>
@@ -53,6 +68,8 @@
     <Checkbox id="enabled" bind:value={data.product.enabled} label="Enable" />
 
     <Input id="description" label="Description" bind:value={data.product.description} type="textarea" />
+
+    <Input id="long-description" label="Long description" bind:value={data.product.longDescription} type="textarea" />
 
     <div class="mb-3 mt-2 row">
         <div class="col-3">

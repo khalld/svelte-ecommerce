@@ -18,6 +18,14 @@
     async function submit() {
 
         try {
+
+            Object.values(user).forEach((element, index, array) => {
+                if (element === null || element.length === 0) {
+                    throw new Error('All fields are mandatory!');
+                } 
+            })
+            
+
             if(user.password.length < 8){
                 throw new Error('Password must be at least of 8 character!')
             }
@@ -46,7 +54,7 @@
             })
             .catch(err => error = err.message)
         } catch (e){
-            error = e;
+            error = e.message;
         }
     }
 

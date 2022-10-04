@@ -14,7 +14,8 @@
     let product = {
         name: "Product 1",
         code: "PD1" + Math.random(),
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut lobortis velit, volutpat porta ante. Vestibulum neque mauris, efficitur in dapibus eget, semper et elit",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+        longDescription: "Sed ut lobortis velit, volutpat porta ante. Vestibulum neque mauris, efficitur in dapibus eget, semper et elit",
         quantity: 100,
         price: 10.89,
         category: [],
@@ -49,37 +50,44 @@
     //$: totPrice = calculateVat(product.price, product.vat)
 
     async function submit() {
+        try {
+        
+            // FIXME:
+            let mandatory = product
+            delete mandatory.category,
+            delete mandatory.photos,
 
-        await fetch(`${env.host}/products/`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(product)
-        }).then(res => {
-            if (res.status == 400){
-                throw new Error('Something wrong happened!')
-            }
-            if (res.status == 409){
-                throw new Error('Product code already used!')
-            }
-            return res.json();
-        })
-        .then(() => {
-            notifier.success('New product added!')
-            goto('/admin/warehouse')
-        })
-        .catch(err => notifier.danger(err.message))
-	}
+            Object.values(mandatory).forEach((element, index, array) => {
+                if (element === null || element.length === 0) {
+                    throw new Error('All fields are mandatory!');
+                } 
+            })
+        
+            await fetch(`${env.host}/products/`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(product)
+            }).then(res => {
+                if (res.status == 400){
+                    throw new Error('Something wrong happened!')
+                }
+                if (res.status == 409){
+                    throw new Error('Product code already used!')
+                }
+                return res.json();
+            })
+            .then(() => {
+                notifier.success('New product added!')
+                goto('/admin/warehouse')
+            })
+            .catch(err => notifier.danger(err.message))
 
-    async function addImage(){
-
-        if (currentPhoto != null && currentPhoto.length > 0){
-            photosArray.push({ idx: photosArray.length +1, pic: currentPhoto})
-            currentPhoto = ''
+        } catch (e) {
+            console.error(e);
         }
-    }
-
+	}
 </script>
 
 <InfoPanelAdmin on:click={submit}>
@@ -97,6 +105,9 @@
     <Checkbox id="enabled" bind:value={product.enabled} label="Enable" />
 
     <Input id="description" label="Description" bind:value={product.description} type="textarea" />
+
+    <Input id="long-description" label="Long description" bind:value={product.longDescription} type="textarea" />
+
 
     <div class="mb-3 mt-2 row">
         <div class="col-3">

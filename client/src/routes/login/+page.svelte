@@ -12,38 +12,53 @@
   export let error = null;
 
   async function submitLogin() {
-    await fetch(`${env.host}/users/login`, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(user)
-    }).then(res => {
-      if (res.status == 400){
-        throw new Error('User not founded or password is not correct')
-      }
-      if (res.status == 401){
-        throw new Error('Wrong password')
-      }
-      if (res.status == 409){
-        throw new Error('User is disabled')
-      }
-      if (res.status == 404){
-        throw new Error('Something wrong happened')
-      }
-      return res.json();
-    })
-    .then(data => {
-      userStore.set({
-        loggedIn: true,
-        _id: data._id,
-        role: data.role
+
+
+    try {
+      Object.values(user).forEach((element, index, array) => {
+        if (element === null || element.length === 0) {
+          throw new Error('All fields are mandatory!');
+        } 
       })
-    })
-    .then(() => {
-      goto("/products");
-    })
-    .catch(err => error = err.message)
+      
+      await fetch(`${env.host}/users/login`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(user)
+      }).then(res => {
+        if (res.status == 400){
+          throw new Error('User not founded or password is not correct')
+        }
+        if (res.status == 401){
+          throw new Error('Wrong password')
+        }
+        if (res.status == 409){
+          throw new Error('User is disabled')
+        }
+        if (res.status == 404){
+          throw new Error('Something wrong happened')
+        }
+        return res.json();
+      })
+      .then(data => {
+        userStore.set({
+          loggedIn: true,
+          _id: data._id,
+          role: data.role
+        })
+      })
+      .then(() => {
+        goto("/products");
+      })
+      .catch(err => error = err.message)
+      
+    } catch (e){
+      error = e.message;
+    }
+
+
 
   }
 

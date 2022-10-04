@@ -31,7 +31,6 @@
 	});
 
   async function sendOrder() {
-    // TODO: controlla che la quantità dei prodotti che hai sia disponibile! Altrimenti rimanda un errore 
     try {
 
       var mandatoryFields = data.order;

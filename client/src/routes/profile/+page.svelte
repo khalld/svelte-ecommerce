@@ -18,7 +18,13 @@
     }
 
     async function updateProfile(){
+
         try {
+            Object.values(data.user).forEach((element, index, array) => {
+                if (element === null || element.length === 0) {
+                    throw new Error('All fields are mandatory!');
+                } 
+            })
 
             await fetch(`${env.host}/users/${get(userStore)._id}`, {
                 method: 'POST',
@@ -51,7 +57,12 @@
     
     async function changePwd(){
         try {
-
+            Object.values(pwd).forEach((element, index, array) => {
+                if (element === null || element.length === 0) {
+                    throw new Error('All fields are mandatory!');
+                } 
+            })
+            
             if (pwd.passwordConf != pwd.newPassword){
                 throw new Error("Passwords are not the same")
             }

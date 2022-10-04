@@ -12,29 +12,43 @@
     let info = null;
     
     async function submit() {
-        error = null;
-        info = null;
-        await fetch(`${env.host}/users/recoverpwd`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        }).then(res => {
-            if (res.status == 409){
-                throw new Error('User disabled. Contact us for more information')
-            } 
-            if (res.status == 404){
-                throw new Error('User not founded')
-            } 
-            if (res.status == 400){
-                throw new Error('Something wrong happened')
-            }
-            if (res.status == 202){
-                info = "Check your email to complete the process";
-            }
-        })
-        .catch(err => error = err.message)
+
+        try {
+            Object.values(user).forEach((element, index, array) => {
+                if (element === null || element.length === 0) {
+                    throw new Error('All fields are mandatory!');
+                } 
+            })
+            
+            error = null;
+            info = null;
+            
+            await fetch(`${env.host}/users/recoverpwd`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            }).then(res => {
+                if (res.status == 409){
+                    throw new Error('User disabled. Contact us for more information')
+                } 
+                if (res.status == 404){
+                    throw new Error('User not founded')
+                } 
+                if (res.status == 400){
+                    throw new Error('Something wrong happened')
+                }
+                if (res.status == 202){
+                    info = "Check your email to complete the process";
+                }
+            })
+            .catch(err => error = err.message)
+            
+        } catch (e) {
+            error = e.message
+        }
+
     }
 
 </script>

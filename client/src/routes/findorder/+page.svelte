@@ -8,10 +8,19 @@
 
   let code = null;
 
-  export let error = "we";
+  export let error;
 
   async function submit() {
-    goto(`findorder/${code}`)
+    try {
+
+      if (code === null || code.length === 0){
+        throw new Error('Field is mandatory!')
+      }
+
+      goto(`findorder/${code}`)
+    } catch (e){
+      error = e.message;
+    }
   }
 
 </script>
