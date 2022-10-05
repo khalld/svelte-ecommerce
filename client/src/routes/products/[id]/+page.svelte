@@ -1,14 +1,7 @@
 <script>
-
-    import Carousel from "../../../lib/component/Carousel.svelte";
-    import InfoPanel from "../../../lib/component/InfoPanel.svelte";
     import Input from "../../../lib/component/Input.svelte";
     import cartStore from '../../../lib/store/cartStore.js';
-	import calculateVat from "../../../lib/js/utils";
     export let data;
-
-    let totPrice = 0.0;
-    $: totPrice = calculateVat(data.product.price, data.product.vat)
 
     function addToCart () {
 		var currentCart = [];
@@ -51,25 +44,82 @@
 
 </script>
 
-<InfoPanel >
-    <Carousel id="carousel-product" pics={data.product.photos}/>
 
-    <div class="mb-3 mt-2 row">
-        <div class="col-3">
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12 col-lg-6 col-md-6">
+			<div class="pro-img-details">
+				<img src="{data.product.photos[0].src}" alt="detail-0">
+			</div>
+			<div class="pro-img-list p-2">
+			{#each data.product.photos as pic, idx}
+				<!-- <a href="#"> -->
+				<img src="{pic.src}" class="w-25 m-2" alt="detail-{idx}">
+				<!-- </a> -->
+			{/each}
+			</div>
+		</div>
+		<div class="col-sm-12 col-lg-6 col-md-6">
+			<h3 class="pro-d-title">
+				{data.product.name}
+			</h3>
+			<p>{data.product.longDescription}</p>
+			<div class="product_meta">
+				<span class="posted_in"> <strong>Categories:</strong> <a rel="tag" href="#">Jackets</a>, <a rel="tag" href="#">Men</a>, <a rel="tag" href="#">Shirts</a>, <a rel="tag" href="#">T-shirt</a>.</span>
+				<span class="tagged_as"><strong>Tags:</strong> <a rel="tag" href="#">mens</a>, <a rel="tag" href="#">womens</a>.</span>
+			</div>
+			<div class="m-bot15"> <strong>Price : </strong> <span > {data.product.price} €</span></div>
+			<div class="m-bot15"> <strong>Available quantity : </strong> 
+				{#if data.product.quantity <= 0}
+					<span> {data.product.price} €</span>
+				{:else}
+					<span>{data.product.price} €</span>
+				{/if}
+			</div>
 			{#if data.product.quantity <= 0}
-            	<Input id="quantity" label="Available quantity" value="0" type="number" disabled/>
-
+				<button class="btn btn-danger mt-2" disabled> <i class="fa fa-shopping-cart"></i> Add to cart</button>
 			{:else}
-            	<Input id="quantity" label="Available quantity" bind:value={data.product.quantity} type="number" readonly/>
+				<button class="btn btn-danger mt-2" on:click={() => addToCart()}> <i class="fa fa-shopping-cart"></i>Add to cart</button>
 			{/if}
-        </div>
-        <div class="col-3">
-            <Input id="totalprice" label="Total" bind:value={totPrice} type="number" readonly />
-        </div>
-    </div>
-	{#if data.product.quantity <= 0}
-    	<button class="btn btn-primary mt-2" disabled>Add to cart</button>
-	{:else}
-    	<button class="btn btn-primary mt-2" on:click={() => addToCart()}>Add to cart</button>
-	{/if}
-</InfoPanel>
+		</div>
+	</div>
+</div>
+
+
+
+<style>
+	.pro-img-details {
+		margin-left: -15px;
+	}
+	
+	.pro-img-details img {
+		width: 100%;
+	}
+	
+	.pro-d-title {
+		font-size: 16px;
+		margin-top: 0;
+	}
+	
+	.product_meta {
+		border-top: 1px solid #eee;
+		border-bottom: 1px solid #eee;
+		padding: 10px 0;
+		margin: 15px 0;
+	}
+	
+	.product_meta span {
+		display: block;
+		margin-bottom: 10px;
+	}
+	.product_meta a, .pro-price{
+		color:#fc5959 ;
+	}
+	
+	.pro-img-list {
+		margin: 10px 0 0 -15px;
+		width: 100%;
+		display: inline-block;
+	}
+	
+</style>
