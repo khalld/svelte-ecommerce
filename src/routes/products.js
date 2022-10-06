@@ -4,9 +4,22 @@ const Product = require('../db/models/product.js');
 
 // Get list all elements
 router.get('', async (req, res) => {
+
+    const { page = 1, limit = 10 } = req.query;
+
     try {
-        const users = await Product.find()
-        res.send(users)
+        const products = await Product.find()
+            .limit(limit * 1)
+            .skip((page - 1) * limit)
+            .exec();
+
+        const count = await Product.countDocuments();
+
+        res.send({
+            products,
+            totalPages: Math.ceil(count / limit),
+            currentPage: page
+        })
     } catch (err) {
         res.status(400)
         res.send({message: err.message, type: 'error'})
@@ -15,9 +28,23 @@ router.get('', async (req, res) => {
 
 // Return only available products
 router.get('/enabled', async (req, res) => {
+
+    console.log(req.query)
+
+    const { page = 1, limit = 10 } = req.query;
     try {
-        const users = await Product.find({enabled: true})
-        res.send(users)
+        const products = await Product.find({enabled: true})
+            .limit(limit * 1)
+            .skip((page - 1) * limit)
+            .exec();
+
+        const count = products.length;
+
+        res.send({
+            products,
+            totalPages: Math.ceil(count / limit),
+            currentPage: page
+        })
     } catch (err) {
         res.status(400)
         res.send({message: err.message, type: 'error'})
@@ -128,7 +155,6 @@ router.post('/:id', async (req, res) => {
         product.description = req.body.description;
         product.longDescription = req.body.longDescription;
         product.price = req.body.price;
-        product.vat = req.body.vat;
         product.category = req.body.category;
         product.photos = req.body.photos;
         product.quantity = req.body.quantity;

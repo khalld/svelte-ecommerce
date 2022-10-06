@@ -14,16 +14,13 @@
 	async function submit() {
 
         try {
-            // FIXME:
-            let mandatory = data.product
-            delete mandatory.category,
-            delete mandatory.photos,
+            // FIXME: aggiungi filtro per .png o .jpeg
 
-            Object.values(mandatory).forEach((element, index, array) => {
-                if (element === null || element.length === 0) {
-                    throw new Error('All fields are mandatory!');
-                } 
-            })
+            // Object.values(data.product).forEach((element, index, array) => {
+            //     if (element === null || element.length === 0) {
+            //         throw new Error('All fields are mandatory!');
+            //     } 
+            // })
             
             await fetch(`${env.host}/products/${data.product._id}`, {
                 method: 'POST',
@@ -82,15 +79,17 @@
 
     <div class="d-flex flex-column justify-content-between mb-3">
         <div class="p-2 order-2">
-            {#each data.product.photos as photo}
-                    <Input type="text" bind:value={photo.src} id="input-pic-{photo.id}" label="Pic n°{photo.id}" labelAlign='horizontal'/>
-            {/each}</div>
-        <div class="order-1">
-            <div class="container w-50 mt-2">
-                <InfoPanelHeader text="Preview"/>
-                <Carousel id="carousel-product" pics={data.product.photos} />
-            </div>
-        </div>
+            <Input type="text" bind:value={data.product.photos[0].src} id="input-pic-{data.product.photos[0].id}" label="Pic n°{data.product.photos[0].id}"/>
+            <Input type="text" bind:value={data.product.photos[1].src} id="input-pic-{data.product.photos[1].id}" label="Pic n°{data.product.photos[1].id}"/>
+            <Input type="text" bind:value={data.product.photos[2].src} id="input-pic-{data.product.photos[2].id}" label="Pic n°{data.product.photos[2].id}"/>
+            <Input type="text" bind:value={data.product.photos[3].src} id="input-pic-{data.product.photos[3].id}" label="Pic n°{data.product.photos[3].id}"/>
+            <Input type="text" bind:value={data.product.photos[4].src} id="input-pic-{data.product.photos[4].id}" label="Pic n°{data.product.photos[4].id}"/>
+    
+            <img src={data.product.photos[0].src} class="rounded mx-auto d-block w-25" alt="pic-n-{data.product.photos[0].id}" >
+            <img src={data.product.photos[1].src} class="rounded mx-auto d-block w-25" alt="pic-n-{data.product.photos[1].id}" >
+            <img src={data.product.photos[2].src} class="rounded mx-auto d-block w-25" alt="pic-n-{data.product.photos[2].id}" >
+            <img src={data.product.photos[3].src} class="rounded mx-auto d-block w-25" alt="pic-n-{data.product.photos[3].id}" >
+            <img src={data.product.photos[4].src} class="rounded mx-auto d-block w-25" alt="pic-n-{data.product.photos[4].i4}" >
     </div>
 
 </InfoPanelAdmin>

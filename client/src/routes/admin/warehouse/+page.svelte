@@ -23,10 +23,11 @@
             }
         })
         .then(() => {
-            const indexOfObject = data.products.findIndex(object => {
-                return object._id === id;
-            });
-            data.products = data.products.splice(indexOfObject, 1);
+            // TODO: Sistemare!
+            // const indexOfObject = data.products.products.findIndex(object => {
+            //     return object._id === id;
+            // });
+            // data.products.products = data.products.products.splice(indexOfObject, 1);
             notifier.success('Product deleted successfully')
         })
         .catch(err => notifier.danger(err.message))
@@ -44,12 +45,12 @@
 </div>
 
 <Table headers={['Name', 'Description', 'Quantity', '#']}>
-    {#if data.products.length == 0}
+    {#if data.products.products.length == 0}
         <div class="spinner-border mt-2">
             <span class="visually-hidden">Loading...</span>
         </div>
     {:else}
-        {#each data.products as p}
+        {#each data.products.products as p}
             <Tr>
                 <td>{p.name}</td>
                 <td>{p.description}</td>

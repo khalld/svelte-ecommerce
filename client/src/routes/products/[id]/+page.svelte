@@ -1,7 +1,10 @@
 <script>
     import Input from "../../../lib/component/Input.svelte";
     import cartStore from '../../../lib/store/cartStore.js';
+
     export let data;
+
+	let focusImg = data.product.photos[0].src;
 
     function addToCart () {
 		var currentCart = [];
@@ -9,8 +12,6 @@
 		cartStore.subscribe((cart) => {
 			currentCart = cart.products;
 		});
-
-        console.log(data.product)
 
 		let filteredCart = currentCart.filter(o => o._id === data.product._id)
 
@@ -49,12 +50,12 @@
 	<div class="row">
 		<div class="col-sm-12 col-lg-6 col-md-6">
 			<div class="pro-img-details">
-				<img src="{data.product.photos[0].src}" alt="detail-0">
+				<img src={focusImg} alt="detail-0">
 			</div>
 			<div class="pro-img-list p-2">
 			{#each data.product.photos as pic, idx}
 				<!-- <a href="#"> -->
-				<img src="{pic.src}" class="w-25 m-2" alt="detail-{idx}">
+				<img src="{pic.src}" class="w-25 m-2 tb-sel" alt="detail-{idx}" on:click={() => focusImg = pic.src}>
 				<!-- </a> -->
 			{/each}
 			</div>

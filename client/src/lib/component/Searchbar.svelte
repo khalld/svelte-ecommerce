@@ -20,7 +20,7 @@
 
 </script>
 
-<div class="input-group flex-nowrap">
+<div class="input-group flex-nowrap mb-5">
     <span class="input-group-text" id="addon-wrapping"><i class="fas fa-search"></i></span>
     <input type="text" class="form-control" placeholder={placeholder} aria-describedby="addon-wrapping"
         bind:value

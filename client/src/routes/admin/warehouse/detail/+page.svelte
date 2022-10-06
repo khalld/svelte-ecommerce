@@ -1,15 +1,11 @@
 <script>
     import InfoPanelAdmin from "../../../../lib/component/InfoPanelAdmin.svelte";
     import InfoPanelHeader from "../../../../lib/component/InfoPanelHeader.svelte";
-    import InputFile from "../../../../lib/component/InputFile.svelte";
-    import Hint from "../../../../lib/component/Hint.svelte";
-
     import Input from "../../../../lib/component/Input.svelte";
     import Checkbox from "../../../../lib/component/Checkbox.svelte";
     import env from "../../../../lib/store/env.js";
     import { goto } from '$app/navigation';    
     import { notifier } from '@beyonk/svelte-notifications';
-    import calculateVat from '../../../../lib/js/utils.js';
 
     let product = {
         name: "Product 1",
@@ -44,6 +40,7 @@
         enabled: false
     };
 
+    $: console.log(product.photos)
     
     //let totPrice = 0.0;
 
@@ -51,17 +48,8 @@
 
     async function submit() {
         try {
-        
-            // FIXME:
-            let mandatory = product
-            delete mandatory.category,
-            delete mandatory.photos,
 
-            Object.values(mandatory).forEach((element, index, array) => {
-                if (element === null || element.length === 0) {
-                    throw new Error('All fields are mandatory!');
-                } 
-            })
+            console.log(product)
         
             await fetch(`${env.host}/products/`, {
                 method: 'POST',
@@ -118,16 +106,16 @@
         </div>
         <!-- TODO: Aggiungi 'simulatore del prezzo' -->
     </div>
+    <img src={product.photos[0].src} class="rounded mx-auto d-block w-25" alt="pic-n-{product.photos[0].id}" >
+    <img src={product.photos[1].src} class="rounded mx-auto d-block w-25" alt="pic-n-{product.photos[1].id}" >
+    <img src={product.photos[2].src} class="rounded mx-auto d-block w-25" alt="pic-n-{product.photos[2].id}" >
+    <img src={product.photos[3].src} class="rounded mx-auto d-block w-25" alt="pic-n-{product.photos[3].id}" >
+    <img src={product.photos[4].src} class="rounded mx-auto d-block w-25" alt="pic-n-{product.photos[4].i4}" >
 
-    {#each product.photos as photo}
-        <div class="col-6">
-            <Input type="text" bind:value={photo.src} id="input-pic-{photo.id}" label="Pic n°{photo.id}"/>
-        </div>
-        {#if photo.src.length > 0}
-        <div class="col-6">
-            <img src={photo.src} class="rounded mx-auto d-block w-25" alt="pic-n-{photo.id}" >
-        </div>
-        {/if}
-    {/each}
+    <Input type="text" bind:value={product.photos[0].src} id="input-pic-{product.photos[0].id}" label="Pic n°{product.photos[0].id}"/>
+    <Input type="text" bind:value={product.photos[1].src} id="input-pic-{product.photos[1].id}" label="Pic n°{product.photos[1].id}"/>
+    <Input type="text" bind:value={product.photos[2].src} id="input-pic-{product.photos[2].id}" label="Pic n°{product.photos[2].id}"/>
+    <Input type="text" bind:value={product.photos[3].src} id="input-pic-{product.photos[3].id}" label="Pic n°{product.photos[3].id}"/>
+    <Input type="text" bind:value={product.photos[4].src} id="input-pic-{product.photos[4].id}" label="Pic n°{product.photos[4].id}"/>
 
 </InfoPanelAdmin>
