@@ -4,7 +4,7 @@
 	import Searchbar from "../../lib/component/Searchbar.svelte";
 	import Hint from "../../lib/component/Hint.svelte";
 	import env from "../../lib/store/env.js";
-  import Pagenavigation from "../../lib/component/PageNavigation.svelte";
+	import Pagenavigation from "../../lib/component/PageNavigation.svelte";
 
 	export let data;
 	let searchbar = "";

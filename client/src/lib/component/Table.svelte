@@ -3,7 +3,7 @@
 </script>
 
 <div class="table-responsive mt-2">
-    <table class="table table-striped table-sm">
+    <table class="table project-table table-centered table-nowrap">
         <thead>
             <tr>
                 {#each headers as h }

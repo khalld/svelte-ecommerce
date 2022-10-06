@@ -59,7 +59,7 @@
 
       var products = []
 
-      await fetch(`${env.host}/products/enabled`)
+      await fetch(`${env.host}/products/enabled?page=0&limit=0`) // returns list of all products
       .then(res => {
           if (res.status == 400){
               throw new Error('No available products founded!')
@@ -67,11 +67,9 @@
           return res.json();
       })
       .then(data => {
-          products = data;
+          products = data.products; // NB: fetcha con pages
       })
       .catch(err => console.log(err))
-
-      console.log(products)
 
       data.order.products.forEach((element) => {
         const indexOfObject = products.findIndex(object => {

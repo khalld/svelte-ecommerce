@@ -29,14 +29,19 @@ router.get('', async (req, res) => {
 // Return only available products
 router.get('/enabled', async (req, res) => {
 
-    console.log(req.query)
-
     const { page = 1, limit = 10 } = req.query;
     try {
-        const products = await Product.find({enabled: true})
-            .limit(limit * 1)
-            .skip((page - 1) * limit)
-            .exec();
+        var products;
+
+        if (page == 0 && limit == 0){
+            products = await Product.find({enabled: true})
+        } else {
+            products = await Product.find({enabled: true})
+                .limit(limit * 1)
+                .skip((page - 1) * limit)
+                .exec();
+        }
+
 
         const count = products.length;
 

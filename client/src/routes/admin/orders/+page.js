@@ -12,7 +12,7 @@ export async function load(event) {
 
     var orders = [];
 
-    await fetch(`${env.host}/orders`)
+    await fetch(`${env.host}/orders?page=1&limit=10`)
     .then(res => {
         if (res.status == 404){
             throw new Error('Something wrong happened')
@@ -23,7 +23,6 @@ export async function load(event) {
         orders = data;
     })
     .catch(err => console.log(err))
-
 
     return {
         orders: orders
