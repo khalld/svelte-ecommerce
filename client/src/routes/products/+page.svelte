@@ -85,11 +85,12 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-sm-4 col-md-3">
+		<!-- TODO: all this line commented needs to be all uncommented them all at once
+			and are going to be enabled in v2 -->
+		<!-- <div class="col-sm-4 col-md-3"> -->
 			<Searchbar placeholder="Filter over available products" bind:value={searchbar} bind:isSearching={isSearch}/>
 			
-			<!-- TODO: aggiungi filters -->
-			<h3>Price</h3>
+			<!-- <h3>Price</h3>
 			
 			<div class="form-check">
 				<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
@@ -110,7 +111,6 @@
 				</label>
 			</div>
 
-			<!-- TODO: aggiungi filters -->
 			<h3>Other filters</h3>
 
 			<div class="form-check">
@@ -125,17 +125,17 @@
 				Disabled checkbox
 				</label>
 			</div>
-		</div>
+		</div> -->
 
-		<div class="col-sm-8 col-md-9">
+		<!-- <div class="col-sm-8 col-md-9"> -->
 
-			<ul class="shop__sorting">
+			<!-- <ul class="shop__sorting">
 				<li class="active"><a href="#">Popular</a></li>
 				<li><a href="#">Newest</a></li>
 				<li><a href="#">Bestselling</a></li>
 				<li><a href="#">Price (low)</a></li>
 				<li><a href="#">Price (high)</a></li>
-			</ul>
+			</ul> -->
 
 			<div class="row">
 				{#if isSearch}
@@ -177,11 +177,12 @@
 				</div>
 			</div>
 
-		</div>
+		<!-- </div> -->
 	</div> 
 </div>
 
-<style>
+<!-- TODO: uncomment in v2 -->
+<!-- <style>
 	
 	.shop__sorting {
 	list-style: none;
@@ -230,4 +231,4 @@
 			font-weight: 600;
 		}
 	}
-</style>
+</style> -->

@@ -71,15 +71,15 @@ router.get('/code/:code', async (req, res) => {
 
 // Get all orders from by
 router.get('/user/:id', async (req, res) => {
-    try {
+    const { page = 1, limit = 10 } = req.query;
 
+    try {
         const orders = await Order.find({'customer._id': req.params.id} )
             .limit(limit * 1)
             .skip((page - 1) * limit)
             .exec();
 
         const count = orders.length;
-
 
         if (orders === null){
             throw new Error(`Not found`)

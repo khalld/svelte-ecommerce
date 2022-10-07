@@ -33,26 +33,6 @@
   async function sendOrder() {
     try {
 
-      var mandatoryFields = data.order;
-      
-      // delete mandatoryFields.tracking
-      // delete mandatoryFields.sales
-      delete mandatoryFields.notes
-      delete mandatoryFields.customer._id
-      delete mandatoryFields.address.address2
-
-      Object.values(mandatoryFields.address).forEach((element, index, array) => {
-        if (element === null || element.length === 0) {
-          throw new Error('Please insert all information required for address');
-        } 
-      })
-
-      Object.values(mandatoryFields.customer).forEach((element, index, array) => {
-        if (element === null || element.length === 0) {
-          throw new Error('Please insert all information for user');
-        } 
-      })
-
       if (data.order.products.length === 0){
         throw new Error('How do you want to order witouth products?')
       }
@@ -61,13 +41,13 @@
 
       await fetch(`${env.host}/products/enabled?page=0&limit=0`) // returns list of all products
       .then(res => {
-          if (res.status == 400){
-              throw new Error('No available products founded!')
-          }
-          return res.json();
+        if (res.status == 400){
+          throw new Error('No available products founded!')
+        }
+        return res.json();
       })
       .then(data => {
-          products = data.products; // NB: fetcha con pages
+        products = data.products;
       })
       .catch(err => console.log(err))
 
@@ -127,6 +107,7 @@
             <CheckoutProduct product={elem} /> 
           {/each}
 
+          <!-- TODO: to enable in v2 -->
           <!-- {#if promoCodes.length > 0}
             {#each promoCodes as promo, idx}
               <li class="list-group-item d-flex justify-content-between bg-light">
@@ -147,6 +128,7 @@
         </ul>
       {/if}
 
+      <!-- TODO: to enable in v2 -->
       <!-- <form class="card p-2">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Promo code" readonly>
@@ -201,6 +183,7 @@
 
         <hr class="my-4">
 
+        <!-- TODO: to enable -->
         <!-- <div class="form-check">
           <input type="checkbox" class="form-check-input" id="same-address">
           <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>

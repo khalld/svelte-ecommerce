@@ -8,7 +8,8 @@
     import { notifier } from "@beyonk/svelte-notifications";
     import userStore from "../../lib/store/userStore";
     import {get} from 'svelte/store';
-
+    import OrderList from "../../lib/component/OrderList.svelte";
+    import OrderElement from "../../lib/component/OrderElement.svelte";
     export let data;
     let error;
     let pwd = {
@@ -18,13 +19,7 @@
     }
 
     async function updateProfile(){
-
         try {
-            Object.values(data.user).forEach((element, index, array) => {
-                if (element === null || element.length === 0) {
-                    throw new Error('All fields are mandatory!');
-                } 
-            })
 
             await fetch(`${env.host}/users/${get(userStore)._id}`, {
                 method: 'POST',
@@ -119,7 +114,7 @@
             <button class="nav-link" id="pwd-tab" data-bs-toggle="tab" data-bs-target="#pwd-tab-pane" type="button" role="tab" aria-controls="pwd-tab-pane" aria-selected="false">Contact</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="myorder-tab" data-bs-toggle="tab" data-bs-target="#myorder-tab-pane" type="button" role="tab" aria-controls="myorder-tab-pane" aria-selected="false" disabled>Disabled</button>
+            <button class="nav-link" id="myorder-tab" data-bs-toggle="tab" data-bs-target="#myorder-tab-pane" type="button" role="tab" aria-controls="myorder-tab-pane" aria-selected="false">My orders</button>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -158,24 +153,33 @@
         </div>
         <div class="tab-pane fade" id="pwd-tab-pane" role="tabpanel" aria-labelledby="pwd-tab" tabindex="0">
             
-            <InfoPanel title="Change password">
-                <form on:submit|preventDefault={changePwd}>
-                    <div class="col-12">
-                        <Input id="password" label="Old password" bind:value={pwd.oldPassword} placeholder="Please insert your old password" type="password"/>
-                    </div>
-                    <div class="col-12">
-                        <Input id="password" label="New Password" bind:value={pwd.newPassword} placeholder="Please insert your new password" type="password"/>
-                    </div>
-                    <div class="col-12">
-                        <Input id="password-conf" label="Confirm password" bind:value={pwd.passwordConf} placeholder="Please confirm your new password" type="password"/>
-                    </div>
-                    <button class="w-100 btn btn-primary btn-lg mt-2" type="submit">Change password</button>
-                </form>
-                <Hint str={error} />
-            </InfoPanel>
-
+            <form on:submit|preventDefault={changePwd}>
+                <div class="col-12">
+                    <Input id="password" label="Old password" bind:value={pwd.oldPassword} placeholder="Please insert your old password" type="password"/>
+                </div>
+                <div class="col-12">
+                    <Input id="password" label="New Password" bind:value={pwd.newPassword} placeholder="Please insert your new password" type="password"/>
+                </div>
+                <div class="col-12">
+                    <Input id="password-conf" label="Confirm password" bind:value={pwd.passwordConf} placeholder="Please confirm your new password" type="password"/>
+                </div>
+                <button class="w-100 btn btn-primary btn-lg mt-2" type="submit">Change password</button>
+            </form>
+            <Hint str={error} />
         </div>
-        <div class="tab-pane fade" id="myorder-tab-pane" role="tabpanel" aria-labelledby="myorder-tab" tabindex="0">...</div>
+        <div class="tab-pane fade mt-2" id="myorder-tab-pane" role="tabpanel" aria-labelledby="myorder-tab" tabindex="0">
+
+            {#if data.orders.orders.length === 0}
+                <Hint str="No order yet"/>
+            {:else}
+                <OrderList>
+                    {#each data.orders.orders as o}
+                        <OrderElement order={o} />
+                    {/each}
+                </OrderList>
+            {/if}
+        
+        </div>
     </div>
 </div>
 

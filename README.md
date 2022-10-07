@@ -62,3 +62,16 @@ Using <a href="https://cloud.mongodb.com/">MongoDb Cloud</a>
 #### Models
 
 ...
+
+#### Nice to have:
+- Send email for recover/registration/order api
+- i18
+- Codice sconto: può essere considerato come una costante (univoco o fetch).
+    - Inserire un panel per aggiungere i codici sconto dinamicamente
+    
+
+- Completa pagina utente
+
+- devi gestirti le api di order paginate su
+    - find my order (?)
+    - lista di ordini da profilo utente

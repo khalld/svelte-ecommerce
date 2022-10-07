@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const Product = require('../db/models/product.js');
 
+// TODO: in v2 the following api must be inserted to make updates to the products page:
+// 1. Sort by price (lowest and higher) . Needs to make a sort with mongoose and and after that apply pagination
+
 // Get list all elements
 router.get('', async (req, res) => {
 
