@@ -37,7 +37,6 @@ router.post('/login', async (req, res) => {
     }
 })
 
-
 router.post('/changepwd', async (req, res) => {
     try {
         var user = await User.findOne({email: req.body.email})
@@ -150,11 +149,23 @@ router.post('/recoverpwd/:token', async (req, res) => {
     }
 })
 
-// Get list all elements
+// Get a paginated list of all users
 router.get('', async (req, res) => {
+    const { page = 1, limit = 10 } = req.query;
+
     try {
         const users = await User.find()
-        res.send(users)
+            .limit(limit * 1)
+            .skip((page - 1) * limit)
+            .exec();
+
+        const count = await User.countDocuments();
+
+        res.send({
+            users,
+            totalPages: Math.ceil(count / limit),
+            currentPage: page
+        })
     } catch (err) {
         res.status(400)
         res.send({message: err.message})

@@ -5,19 +5,10 @@
     import InfoPanel from '../../../../../lib/component/InfoPanel.svelte';
     import Select from '../../../../../lib/component/Select.svelte';
     import InfoPanelHeader from '../../../../../lib/component/InfoPanelHeader.svelte';
-  import { onMount } from 'svelte';
     
     export let data;
 
     let isNewOrder = data.order.status === "PENDING" ? true : false;
-
-    // onMount(async() => {
-    //     isNewOrder = data.order.status === "PENDING" ? true : false
-    // })
-
-    $: console.log(isNewOrder)
-
-    // $: console.log(initialStatus)
 
     async function submit() {
 

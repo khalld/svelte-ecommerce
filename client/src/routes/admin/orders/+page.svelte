@@ -20,7 +20,6 @@
 				return res.json();
 			})
 			.then(data2 => {
-                console.log(data2)
 				data.orders = data2;
 			})
 			.catch(err => console.log(err))
@@ -39,7 +38,7 @@
 
 <h1>Orders list</h1>
 
-<Table headers={['Data', 'Name' ,'Email', 'Amount', 'Status', '#']}>
+<Table headers={['Data', 'Name' ,'Email', 'Amount', 'Status', 'Actions']}>
     {#if data.orders.orders.length == 0}
         <div class="spinner-border mt-2">
             <span class="visually-hidden">Loading...</span>
