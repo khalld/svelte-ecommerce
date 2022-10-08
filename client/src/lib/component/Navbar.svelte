@@ -11,7 +11,9 @@
 
 </script>
 
-<nav class="navbar navbar-expand-lg bg-primary mb-4 {$page.url.pathname == "/" ? "fixed-top" : "" }">
+
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <div class="container-fluid">
 
     <a class="navbar-brand" href="/"><i class="fa-brands fa-d-and-d fa-xl"></i></a>

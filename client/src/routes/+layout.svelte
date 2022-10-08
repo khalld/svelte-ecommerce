@@ -17,7 +17,7 @@
 {#if ! currPath.includes("admin")}
 
 <Navbar />
-<div class="d-flex flex-column min-vh-100 {$page.url.pathname != "/" ? "mx-4 " : "" } mb-2">
+<div class="d-flex flex-column min-vh-100 {$page.url.pathname != "/" ? "mx-4 " : "" } mb-2 p-5 mt-5">
     <slot></slot>
 </div>
 
