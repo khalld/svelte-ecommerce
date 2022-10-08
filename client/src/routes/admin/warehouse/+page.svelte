@@ -60,7 +60,7 @@
 </script>
 
 
-<h1>Warehouse</h1>
+<h1 class="mt-4">Warehouse</h1>
 
 <div class="d-flex flex-row-reverse bd-highlight">
     <button class="btn btn-success" on:click={() => goto('/admin/warehouse/detail')}>Add new product</button>

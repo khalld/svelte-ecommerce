@@ -36,7 +36,7 @@
 
 </script>
 
-<h1>Orders list</h1>
+<h1 class="mt-4">Orders list</h1>
 
 <Table headers={['Data', 'Name' ,'Email', 'Amount', 'Status', 'Actions']}>
     {#if data.orders.orders.length == 0}
@@ -56,11 +56,12 @@
                             <div class="progress-bar bg-warning" role="progressbar" style="width: 50%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         {:else if o.status == "REJECTED"}
                             <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        {:else if o.status == "SHIPPED"}
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 75%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         {:else}
                             <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         {/if}
                     </div>
-
                 </td>
                 <td>
                     <i class="fas fa-pencil fa-lg tb-sel text-success" on:click={() => goto(`/admin/orders/detail/${o._id}`)}/>

@@ -67,6 +67,9 @@
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item {$page.url.pathname == "/profile" ? "active" : "" }" href="/profile">Profile</a></li>
+              {#if $userStore.role === "admin"}
+                <li><a class="dropdown-item {$page.url.pathname == "/admin" ? "active" : "" }" href="/admin">Dashboard</a></li>
+              {/if}
               <li><hr class="dropdown-divider" /></li>
               <li><a class="dropdown-item" on:click={() => logout()} href="/">Logout</a></li>
             </ul>
@@ -75,54 +78,6 @@
           <button type="button" class="btn btn-primary position-relative" on:click={() => goto('/login')} >
             Login
           </button>
-        {/if}
-
-        {#if $userStore.role === "admin"}
-          <li class="nav-item dropstart">
-            <a
-              class="nav-link dropdown-toggle"
-              href="/"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Admin panel
-            </a>
-            <ul class="dropdown-menu">
-              <li class="nav-item">
-                <a class="dropdown-item {$page.url.pathname == "/admin" ? "active" : "" }" href="/admin">
-                  <i class="fa-solid fa-jedi fa-lg"></i>
-                  Dashboard
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="dropdown-item  {$page.url.pathname == "/admin/orders" ? "active" : "" }" href="/admin/orders">
-                  <i class="fa-solid fa-truck-fast fa-lg"></i>
-                  Orders
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="dropdown-item  {$page.url.pathname == "/admin/users" ? "active" : "" }" href="/admin/users">
-                  <i class="fa-solid fa-users fa-lg"></i>
-                  Users
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="dropdown-item  {$page.url.pathname == "/admin/warehouse" ? "active" : "" }" href="/admin/warehouse">
-                  <i class="fa-solid fa-warehouse fa-lg"></i>
-                  Warehouse
-                </a>
-              </li>
-              <li><hr class="dropdown-divider" /></li>
-              <li class="nav-item">
-                <a class="dropdown-item disabled" href="/">
-                  <i class="fa-solid fa-question fa-lg"></i>
-                  Helpdesk
-                </a>
-              </li>
-            </ul>
-          </li>
         {/if}
 
       </ul>

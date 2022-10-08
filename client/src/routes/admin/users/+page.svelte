@@ -35,7 +35,7 @@
 
 </script>
 
-<h1>Users list</h1>
+<h1 class="mt-4">Users list</h1>
 
 <Table headers={['Name', 'Email', 'Enabled', 'Actions']}>
     {#if data.users.users.length == 0}
