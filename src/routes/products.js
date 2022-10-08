@@ -2,6 +2,12 @@ const express = require("express");
 const router = express.Router();
 const Product = require('../db/models/product.js');
 
+function getMultipleRandom(arr, num) {
+    const shuffled = [...arr].sort(() => 0.5 - Math.random());
+
+    return shuffled.slice(0, num);
+}
+
 // TODO: in v2 the following api must be inserted to make updates to the products page:
 // 1. Sort by price (lowest and higher) . Needs to make a sort with mongoose and and after that apply pagination
 
@@ -45,14 +51,25 @@ router.get('/enabled', async (req, res) => {
                 .exec();
         }
 
-
-        const count = products.length;
+        const count =  await Product.find({enabled: true}).countDocuments()
 
         res.send({
             products,
             totalPages: Math.ceil(count / limit),
             currentPage: page
         })
+    } catch (err) {
+        res.status(400)
+        res.send({message: err.message, type: 'error'})
+    }
+})
+
+// Return only three random
+router.get('/rand', async (req, res) => {
+    try {
+        var products = await Product.find({enabled: true})
+
+        res.send(getMultipleRandom(products, 3))
     } catch (err) {
         res.status(400)
         res.send({message: err.message, type: 'error'})

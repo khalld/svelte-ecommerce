@@ -72,9 +72,9 @@
 			<div class="m-bot15"> <strong>Price : </strong> <span > {data.product.price} €</span></div>
 			<div class="m-bot15"> <strong>Available quantity : </strong> 
 				{#if data.product.quantity <= 0}
-					<span> {data.product.price} €</span>
+					<span> {data.product.quantity}</span>
 				{:else}
-					<span>{data.product.price} €</span>
+					<span>{data.product.quantity}</span>
 				{/if}
 			</div>
 			{#if data.product.quantity <= 0}

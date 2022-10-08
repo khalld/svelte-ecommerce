@@ -10,6 +10,8 @@
     import {get} from 'svelte/store';
     import OrderList from "../../lib/component/OrderList.svelte";
     import OrderElement from "../../lib/component/OrderElement.svelte";
+    import Pagenavigation from "../../lib/component/PageNavigation.svelte";
+
     export let data;
     let error;
     let pwd = {
@@ -17,6 +19,31 @@
         // newPassword: 'password02',
         // passwordConf: 'password02'
     }
+
+
+	let currPage = data.orders.currentPage;
+	let ordersPage = [...Array(data.orders.totalPages).keys() ]
+
+    async function changePage(selPage){
+		const limit = 10
+
+		await fetch(`${env.host}/orders/user/${get(userStore)._id}?page=${selPage}&limit=${limit}`)
+			.then(res => {
+				if (res.status == 400){
+					throw new Error('Something wrong happened')
+				}
+				return res.json();
+			})
+			.then(data2 => {
+				data.orders = data2;
+			})
+			.catch(err => console.log(err))
+
+		currPage = selPage;
+
+	}
+
+    console.log(data.orders)
 
     async function updateProfile(){
         try {
@@ -178,6 +205,17 @@
                     {/each}
                 </OrderList>
             {/if}
+
+            <Pagenavigation>
+
+                {#each ordersPage as pg}
+                    {#if currPage == pg+1}
+                        <li class="page-item page-link tb-sel active" on:click={() => changePage(pg+1)}>{pg+1}</li>
+                    {:else}
+                        <li class="page-item page-link tb-sel" on:click={() => changePage(pg+1)}>{pg+1}</li>
+                    {/if}
+                {/each}
+            </Pagenavigation>
         
         </div>
     </div>

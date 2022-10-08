@@ -24,7 +24,7 @@ export async function load(event) {
     
     var orders = null;
 
-    await fetch(`${env.host}/orders/user/${get(userStore)._id}`)
+    await fetch(`${env.host}/orders/user/${get(userStore)._id}?page=1&limit=10`)
     .then(res => {
         if (res.status == 404 || res.status == 400){
             throw new Error('Something wrong happened')
