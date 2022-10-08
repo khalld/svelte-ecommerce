@@ -2,8 +2,14 @@ const express = require("express");
 const router = express.Router();
 const Order = require('../db/models/order.js');
 const { v4: uuidv4 } = require('uuid');
+const env = require('../env.js')
+const nodemailer = require('nodemailer');
 
-// Get list all elements
+// default transporter to send all emails
+var transporter =  nodemailer.createTransport(env.mail)
+
+
+// Get paginated list of all orders
 router.get('', async (req, res) => {
 
     const { page = 1, limit = 10 } = req.query;
@@ -27,7 +33,7 @@ router.get('', async (req, res) => {
     }
 })
 
-// Get specific element
+// Get specific order
 router.get('/:id', async (req, res) => {
     try {
         const order = await Order.findOne({_id: req.params.id})
@@ -48,7 +54,7 @@ router.get('/:id', async (req, res) => {
 
 })
 
-// Get specific element by code
+// Get specific order by code
 router.get('/code/:code', async (req, res) => {
     try {
         const order = await Order.findOne({code: req.params.code})
@@ -68,8 +74,7 @@ router.get('/code/:code', async (req, res) => {
     }
 })
 
-
-// Get all orders from by
+// Get a paginated list of orders filtered by user id
 router.get('/user/:id', async (req, res) => {
     const { page = 1, limit = 10 } = req.query;
 
@@ -107,6 +112,22 @@ router.post('', async (req, res) => {
         var order = new Order(req.body);
         order.code = uuidv4();
         await order.save()
+
+        var mailOptions = {
+            from: env.mail.auth.user,
+            to: user.email,
+            subject: `Company Name - Order ${order.code} created`,
+            text: `<h1>Hi ${user.name},</h1><p>we are glad that you choose us! There you can check the status of your order ${env.client.host}/findorder/${order.code}</p>`
+        }
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.error(error)
+                throw new Error('Error sending email!')
+            }
+            console.log('Email sent: ' + info.response);
+        });
+
         res.send(order);
     } catch (err) {
         res.status(400)
@@ -126,6 +147,14 @@ router.post('/:id', async (req, res) => {
 
         order.status = req.body.status;
         order.tracking = req.body.tracking;
+
+        // TODO:
+        // add controls of status
+        // impossible change from shipped to pending
+        // impossible change from pending to received
+        
+        // TODO: in v2
+        // add email to notify the update of order from pending to --> delivered
 
         await order.save()
         res.send(order);

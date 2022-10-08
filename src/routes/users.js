@@ -1,8 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const User = require('../db/models/user.js');
+const env = require('../env.js')
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require('uuid');
+const nodemailer = require('nodemailer');
+
+// default transporter to send all emails
+var transporter =  nodemailer.createTransport(env.mail)
 
 router.post('/login', async (req, res) => {
     try {
@@ -96,6 +101,21 @@ router.post('/recoverpwd', async (req, res) => {
         user.enabled = false;
 
         await user.save()
+
+        var mailOptions = {
+            from: env.mail.auth.user,
+            to: user.email,
+            subject: 'Company Name - Password recovery',
+            text: `<h1>Hi ${user.name},</h1><p>it seems that you have forgot your password. Click <a href="${env.client.host}recover/{token}">here</a> to recover your password! If you have problem to see the link, copy and paste this link on your browser: http://localhost:5173/recover/{token}</p>`
+        }
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.error(error)
+                throw new Error('Error sending email!')
+            }
+            console.log('Email sent: ' + info.response);
+        });
 
         res.status(202)
         res.send({message: 'Success', type: 'info'});
@@ -197,7 +217,7 @@ router.get('/:id', async (req, res) => {
 
 })
 
-// Add new element
+// Register a new user
 router.post('', async (req, res) => {
     try {
         const userExist = await User.findOne({email: req.body.email})
@@ -221,11 +241,26 @@ router.post('', async (req, res) => {
             role: "user"
         });
         
+        var mailOptions = {
+            from: env.mail.auth.user,
+            to: user.email,
+            subject: 'Company Name - Welcome!',
+            text: `<h1>Welcome ${user.name} ${user.surname},</h1><p> we are glad to have you with us!</p>`
+        }
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log(error)
+                throw new Error('Error sending email!')
+            }
+            console.log('Email sent: ' + info.response);
+        });
+
         await user.save()
         res.status(201);
         res.send(user);
     } catch (err) {
-        
+        console.error("error:" + err)        
         if (err.message === 'Email already used'){
             res.status(409)
         } else {
