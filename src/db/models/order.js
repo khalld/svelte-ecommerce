@@ -11,13 +11,15 @@ const orderSchema = new Schema({
         email: String,
         name: String,
         surname: String,
+        phone: Number
     },
     address: {
         address: String,
         address2: String,
         country: String,
         region: String,
-        zip: Number,
+        city: String,
+        zip: Number
     },
     tracking: {
         id: String,

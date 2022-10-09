@@ -16,9 +16,11 @@
 
     }
 
+    export let showButton = true;
+
 </script>
 
-<div class="container">
+<div class="container my-5">
     <div class="card p-4 bg-body rounded shadow-sm">
         <div class="row mb-2 pb-1">
             <div class="col-4">
@@ -27,11 +29,13 @@
             </div>
         </div>
         <slot></slot>
+        {#if showButton == true}
         <div class="row border-top pt-3 mt-3">
             <div class="col-3">
                 <button class="btn btn-success btn" on:click>Confirm</button>
             </div>
         </div>
+        {/if}
     </div>
 
 </div>

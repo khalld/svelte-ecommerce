@@ -14,41 +14,41 @@
 	let currPage = data.products.currentPage;
 	let productsPage = [...Array(data.products.totalPages).keys() ]
 
-	function addToCart (p) {
-		var currentCart = [];
+	// function addToCart (p) {
+	// 	var currentCart = [];
 
-		cartStore.subscribe((cart) => {
-			currentCart = cart.products;
-		});
+	// 	cartStore.subscribe((cart) => {
+	// 		currentCart = cart.products;
+	// 	});
 
-		let filteredCart = currentCart.filter(o => o._id === p._id)
+	// 	let filteredCart = currentCart.filter(o => o._id === p._id)
 
-		// product is already in our cart
-		if(filteredCart.length > 0){			
-			currentCart.forEach((element, idx, arr) => {
-				if(element._id === filteredCart[0]._id){
-					element.quantity += 1
-				}
-			})
-		} else {
-			currentCart.push({
-				_id: p._id,
-				name: p.name,
-				code: p.code,
-				quantity: 1,
-				price: p.price
-			});
-		}
+	// 	// product is already in our cart
+	// 	if(filteredCart.length > 0){			
+	// 		currentCart.forEach((element, idx, arr) => {
+	// 			if(element._id === filteredCart[0]._id){
+	// 				element.quantity += 1
+	// 			}
+	// 		})
+	// 	} else {
+	// 		currentCart.push({
+	// 			_id: p._id,
+	// 			name: p.name,
+	// 			code: p.code,
+	// 			quantity: 1,
+	// 			price: p.price
+	// 		});
+	// 	}
 
-		var elements_num = 0;
+	// 	var elements_num = 0;
 
-		for (let i = 0; i < currentCart.length; i++){
-			elements_num += currentCart[i].quantity 
-		}
+	// 	for (let i = 0; i < currentCart.length; i++){
+	// 		elements_num += currentCart[i].quantity 
+	// 	}
 
-		cartStore.set({products: currentCart, amount: 0.0, n_elem: elements_num})
+	// 	cartStore.set({products: currentCart, amount: 0.0, n_elem: elements_num})
 
-	}
+	// }
 
 	async function changePage(selPage){
 		const limit = 10
@@ -143,38 +143,34 @@
 						<Hint str="Sorry bro! Anything founded"/>
 					{:else}
 						{#each results as prod}
-							<Product p={prod} addToCart={() => addToCart(prod)}/>
+							<Product p={prod}/>
 						{/each}
 					{/if}
 				{:else}
 					{#each data.products.products as prod}
-						<Product p={prod} addToCart={() => addToCart(prod)}/>
+						<Product p={prod}/>
 					{/each}
 				{/if}
 				
 			</div>
 
-			<div class="d-flex align-items-end flex-column mb-3">
-				<div class="mt-5 p-2">
-					
-					{#if !isSearch}
-					<div class="row">
-						<div class="col-sm-12">
-							<Pagenavigation>
-								{#each productsPage as pg}
-									{#if currPage == pg+1}
-										<li class="page-item page-link tb-sel active" on:click={() => changePage(pg+1)}>{pg+1}</li>
-									{:else}
-										<li class="page-item page-link tb-sel" on:click={() => changePage(pg+1)}>{pg+1}</li>
-									{/if}
-								{/each}
-
-							</Pagenavigation>
-						</div>
+			<div class="mt-5 p-2">
+				
+				{#if !isSearch}
+				<div class="row">
+					<div class="col-sm-12">
+						<Pagenavigation>
+							{#each productsPage as pg}
+								{#if currPage == pg+1}
+									<li class="page-item page-link tb-sel active" on:click={() => changePage(pg+1)}>{pg+1}</li>
+								{:else}
+									<li class="page-item page-link tb-sel" on:click={() => changePage(pg+1)}>{pg+1}</li>
+								{/if}
+							{/each}
+						</Pagenavigation>
 					</div>
-					{/if}
-
 				</div>
+				{/if}
 			</div>
 
 		<!-- </div> -->

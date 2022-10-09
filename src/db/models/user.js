@@ -11,6 +11,7 @@ const userSchema = new Schema({
         address2: String,
         country: String,
         region: String,
+        city: String,
         zip: Number,
     },
     token: String,

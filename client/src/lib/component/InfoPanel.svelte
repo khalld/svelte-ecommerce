@@ -4,7 +4,7 @@
     export let redirectText;
 </script>
 
-<div class="container">
+<div class="container mt-4">
     <div class="card p-4 bg-body rounded shadow-sm mb-2">
         <div class="row pb-1">
             {#if title != null}

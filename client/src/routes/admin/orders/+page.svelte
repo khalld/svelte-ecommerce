@@ -4,6 +4,8 @@
     import { goto } from '$app/navigation';
     import Pagenavigation from '../../../lib/component/PageNavigation.svelte';
     import env from '../../../lib/store/env';
+    import convertData from '../../../lib/js/formatDate';
+    
     export let data;
 
 	let currPage = data.orders.currentPage;
@@ -28,12 +30,6 @@
 
 	}
 
-    function convertDate(dt){
-
-        // TODO: CONVERTI
-        return dt
-    }
-
 </script>
 
 <h1 class="mt-4">Orders list</h1>
@@ -46,7 +42,7 @@
     {:else}
         {#each data.orders.orders as o}
             <Tr>
-                <td>{convertDate(o.data)}</td>
+                <td>{convertData(o.data)}</td>
                 <td>{o.customer.name} {o.customer.surname}</td>
                 <td>{o.customer.email}</td>
                 <td>{o.amount} €</td>
@@ -58,7 +54,7 @@
                             <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         {:else if o.status == "SHIPPED"}
                             <div class="progress-bar bg-success" role="progressbar" style="width: 75%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                        {:else}
+                        {:else if o.status == "DELIVERED"}
                             <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         {/if}
                     </div>

@@ -54,10 +54,8 @@
         </li>
 
         {#if $userStore.loggedIn == true}
-          <li class="nav-item dropstart">
-            <button type="button" class="btn position-relative {$page.url.pathname == "/profile" ? "link-light" : "link-secondary" } " data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-solid fa-user fa-xl" ></i>
-            </button>
+          <li class="nav-item dropstart me-3 ms-3 mt-2">
+            <i class="fa-solid fa-user fa-xl tb-sel {$page.url.pathname == "/profile" ? "link-light" : "link-secondary" } " data-bs-toggle="dropdown" aria-expanded="false" ></i>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item {$page.url.pathname == "/profile" ? "active" : "" }" href="/profile">Profile</a></li>
               {#if $userStore.role === "admin"}
@@ -74,12 +72,10 @@
         {/if}
 
         <li class="nav-item me-4 mt-2 position-relative" >
-          <!-- <button type="button" class="btn btn-primary position-relative  on:click={() => goto("/cart")}> -->
             <i class="fa-solid fa-cart-shopping fa-xl tb-sel {$page.url.pathname == "/cart" ? "link-light" : "link-secondary" } " on:click={() => goto("/cart")}></i>
             <span class="position-absolute badge rounded-pill bg-danger tb-sel">
               {$cartStore.n_elem}
             </span>
-          <!-- </button> -->
         </li>
 
       </ul>

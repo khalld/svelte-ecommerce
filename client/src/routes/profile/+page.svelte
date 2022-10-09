@@ -20,7 +20,6 @@
         // passwordConf: 'password02'
     }
 
-
 	let currPage = data.orders.currentPage;
 	let ordersPage = [...Array(data.orders.totalPages).keys() ]
 
@@ -42,8 +41,6 @@
 		currPage = selPage;
 
 	}
-
-    console.log(data.orders)
 
     async function updateProfile(){
         try {
@@ -164,14 +161,17 @@
                     <div class="col-12">
                         <Input id="address2" bind:value={data.user.address.address2} placeholder="Apartment or suite"/>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-6">
                         <Select id="select-country" label="Country" arialabel="select country" bind:value={data.user.address.country} elements={utils.countries}/>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-6">
                         <Select id="select-country" label="Region" arialabel="select region" bind:value={data.user.address.region} elements={utils.regions}/>
                     </div>
-                    <div class="col-md-4">
-                        <Input id="zip" label="ZIP" bind:value={data.user.address.zip} placeholder="ZIP code" type="number"/>
+                    <div class="col-8">
+                        <Input id="city" label="City" bind:value={data.user.address.city} placeholder="City" type="text" colClass="mb-4" />
+                    </div>
+                    <div class="col-4">
+                        <Input id="zip" label="ZIP" bind:value={data.user.address.zip} placeholder="ZIP code" type="number"  colClass="mb-4"/>
                     </div>
                 </div>
                 <button class="w-100 btn btn-primary btn-lg mt-2" type="submit">Update profile</button>
@@ -206,8 +206,7 @@
                 </OrderList>
             {/if}
 
-            <Pagenavigation>
-
+            <Pagenavigation addClass="mt-2">
                 {#each ordersPage as pg}
                     {#if currPage == pg+1}
                         <li class="page-item page-link tb-sel active" on:click={() => changePage(pg+1)}>{pg+1}</li>
@@ -216,7 +215,6 @@
                     {/if}
                 {/each}
             </Pagenavigation>
-        
         </div>
     </div>
 </div>

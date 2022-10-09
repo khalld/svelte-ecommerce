@@ -1,7 +1,6 @@
 <script>
     import { goto } from '$app/navigation';
     
-    export let addToCart;
     export let p = {
         url: '',
         description: "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
@@ -18,12 +17,7 @@
       </div>
       <div class="card-footer d-flex justify-content-between align-items-center">
         <div class="btn-group">
-          <button class="btn btn-success" on:click={() => goto(`/products/${p._id}`)}>Detail</button>
-          {#if p.quantity <= 0}
-            <button class="btn btn-warning" disabled>Add to cart</button>
-          {:else}
-            <button class="btn btn-warning" on:click={() => addToCart(p._id)} >Add to cart</button>
-          {/if}
+          <button class="btn btn-secondary" on:click={() => goto(`/products/${p._id}`)}>Detail</button>
         </div>
         {#if p.quantity <= 0}
           <span class="badge bg-danger rounded-pill">On stock</span>
@@ -32,7 +26,7 @@
         {/if}
 
 
-        <small class="text-muted">9 mins</small>
+        <small class="text-muted">{p.price} €</small>
       </div>
 
     </div>

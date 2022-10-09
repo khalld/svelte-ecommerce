@@ -51,7 +51,7 @@
 </script>
 
 <InfoPanelAdmin on:click={submit}>
-    <InfoPanelHeader text="Detail of product {data.product._id}" />
+    <InfoPanelHeader text="Detail of product" />
 
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12">
@@ -77,19 +77,49 @@
         </div>
     </div>
 
-    <div class="d-flex flex-column justify-content-between mb-3">
-        <div class="p-2 order-2">
+    <div class="row">
+        <div class="col-4">
+            <img src={data.product.photos[0].src} class="img-fluid w-50 border" alt="pic-n-{data.product.photos[0].id}" >
+        </div>
+        <div class="col-8">
             <Input type="text" bind:value={data.product.photos[0].src} id="input-pic-{data.product.photos[0].id}" label="Pic n°{data.product.photos[0].id}"/>
-            <Input type="text" bind:value={data.product.photos[1].src} id="input-pic-{data.product.photos[1].id}" label="Pic n°{data.product.photos[1].id}"/>
-            <Input type="text" bind:value={data.product.photos[2].src} id="input-pic-{data.product.photos[2].id}" label="Pic n°{data.product.photos[2].id}"/>
-            <Input type="text" bind:value={data.product.photos[3].src} id="input-pic-{data.product.photos[3].id}" label="Pic n°{data.product.photos[3].id}"/>
-            <Input type="text" bind:value={data.product.photos[4].src} id="input-pic-{data.product.photos[4].id}" label="Pic n°{data.product.photos[4].id}"/>
-    
-            <img src={data.product.photos[0].src} class="rounded mx-auto d-block w-25" alt="pic-n-{data.product.photos[0].id}" >
-            <img src={data.product.photos[1].src} class="rounded mx-auto d-block w-25" alt="pic-n-{data.product.photos[1].id}" >
-            <img src={data.product.photos[2].src} class="rounded mx-auto d-block w-25" alt="pic-n-{data.product.photos[2].id}" >
-            <img src={data.product.photos[3].src} class="rounded mx-auto d-block w-25" alt="pic-n-{data.product.photos[3].id}" >
-            <img src={data.product.photos[4].src} class="rounded mx-auto d-block w-25" alt="pic-n-{data.product.photos[4].i4}" >
+        </div>
     </div>
 
+    <div class="row">
+        <div class="col-4">
+            <img src={data.product.photos[1].src} class="img-fluid w-50 border" alt="pic-n-{data.product.photos[1].id}" >
+        </div>
+        <div class="col-8">
+            <Input type="text" bind:value={data.product.photos[1].src} id="input-pic-{data.product.photos[1].id}" label="Pic n°{data.product.photos[1].id}"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+            <img src={data.product.photos[2].src} class="img-fluid w-50 border" alt="pic-n-{data.product.photos[2].id}" >
+        </div>
+        <div class="col-8">
+            <Input type="text" bind:value={data.product.photos[2].src} id="input-pic-{data.product.photos[2].id}" label="Pic n°{data.product.photos[2].id}"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+            <img src={data.product.photos[3].src} class="img-fluid w-50 border" alt="pic-n-{data.product.photos[3].id}" >
+        </div>
+        <div class="col-8">
+            <Input type="text" bind:value={data.product.photos[3].src} id="input-pic-{data.product.photos[3].id}" label="Pic n°{data.product.photos[3].id}"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+            <img src={data.product.photos[4].src} class="img-fluid w-50 border" alt="pic-n-{data.product.photos[4].id}" >
+        </div>
+        <div class="col-8">
+            <Input type="text" bind:value={data.product.photos[4].src} id="input-pic-{data.product.photos[4].id}" label="Pic n°{data.product.photos[4].id}"/>
+        </div>
+    </div>
+    
 </InfoPanelAdmin>

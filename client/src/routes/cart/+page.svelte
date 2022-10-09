@@ -141,6 +141,9 @@
 
     <div class="col-md-7 col-lg-8">
       <h4 class="mb-3">Please insert your information for checkout</h4>
+      <p class="text-muted">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis tincidunt ex. Curabitur efficitur tincidunt enim nec efficitur. Proin in commodo mauris. Quisque ultrices metus eros, commodo tempus dui posuere quis
+      </p>
       <form on:submit|preventDefault={sendOrder} class="needs-validation" novalidate> <!-- TODO: che signfica ?? -->
         <div class="row g-3">
           <div class="col-sm-6">
@@ -167,17 +170,20 @@
             <Input id="additional-notes" label="Notes" bind:value={data.order.notes} placeholder="Write additional notes for the expedition" type="textarea" />
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-6">
             <Select id="select-country" label="Country" arialabel="select country" bind:value={data.order.address.country} elements={utils.countries}/>
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-6">
             <Select id="select-country" label="State/Region" arialabel="select region" bind:value={data.order.address.region} elements={utils.regions}/>
           </div>
 
-          <div class="col-md-4">
-            <Input id="zip" label="ZIP" bind:value={data.order.address.zip} placeholder="ZIP code" type="number"/>
-          </div>
+          <div class="col-8">
+            <Input id="city" label="City" bind:value={data.order.address.city} placeholder="City" type="text" colClass="mb-4" />
+        </div>
+        <div class="col-4">
+            <Input id="zip" label="ZIP" bind:value={data.order.address.zip} placeholder="ZIP code" type="number"  colClass="mb-4"/>
+        </div>
           
         </div>
 

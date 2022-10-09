@@ -5,6 +5,7 @@
     export let data;
 
 	let focusImg = data.product.photos[0].src;
+	let quantity = 1;
 
     function addToCart () {
 		var currentCart = [];
@@ -19,7 +20,7 @@
 		if(filteredCart.length > 0){			
 			currentCart.forEach((element, idx, arr) => {
 				if(element._id === filteredCart[0]._id){
-					element.quantity += 1
+					element.quantity += quantity
 				}
 			})
 		} else {
@@ -27,7 +28,7 @@
 				_id: data.product._id,
 				name: data.product.name,
 				code: data.product.code,
-				quantity: 1,
+				quantity: quantity,
 				price: data.product.price
 			});
 		}
@@ -50,12 +51,12 @@
 	<div class="row">
 		<div class="col-sm-12 col-lg-6 col-md-6">
 			<div class="pro-img-details">
-				<img src={focusImg} alt="detail-0">
+				<img src={focusImg} class="border border-secondary" alt="detail-0">
 			</div>
 			<div class="pro-img-list p-2">
 			{#each data.product.photos as pic, idx}
 				<!-- <a href="#"> -->
-				<img src="{pic.src}" class="w-25 m-2 tb-sel" alt="detail-{idx}" on:click={() => focusImg = pic.src}>
+				<img src="{pic.src}" class="w-25 m-2 tb-sel border border-secondary" alt="detail-{idx}" on:click={() => focusImg = pic.src}>
 				<!-- </a> -->
 			{/each}
 			</div>
@@ -65,10 +66,11 @@
 				{data.product.name}
 			</h3>
 			<p>{data.product.longDescription}</p>
-			<div class="product_meta">
+			<!-- TODO: Enable in v2 -->
+			<!-- <div class="product_meta">
 				<span class="posted_in"> <strong>Categories:</strong> <a rel="tag" href="#">Jackets</a>, <a rel="tag" href="#">Men</a>, <a rel="tag" href="#">Shirts</a>, <a rel="tag" href="#">T-shirt</a>.</span>
 				<span class="tagged_as"><strong>Tags:</strong> <a rel="tag" href="#">mens</a>, <a rel="tag" href="#">womens</a>.</span>
-			</div>
+			</div> -->
 			<div class="m-bot15"> <strong>Price : </strong> <span > {data.product.price} €</span></div>
 			<div class="m-bot15"> <strong>Available quantity : </strong> 
 				{#if data.product.quantity <= 0}
@@ -77,6 +79,9 @@
 					<span>{data.product.quantity}</span>
 				{/if}
 			</div>
+
+			<Input labelAlign="horizontal" id="quantity" label="Quantity" bind:value={quantity} type="number" />
+
 			{#if data.product.quantity <= 0}
 				<button class="btn btn-danger mt-2" disabled> <i class="fa fa-shopping-cart"></i> Add to cart</button>
 			{:else}

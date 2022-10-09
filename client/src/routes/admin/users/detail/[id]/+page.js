@@ -26,7 +26,23 @@ export async function load({ url, event }) {
     })
     .catch(err => console.log(err))
 
+    var orders = null;
+
+    await fetch(`${env.host}/orders/user/${id}?page=1&limit=10`)
+    .then(res => {
+        if (res.status == 404 || res.status == 400){
+            throw new Error('Something wrong happened')
+        }
+        return res.json();
+    })
+    .then(data => {
+        orders = data;
+    })
+    .catch(err => console.log(err))
+
+
     return {
-        user: user
+        user: user,
+        orders: orders
     };
 }

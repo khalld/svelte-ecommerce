@@ -5,7 +5,7 @@
     import Modal from '../../../lib/component/Modal.svelte';
     import env from '../../../lib/store/env';
     import {goto} from '$app/navigation';
-
+    import { notifier } from '@beyonk/svelte-notifications';
     export let data;
 	let currPage = data.users.currentPage;
 	let usersPage = [...Array(data.users.totalPages).keys() ]
@@ -21,7 +21,6 @@
 				return res.json();
 			})
 			.then(data2 => {
-                console.log(data2)
 				data.users = data2;
 			})
 			.catch(err => console.log(err))
@@ -29,8 +28,28 @@
 		currPage = selPage;
 	}
 
-    async function disableUser(id){
-        console.log("TODO:")
+    async function disableUser(id, enabled){
+        await fetch(`${env.host}/users/disable`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: id,
+                enabled: !enabled
+            })
+        }).then(res => {
+            if (res.status === 400){
+                throw new Error('Something wrong happened')
+            }
+            if (res.status === 404){
+                throw new Error('User not exist')
+            }
+        })
+        .then(() => {
+            notifier.success('Operation successfully completed')
+        })
+        .catch(err => notifier.danger(err.message))
     }
 
 </script>
@@ -58,8 +77,8 @@
                 </td>
                 <td>
                     <i class="fas fa-pencil fa-lg tb-sel text-success" on:click={() => goto(`/admin/users/detail/${u._id}`)}/>
-                    <i class="fa fa-trash fa-lg tb-sel text-danger" aria-hidden="true" data-bs-target="#deleteModal-{u._id}" data-bs-toggle="modal" />
-                    <Modal id="deleteModal-{u._id}" labeledby="modal-label-{u._id}" on:click={disableUser(u._id)} title="Confirm delete" body="Are you sure that you want to delete product {u.email} ?"/>
+                    <i class="fa fa-exclamation fa-lg tb-sel {u.enabled == true ? "text-danger": "text-warning"}" aria-hidden="true" data-bs-target="#deleteModal-{u._id}" data-bs-toggle="modal" />
+                    <Modal id="deleteModal-{u._id}" labeledby="modal-label-{u._id}" on:click={disableUser(u._id, u.enabled)} title="{u.enabled == true ? "Disable user" : "Enable user"} " body="Are you sure that you want to {u.enabled == true ? "disable" : "enable"} user {u.email} ?"/>
                 </td>
             </Tr>
         {/each}
@@ -68,7 +87,6 @@
 
 
 <Pagenavigation>
-
     {#each usersPage as pg}
         {#if currPage == pg+1}
             <li class="page-item page-link tb-sel active" on:click={() => changePage(pg+1)}>{pg+1}</li>

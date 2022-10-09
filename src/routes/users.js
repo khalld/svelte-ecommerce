@@ -192,7 +192,7 @@ router.get('', async (req, res) => {
     }
 })
 
-// Get specific element
+// Get specific user by id
 router.get('/:id', async (req, res) => {
     try {
         if (req.params.id == null){
@@ -215,6 +215,34 @@ router.get('/:id', async (req, res) => {
         res.send({message: err.message, type: 'error'})
     }
 
+})
+
+
+// Get specific element
+router.post('/disable', async (req, res) => {
+    try {
+        if (req.body.id == null){
+            throw new Error('Id required')
+        }
+
+        const user = await User.findOne({_id: req.body.id}).select('-password')
+
+        if (user == null){
+            throw new Error(`Not found`)
+        }
+
+        user.enabled = req.body.enabled;
+        await user.save()
+        res.send(user)
+    } catch (err) {
+        if (err.message === 'Not found') {
+            res.status(404)
+        } else {
+            res.status(400)
+        }
+        
+        res.send({message: err.message, type: 'error'})
+    }
 })
 
 // Register a new user
