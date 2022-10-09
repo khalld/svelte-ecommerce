@@ -1,43 +1,46 @@
-# create-svelte
+# Demo e-commerce
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Demo of an ecommerce made with express js for the server part and svelte for the front end.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Admin Panel (product creation and order management, user views)
+- Registration
+- Login
+- Search on the products page
+- Shopping cart management
+- Authentication
+- Simulation of the purchase (it is not necessary to be logged in)
+- View order status
+- Management of sending emails for: password change, order notification
+- Mongodb database (using <a href="https://cloud.mongodb.com/">MongoDb Cloud</a> )
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Libraries
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+Server side
+- Express
+- Mongoose to handle database
+- Nodemailer for sending emails
 
-## Developing
+Front end side
+- Svelte
+- Bootstrap 5.2 with SASS integration
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+# Getting started
+
+To run the server side, in this folder:
 
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
-
-To create a production version of your app:
+To run the client side, go to `client` folder and then:
 
 ```bash
-npm run build
+npm run dev
 ```
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
-
-### Requirements
+## Requirements
 
 - Node `v16.17.0`
 
@@ -50,28 +53,8 @@ open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args
 ### Useful links
 
 <ul>
+    <li><a href="https://github.com/svelte-add/bootstrap">Add bootstrap to svelte</a></li>
     <li><a href="https://blog.logrocket.com/how-switch-node-js-versions-nvm/">Manage multiple version of Node.js with nvm</a></li>
     <li><a href="https://www.youtube.com/watch?v=wCelDI_rPcY">Run svelte and express in same port</a> (necessario per dopo?)</li>
 </ul>
 
-
-### Database
-
-Using <a href="https://cloud.mongodb.com/">MongoDb Cloud</a> 
-
-#### Models
-
-...
-
-#### Nice to have:
-- Send email for recover/registration/order api
-- i18
-- Codice sconto: può essere considerato come una costante (univoco o fetch).
-    - Inserire un panel per aggiungere i codici sconto dinamicamente
-    
-
-- Completa pagina utente
-
-- devi gestirti le api di order paginate su
-    - find my order (?)
-    - lista di ordini da profilo utente
