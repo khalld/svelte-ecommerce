@@ -13,8 +13,8 @@ export default {
     ],
     shipment: [
         {
-            code: "POSTEIT44",
-            price: 7.99,
+            code: "POSTE-ITALIANE",
+            price: 11,
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris luctus, lectus malesuada scelerisque gravida, ante felis suscipit eros, ut iaculis elit arcu a libero."
         },
         {

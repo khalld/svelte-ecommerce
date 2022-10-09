@@ -1,5 +1,9 @@
 <script>
+    import convertData from "../js/formatDate";
     export let order;
+
+    let total = order.amount + order.shipment.price;
+
 </script>
 
 <div class="container-fluid">
@@ -18,44 +22,54 @@
                     <div class="card-body">
                         <div class="mb-3 d-flex justify-content-between">
                             <div>
-                                <span class="me-3">22-11-2021</span>
-                                <span class="me-3">#16123222</span>
-                                <span class="me-3">Visa -1234</span>
-                                <span class="badge rounded-pill bg-info">SHIPPING</span>
-                                </div>
-                                <div class="d-flex">
-                                <button class="btn btn-link p-0 me-3 d-none d-lg-block btn-icon-text"><i class="bi bi-download"></i> <span class="text">Invoice</span></button>
-                                <div class="dropdown">
-                                    <button class="btn btn-link p-0 text-muted" type="button" data-bs-toggle="dropdown">
-                                    <i class="bi bi-three-dots-vertical"></i>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil"></i> Edit</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-printer"></i> Print</a></li>
-                                    </ul>
-                                </div>
+                                <span class="fw-bold">Order date: </span><span class="me-3">{convertData(order.data)}</span>
+                                <!-- <span class="me-3">#16123222</span>
+                                <span class="me-3">Visa -1234</span> -->
+                                
+                                <span class="fw-bold">Order status: </span>
+                                {#if order.status == "PENDING"}
+                                    <span class="badge bg-warning rounded-pill">PENDING</span>
+                                {:else if order.status == "REJECTED"}
+                                    <span class="badge bg-danger rounded-pill">REJECTED</span>
+                                {:else if order.status == "SHIPPED"}
+                                    <span class="badge bg-success rounded-pill">SHIPPED</span>
+                                {:else if order.status == "DELIVERED"}
+                                    <span class="badge bg-success rounded-pill">DELIVERED</span>
+                                {/if}
+
+
                             </div>
                         </div>
 
                         <table class="table table-borderless">
                             <tbody>
-                            {#each order.products as prod}
+                                <tr>
+                                    <th>Products</th>
+                                    <th>Quantity</th>
+                                    <th class="text-end">Total price</th>
+                                </tr>
+                                {#each order.products as prod}
                                 <tr>
                                     <td>
-                                    <div class="d-flex mb-2">
-                                        <div class="flex-shrink-0">
-                                        <img src="https://via.placeholder.com/280x280/87CEFA/000000" alt="" width="35" class="img-fluid">
+                                        <div class="d-flex mb-2">
+                                            <div class="flex-shrink-0">
+                                            <img src="https://via.placeholder.com/280x280/87CEFA/000000" alt="" width="35" class="img-fluid">
+                                            </div>
+                                            <div class="flex-lg-grow-1 ms-3">
+                                            <h6 class="small mb-0"><a href="/products/{prod._id}" class="text-reset">{prod.name}</a></h6>
+                                            <span class="small">{prod.code}</span>
+                                            </div>
                                         </div>
-                                        <div class="flex-lg-grow-1 ms-3">
-                                        <h6 class="small mb-0"><a href="/products/{prod._id}" class="text-reset">{prod.name}</a></h6>
-                                        <!-- <span class="small">Color: Black</span> -->
-                                        </div>
-                                    </div>
                                     </td>
                                     <td>{prod.quantity}</td>
                                     <td class="text-end">{prod.price * prod.quantity} €</td>
                                 </tr>
-                            {/each}
+                                {/each}
+                                <tr>
+                                    <td>{order.shipment.code} (shipment)</td>
+                                    <td></td>
+                                    <td class="text-end">{order.shipment.price} €</td>
+                                </tr>
                             </tbody>
                             <tfoot>
                                 <!-- TODO: add shipping cost -->
@@ -74,7 +88,7 @@
                             </tr> -->
                             <tr class="fw-bold">
                                 <td colspan="2">TOTAL</td>
-                                <td class="text-end">{order.amount} €</td>
+                                <td class="text-end">{total} €</td>
                             </tr>
                             </tfoot>
                         </table>
@@ -83,21 +97,29 @@
                 <!-- Payment -->
                 <div class="card mb-4">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6">
+                        <div class="row d-flex justify-content-center">
+                            <span class="fw-bold mb-1">Shipping information</span>
+                            <div class="col-6">
+                                <span class="fw-bold">{order.customer.name} {order.customer.surname}</span> <br>
+                                {order.customer.phone} <br>
+                            </div>
+                            <div class="col-6">
+                                {order.address.country}, {order.address.region}<br>
+                                {order.address.city}, {order.address.zip}<br>
+                                {order.address.address} {#if order.address.address2 != null}, {order.address.address2}{/if}
+                            </div>
+                            <!-- <div class="col-lg-6">
                                 <h3 class="h6">Payment Method</h3>
                                 <p>Visa -1234 <br>
                                 Total: $169,98 <span class="badge bg-success rounded-pill">PAID</span></p>
-                                </div>
-                                <div class="col-lg-6">
-                                <h3 class="h6">Billing address</h3>
-                                <address>
-                                    <strong>John Doe</strong><br>
-                                    1355 Market St, Suite 900<br>
-                                    San Francisco, CA 94103<br>
-                                    <abbr title="Phone">P:</abbr> (123) 456-7890
-                                </address>
                             </div>
+                            <div class="col-lg-6">
+                                <h3 class="h6">Billing address</h3>
+                                <strong>John Doe</strong><br>
+                                1355 Market St, Suite 900<br>
+                                San Francisco, CA 94103<br>
+                                <abbr title="Phone">P:</abbr> (123) 456-7890
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -119,21 +141,12 @@
                     <div class="card-body">
                         <h3 class="h6">Shipping Information</h3>
 
-                        {#if order.tracking.id != null}
-                            <strong>FedEx</strong>
-                            <span><a href="#" class="text-decoration-underline" target="_blank">FF1234567890</a> <i class="bi bi-box-arrow-up-right"></i> </span>
+                        {#if order.shipment.trackingId != null}
+                            <strong>{order.shipment.code}</strong><br>
+                            <span class="text-decoration-underline text-primary">{order.shipment.trackingId} <i class="bi bi-box-arrow-up-right"></i> </span>
                         {:else}
                         <strong>Your order is still being processed</strong>
                         {/if}
-                            <hr>
-                            <h3 class="h6">Address</h3>
-                            <address>
-                                <strong>{order.customer.name} {order.customer.surname}</strong><br>
-                                {order.address.address} {#if order.address.address2 != null}
-                                , {order.address.address2}{/if}<br>
-                                {order.address.country}, {order.address.region}, {order.address.city} {order.address.zip}<br>
-                                <abbr title="Phone">Phone:</abbr> {order.customer.phone}
-                            </address>
                     </div>
                 </div>
             </div>

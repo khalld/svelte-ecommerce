@@ -38,13 +38,10 @@ export async function load(event) {
                 _id: userInfo._id, //FIXME: type object id
                 email: userInfo.email,
                 name: userInfo.name,
-                surname: userInfo.surname
+                surname: userInfo.surname,
+                phone: userInfo.phone
             },
             address: userInfo.address,
-            tracking: {
-                id: null,
-                provider: null,
-            },
             amount: 0.0,
             notes: null,
             status: "PENDING"

@@ -7,7 +7,9 @@
   import utils from "../../lib/store/utils";
   import Input from "../../lib/component/Input.svelte";
   import Select from "../../lib/component/Select.svelte";
+  
   export let data;
+  const shipment = env.shipment[0];
   
 	onMount(async () => {
     let nElem = 0;
@@ -22,13 +24,15 @@
       amount += element.price * element.quantity;
       nElem += element.quantity;
       // aggiorno il numero di elementi da visualizzare nel tooltip
-    })
-    
+    }) 
+      
     amount = amount.toFixed(2)
 
     cartStore.set({products: data.order.products, amount: amount, n_elem: nElem})
 
 	});
+  
+  let total = shipment.price + parseFloat(data.order.amount)
 
   async function sendOrder() {
     try {
@@ -61,6 +65,9 @@
         }
 
       })
+
+      data.order.amount = parseFloat(data.order.amount)
+      data.order.shipment = shipment
 
       await fetch(`${env.host}/orders`, {
         method: 'POST',
@@ -120,10 +127,19 @@
             {/each}
           {/if} -->
 
+          {#if shipment != null}
+              <li class="list-group-item d-flex justify-content-between bg-light">
+                <div class="text-success">
+                  <h6 class="my-0">{shipment.code}</h6>
+                  <small>Spedizione</small>
+                </div>
+                <span class="text-success">{shipment.price} €</span>
+              </li>
+          {/if}
 
           <li class="list-group-item d-flex justify-content-between">
             <span>Total </span>
-            <strong>{data.order.amount} €</strong>
+            <strong>{total} €</strong>
           </li>
         </ul>
       {/if}
@@ -154,10 +170,13 @@
             <Input id="surname" label="Surname" bind:value={data.order.customer.surname} placeholder="Please insert your surname"/>
           </div>
 
-          <div class="col-12">
+          <div class="col-6">
             <Input id="email" label="Email" bind:value={data.order.customer.email} placeholder="Please insert your email" type="email"/>
           </div>
 
+          <div class="col-6">
+            <Input id="phone" label="Phone" bind:value={data.order.customer.phone} placeholder="Please insert your phone number" type="number"/>
+        </div>
           <div class="col-12">
             <Input id="address" label="Address" bind:value={data.order.address.address} placeholder="Please insert your shipping address"/>
           </div>

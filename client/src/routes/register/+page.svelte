@@ -2,7 +2,6 @@
     import Hint from "../../lib/component/Hint.svelte";
     import env from '../../lib/store/env.js';
     import utils from '../../lib/store/utils.js';
-    import { goto } from '$app/navigation';
     import Input from "../../lib/component/Input.svelte";
     import Select from "../../lib/component/Select.svelte";
     
@@ -14,6 +13,7 @@
         email: "user01@email.it",
         password: "password01",
         passwordConf: "password01",
+        phone: 123456789,
         address: {
             address: "Via alcide de Gaspari",
             address2: "N 23, interno 45",
@@ -26,13 +26,7 @@
 
     async function submit() {
         try {
-            // Check that all fields are mandatory!
-            Object.values(user).forEach((element, index, array) => {
-                if (element === null) {
-                    throw new Error('All fields are mandatory!');
-                } 
-            })
-
+            
             if(user.password.length < 8){
                 throw new Error('Password must be at least of 8 character!')
             }
@@ -82,8 +76,11 @@
                 <div class="col-sm-6">
                     <Input id="surname" label="Surname" bind:value={user.surname} placeholder="Please insert your surname"/>
                 </div>
-                <div class="col-12">
+                <div class="col-6">
                     <Input id="email" label="Email" bind:value={user.email} placeholder="Please insert your email" type="email"/>
+                </div>
+                <div class="col-6">
+                    <Input id="phone" label="Phone" bind:value={user.phone} placeholder="Please insert your phone number" type="number"/>
                 </div>
                 <div class="col-12">
                     <Input id="password" label="Password" bind:value={user.password} placeholder="Please insert your password" type="password"/>

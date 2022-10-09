@@ -8,4 +8,6 @@ export async function load(event) {
         throw redirect(307, '/')
     }
 
+    throw redirect(307, '/admin/orders')
+
 }

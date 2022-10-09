@@ -152,8 +152,11 @@
                     <div class="col-sm-6">
                         <Input id="surname" label="Surname" bind:value={data.user.surname} placeholder="Please insert your surname"/>
                     </div>
-                    <div class="col-12">
+                    <div class="col-6">
                         <Input id="email" label="Email" bind:value={data.user.email} placeholder="Please insert your email" type="email"/>
+                    </div>
+                    <div class="col-6">
+                        <Input id="phone" label="Phone" bind:value={data.user.phone} placeholder="Please insert your phone number" type="number"/>
                     </div>
                     <div class="col-12">
                         <Input id="address" label="Address" bind:value={data.user.address.address} placeholder="Please insert your shipping address"/>
@@ -204,17 +207,18 @@
                         <OrderElement order={o} />
                     {/each}
                 </OrderList>
+                
+                <Pagenavigation addClass="mt-2">
+                    {#each ordersPage as pg}
+                        {#if currPage == pg+1}
+                            <li class="page-item page-link tb-sel active" on:click={() => changePage(pg+1)}>{pg+1}</li>
+                        {:else}
+                            <li class="page-item page-link tb-sel" on:click={() => changePage(pg+1)}>{pg+1}</li>
+                        {/if}
+                    {/each}
+                </Pagenavigation>
             {/if}
 
-            <Pagenavigation addClass="mt-2">
-                {#each ordersPage as pg}
-                    {#if currPage == pg+1}
-                        <li class="page-item page-link tb-sel active" on:click={() => changePage(pg+1)}>{pg+1}</li>
-                    {:else}
-                        <li class="page-item page-link tb-sel" on:click={() => changePage(pg+1)}>{pg+1}</li>
-                    {/if}
-                {/each}
-            </Pagenavigation>
         </div>
     </div>
 </div>

@@ -13,12 +13,6 @@
     async function submit() {
 
         try {
-        
-            Object.values(data.order.tracking).forEach((element, index, array) => {
-                if (element === null || element.length === 0) {
-                    throw new Error('All fields are mandatory!');
-                } 
-            })
 
             await fetch(`${env.host}/orders/${data.order._id}`, {
                 method: 'POST',
@@ -39,8 +33,7 @@
     
     
             if (isNewOrder && data.order.status === "SHIPPED"){
-                console.log(data.order.products)
-    
+                // Update product's quantity warehouse
                 data.order.products.forEach(async element => {
                     await fetch(`${env.host}/products/updatequantity/${element._id}`, {
                         method: 'POST',
@@ -64,12 +57,6 @@
         } catch (e){
             console.error(e)
         }
-
-
-
-
-        // TODO: dopo aver passato SHIPPED gestisci la quantità di oggetti nel warehouse
-
     }
 
 </script>
@@ -82,8 +69,7 @@
             <div class="d-flex text-muted pt-3">
                 <div class="pb-3 mb-0 lh-sm w-100">
                     
-                    <Input labelAlign="horizontal" id="trackId" label="Tracking id" bind:value={data.order.tracking.id} type="number" />
-                    <Input labelAlign="horizontal" id="trackProv" label="Tracking provider" bind:value={data.order.tracking.provider} />
+                    <Input labelAlign="horizontal" id="trackId" label="Tracking id" bind:value={data.order.shipment.trackingId} type="number" />
                     
                     <Select labelAlign="horizontal" id="status-select" label="Current status" arialabel="Default select example" bind:value={data.order.status} elements={env.status} />
 

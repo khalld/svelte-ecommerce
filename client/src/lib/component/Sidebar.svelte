@@ -3,12 +3,6 @@
     import userStore from '../store/userStore';
     import { goto } from '$app/navigation';
 
-    // function capitalizeFirst(str){
-    //     return str.charAt(0).toUpperCase() + str.slice(1);
-    // }
-
-    // let title = capitalizeFirst($page.url.pathname.split("/")[$page.url.pathname.split("/").length - 1])
-
     function logout(){
 		userStore.set({loggedIn: false, _id: null, role: null});
 		goto("/login");
@@ -28,37 +22,50 @@
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
             <div class="position-sticky pt-3 sidebar-sticky">
                 <ul class="nav flex-column">
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link {$page.url.pathname == "/admin" ? "active" : "" } nav-link" href="/admin">
                             <i class="fa-solid fa-jedi fa-lg"></i>
                             Dashboard
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
-                        <a class="nav-link  {$page.url.pathname == "/admin/orders" ? "active" : "" }" href="/admin/orders">
+                        <a class="nav-link  {$page.url.pathname.indexOf("/orders") != -1 ? "active" : "" }" href="/admin/orders">
                             <i class="fa-solid fa-truck-fast fa-lg"></i>
                             Orders
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link  {$page.url.pathname == "/admin/users" ? "active" : "" }" href="/admin/users">
+                        <a class="nav-link  {$page.url.pathname.indexOf("/users") != -1 ? "active" : "" }" href="/admin/users">
                             <i class="fa-solid fa-users fa-lg"></i>
                             Users
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link  {$page.url.pathname == "/admin/warehouse" ? "active" : "" }" href="/admin/warehouse">
+                        <a class="nav-link  {$page.url.pathname.indexOf("/warehouse") != -1 ? "active" : "" }" href="/admin/warehouse">
                             <i class="fa-solid fa-warehouse fa-lg"></i>
                             Warehouse
                         </a>
                     </li>
-                    <li><hr class="dropdown-divider" /></li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item ">
                         <a class="nav-link disabled" href="/">
                             <i class="fa-solid fa-question fa-lg"></i>
                             Helpdesk
                         </a>
+                    </li> -->
+                    <li class="nav-item position-absolute bottom-0 start-0 mb-4 p-2">
+                        <div class="dropdown flex-column">
+                            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user fa-xl rounded-circle me-2"></i>
+                                <strong>Profile</strong>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" on:click={() => logout()} href="/">Logout</a></li>
+                            </ul>
+                        </div>
                     </li>
+                    
                 </ul>
 
                 <!-- <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
@@ -93,23 +100,6 @@
                     </a>
                     </li>
                 </ul> -->
-
-                <div class="position-absolute bottom-0 start-0 mb-2 p-2">
-                    <div class="dropdown flex-column">
-                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-user fa-xl rounded-circle me-2"></i>
-
-                            <strong>Profile</strong>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                            <li><a class="dropdown-item {$page.url.pathname == "/profile" ? "active" : "" }" href="/profile">Profile</a></li>
-                            <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" on:click={() => logout()} href="/">Logout</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-
             </div>
 
         </nav>
