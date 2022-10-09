@@ -16,7 +16,7 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <div class="container-fluid">
 
-    <a class="navbar-brand" href="/"><i class="fa-brands fa-d-and-d fa-xl"></i></a>
+    <a class="navbar-brand p-2" href="/"><i class="fa-brands fa-d-and-d fa-xl {$page.url.pathname == "/" ? "link-light" : "link-secondary" } "></i></a>
     <button
       class="navbar-toggler"
       type="button"
@@ -49,22 +49,13 @@
           </ul>
         </li> -->
 
-        <li class="nav-item me-4" >
-          <button type="button" class="btn btn-primary position-relative {$page.url.pathname == "/cart" ? "active" : "" }" on:click={() => goto("/cart")}>
-            <i class="fa-solid fa-cart-shopping fa-xl" ></i>
-            <span class="position-absolute badge rounded-pill bg-danger">
-              {$cartStore.n_elem}
-            </span>
-          </button>
+        <li class="nav-item">
+          <a class="nav-link {$page.url.pathname == "/products" ? "active" : "" } " href="/products" >Our products</a>
         </li>
-
-        <button type="button" class="btn btn-primary position-relative {$page.url.pathname == "/products" ? "active" : "" }" on:click={() => goto('/products')} >
-          Products
-        </button>
 
         {#if $userStore.loggedIn == true}
           <li class="nav-item dropstart">
-            <button type="button" class="btn btn-primary position-relative {$page.url.pathname == "/profile" ? "active" : "" }" data-bs-toggle="dropdown" aria-expanded="false">
+            <button type="button" class="btn position-relative {$page.url.pathname == "/profile" ? "link-light" : "link-secondary" } " data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fa-solid fa-user fa-xl" ></i>
             </button>
             <ul class="dropdown-menu">
@@ -77,10 +68,19 @@
             </ul>
           </li>
         {:else}
-          <button type="button" class="btn btn-primary position-relative" on:click={() => goto('/login')} >
+          <a class="nav-link {$page.url.pathname == "/profile" ? "active" : "" }" href="/login" >
             Login
-          </button>
+          </a>
         {/if}
+
+        <li class="nav-item me-4 mt-2 position-relative" >
+          <!-- <button type="button" class="btn btn-primary position-relative  on:click={() => goto("/cart")}> -->
+            <i class="fa-solid fa-cart-shopping fa-xl tb-sel {$page.url.pathname == "/cart" ? "link-light" : "link-secondary" } " on:click={() => goto("/cart")}></i>
+            <span class="position-absolute badge rounded-pill bg-danger tb-sel">
+              {$cartStore.n_elem}
+            </span>
+          <!-- </button> -->
+        </li>
 
       </ul>
     </div>

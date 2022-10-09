@@ -21,8 +21,8 @@
 </script>
 
 <div class="input-group flex-nowrap mb-5">
-    <span class="input-group-text" id="addon-wrapping"><i class="fas fa-search"></i></span>
-    <input type="text" class="form-control" placeholder={placeholder} aria-describedby="addon-wrapping"
+    <span class="input-group-text shadow-sm" id="addon-wrapping"><i class="fas fa-search"></i></span>
+    <input type="text" class="form-control shadow-sm" placeholder={placeholder} aria-describedby="addon-wrapping"
         bind:value
         on:input={inputHandler}
         on:blur={blurHandler} />
