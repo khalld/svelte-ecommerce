@@ -1,4 +1,5 @@
 <script>
+    import "../app.scss";
     import Navbar from '../lib/component/Navbar.svelte';
     import Footer from '../lib/component/Footer.svelte';
     import { NotificationDisplay } from '@beyonk/svelte-notifications'
@@ -21,7 +22,7 @@
     <slot></slot>
 </div>
 
-<Footer></Footer>
+<Footer />
 
 {:else}
     <Sidebar>
