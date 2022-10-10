@@ -12,16 +12,15 @@
     let info = null;
     
     async function submit() {
-
+        error = null;
+        info = null;
+            
         try {
             Object.values(user).forEach((element, index, array) => {
                 if (element === null || element.length === 0) {
                     throw new Error('All fields are mandatory!');
                 } 
             })
-            
-            error = null;
-            info = null;
             
             await fetch(`${env.host}/users/recoverpwd`, {
                 method: 'POST',

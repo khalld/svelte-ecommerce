@@ -1,13 +1,15 @@
 /* Variables and mixins declared here will be available in all other SCSS files */
-@import "bootstrap/scss/functions"; /* Override Bootstrap's variables here */
+@import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/maps";
 @import "bootstrap/scss/mixins";
 @import "bootstrap/scss/utilities";
 @import "bootstrap";
 
+ /* Override Bootstrap's variables here */
+
 $theme-colors: (
-    "primary":    $gray-500,
+    "primary":    $gray-800,
     "secondary":  $secondary,
     "success":    $success,
     "info":       $info,
@@ -23,3 +25,4 @@ $dropdown-link-active-bg: $gray-700;
 
 $nav-link-color: $gray-800;
 $nav-link-hover-color: $dark;
+$pagination-active-bg: $gray-700;

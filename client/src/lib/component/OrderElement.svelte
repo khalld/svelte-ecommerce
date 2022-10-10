@@ -19,8 +19,10 @@
     {:else if order.status == "REJECTED"}
         <span class="badge bg-danger rounded-pill">REJECTED</span>
     {:else if order.status == "SHIPPED"}
-        <span class="badge bg-success rounded-pill">SHIPPED</span>
+        <span class="badge bg-info rounded-pill">SHIPPED</span>
     {:else if order.status == "DELIVERED"}
         <span class="badge bg-success rounded-pill">DELIVERED</span>
+    {:else if order.status == "RETURNED"}
+        <span class="badge bg-danger rounded-pill">RETURNED</span>
     {/if}
 </li>

@@ -1,7 +1,7 @@
 export default {
     host: 'http://localhost:3000',
-    status: ["PENDING", "REJECTED", "SHIPPED", "DELIVERED"],
-    sales: [    // TODO: create a schema for db
+    status: ["PENDING", "REJECTED", "SHIPPED", "DELIVERED", "RETURNED"],
+    sales: [    // TODO: create a schema for db in v2
         {
             code: "WELCOME10",
             sale: 20

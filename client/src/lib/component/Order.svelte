@@ -32,9 +32,11 @@
                                 {:else if order.status == "REJECTED"}
                                     <span class="badge bg-danger rounded-pill">REJECTED</span>
                                 {:else if order.status == "SHIPPED"}
-                                    <span class="badge bg-success rounded-pill">SHIPPED</span>
+                                    <span class="badge bg-info rounded-pill">SHIPPED</span>
                                 {:else if order.status == "DELIVERED"}
                                     <span class="badge bg-success rounded-pill">DELIVERED</span>
+                                {:else if order.status == "RETURNED"}
+                                    <span class="badge bg-danger rounded-pill">RETURNED</span>
                                 {/if}
 
 
@@ -145,7 +147,7 @@
                             <strong>{order.shipment.code}</strong><br>
                             <span class="text-decoration-underline text-primary">{order.shipment.trackingId} <i class="bi bi-box-arrow-up-right"></i> </span>
                         {:else}
-                        <strong>Your order is still being processed</strong>
+                            <strong>Your order is still being processed</strong>
                         {/if}
                     </div>
                 </div>

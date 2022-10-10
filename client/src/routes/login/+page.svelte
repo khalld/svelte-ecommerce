@@ -13,8 +13,7 @@
   export let error = null;
 
   async function submitLogin() {
-
-
+    error = null;
     try {
       Object.values(user).forEach((element, index, array) => {
         if (element === null || element.length === 0) {

@@ -21,7 +21,12 @@ const orderSchema = new Schema({
         city: String,
         zip: Number
     },
-    shipment: Object,
+    shipment: {
+        code: String,
+        price: Number,
+        description: String,
+        trackingId: Number,
+    },
     amount: Number,
     notes: String,
     status: String

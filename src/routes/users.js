@@ -106,15 +106,13 @@ router.post('/recoverpwd', async (req, res) => {
             from: env.mail.auth.user,
             to: user.email,
             subject: 'Company Name - Password recovery',
-            text: `<h1>Hi ${user.name},</h1><p>it seems that you have forgot your password. Click <a href="${env.client.host}recover/{token}">here</a> to recover your password! If you have problem to see the link, copy and paste this link on your browser: http://localhost:5173/recover/{token}</p>`
+            html: `<h1>Hi ${user.name},</h1><p>it seems that you have forgot your password. Click <a href="${env.client.host}recover/${token}">here</a> to recover your password!<br><br> If you have problem to see the link, copy and paste this link on your browser: http://localhost:5173/recover/${token}</p>`
         }
 
         transporter.sendMail(mailOptions, function(error, info){
             if (error) {
-                console.error(error)
                 throw new Error('Error sending email!')
             }
-            console.log('Email sent: ' + info.response);
         });
 
         res.status(202)
@@ -199,6 +197,12 @@ router.get('/:id', async (req, res) => {
             throw new Error('Id required')
         }
 
+        const userExist = await User.findOne({email: req.body.email})
+
+        if (userExist != null){
+            throw new Error(`Email already used`)
+        }
+
         const user = await User.findOne({_id: req.params.id}).select('-password')
 
         if (user == null){
@@ -217,8 +221,7 @@ router.get('/:id', async (req, res) => {
 
 })
 
-
-// Get specific element
+// Disable or enable a user
 router.post('/disable', async (req, res) => {
     try {
         if (req.body.id == null){
@@ -273,15 +276,14 @@ router.post('', async (req, res) => {
             from: env.mail.auth.user,
             to: user.email,
             subject: 'Company Name - Welcome!',
-            text: `<h1>Welcome ${user.name} ${user.surname},</h1><p> we are glad to have you with us!</p>`
+            html: `<h1>Welcome ${user.name} ${user.surname},</h1><p> we are glad to have you with us!</p>`
         }
 
         transporter.sendMail(mailOptions, function(error, info){
             if (error) {
-                console.log(error)
+                console.log("error email", error)
                 throw new Error('Error sending email!')
             }
-            console.log('Email sent: ' + info.response);
         });
 
         await user.save()

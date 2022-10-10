@@ -111,21 +111,21 @@ router.post('', async (req, res) => {
     try {
         var order = new Order(req.body);
         order.code = uuidv4();
+        order.shipment.trackingId = null;
+
         await order.save()
 
         var mailOptions = {
             from: env.mail.auth.user,
-            to: user.email,
-            subject: `Company Name - Order ${order.code} created`,
-            text: `<h1>Hi ${user.name},</h1><p>we are glad that you choose us! There you can check the status of your order ${env.client.host}/findorder/${order.code}</p>`
+            to: order.customer.email,
+            subject: `Company Name - Order ${order.code}`,
+            html: `<h1>Hi ${order.customer.name},</h1><p>we are glad that you choose us! <a href="${env.client.host}findorder/${order.code}">Here</a> you can check the status of your order <br><br>If you have problem to see the link, copy and paste this link on your browser: ${env.client.host}findorder/${order.code}</p>`
         }
 
         transporter.sendMail(mailOptions, function(error, info){
             if (error) {
-                console.error(error)
                 throw new Error('Error sending email!')
             }
-            console.log('Email sent: ' + info.response);
         });
 
         res.send(order);
@@ -138,6 +138,7 @@ router.post('', async (req, res) => {
 
 // Edit an existing element. Is possible change only status and tracking information
 router.post('/:id', async (req, res) => {
+
     try {
         var order = await Order.findOne({_id: req.params.id})
 
@@ -145,18 +146,37 @@ router.post('/:id', async (req, res) => {
             throw new Error(`Not found`)
         }
 
-        order.status = req.body.status;
-        order.tracking = req.body.tracking;
+        // some logical base controls to avoid illogical status
+        if ((order.status == "DELIVERED" || order.status == "SHIPPED") && (req.body.status == "REJECTED" || req.body.status == "PENDING")){
+            throw new Error("That's bad!")
+        }
 
-        // TODO:
-        // add controls of status
-        // impossible change from shipped to pending
-        // impossible change from pending to received
-        
-        // TODO: in v2
-        // add email to notify the update of order from pending to --> delivered
+        if ((order.status == "PENDING" || order.status == "REJECTED") && req.body.status == "RETURNED" || req.body.status == "DELIVERED" ){
+            throw new Error("That's bad!")
+        }
+
+        order.status = req.body.status;
+        order.shipment.trackingId = req.body.shipment.trackingId;
 
         await order.save()
+
+        // Send email to confirm that the order was shipped or rejected
+        if (order.status == "PENDING" && (req.body.status == "REJECTED" || req.body.status == "SHIPPED")){
+            var mailOptions = {
+                from: env.mail.auth.user,
+                to: order.customer.email,
+                subject: `Company Name - Changed status of order ${order.code}`,
+                html: `<h1>Hi ${order.customer.name},</h1><p>it seems that the status of your order changed. Click <a href="${env.client.host}findorder/${order.code}">here</a> to check the current status!<br><br>If you have problem to see the link, copy and paste this link on your browser: ${env.client.host}findorder/${order.code}</p>`
+            }
+    
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                    throw new Error('Error sending email!')
+                }
+            });
+
+        }
+
         res.send(order);
 
     } catch (err) {

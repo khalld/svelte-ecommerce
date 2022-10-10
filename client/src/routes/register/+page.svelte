@@ -10,7 +10,7 @@
     let user = {
         name: "Mimmo",
         surname: "Lucifora",
-        email: "user01@email.it",
+        email: "gatic20289@migonom.com",
         password: "password01",
         passwordConf: "password01",
         phone: 123456789,
@@ -25,6 +25,8 @@
     }
 
     async function submit() {
+        error = null;
+        info = null;
         try {
             
             if(user.password.length < 8){
