@@ -74,15 +74,6 @@
                                 </tr>
                             </tbody>
                             <tfoot>
-                                <!-- TODO: add shipping cost -->
-                            <!-- <tr>
-                                <td colspan="2">Subtotal</td>
-                                <td class="text-end">$159,98</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">Shipping</td>
-                                <td class="text-end">$20.00</td>
-                            </tr> -->
                             <!-- TODO: add in v2 -->
                             <!-- <tr>
                                 <td colspan="2">Discount (Code: NEWYEAR)</td>

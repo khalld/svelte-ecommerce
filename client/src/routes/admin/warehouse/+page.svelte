@@ -45,11 +45,13 @@
             }
         })
         .then(() => {
-            // TODO: Sistemare!
-            // const indexOfObject = data.products.products.findIndex(object => {
-            //     return object._id === id;
-            // });
-            // data.products.products = data.products.products.splice(indexOfObject, 1);
+            const indexOfObject = data.products.products.findIndex(object => {
+                return object._id === id;
+            });
+            data.products.products.splice(indexOfObject, 1);
+
+            data.products.products = data.products.products
+
             notifier.success('Product deleted successfully')
         })
         .catch(err => notifier.danger(err.message))

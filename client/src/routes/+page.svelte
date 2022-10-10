@@ -16,9 +16,9 @@
       <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
       <div class="container">
         <div class="carousel-caption text-start">
-          <h1>Example headline.</h1>
-          <p>Some representative placeholder content for the first slide of the carousel.</p>
-          <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+          <h1>Maecenas sit amet ligula ipsum</h1>
+          <p>Maecenas egestas at nisl non lacinia. Vestibulum nec nulla bibendum, elementum metus in, facilisis velit. Donec ac laoreet justo. Nulla accumsan interdum mi, vitae consequat nunc interdum volutpat. Duis fermentum porttitor nunc ut varius. Vestibulum cursus venenatis bibendum. Cras ornare pharetra purus. Curabitur odio libero, efficitur a est non, tristique malesuada nisi. Sed et finibus diam, quis euismod erat. </p>
+          <p><a class="btn btn-lg btn-primary" href="/register">Sign up</a></p>
         </div>
       </div>
     </div>
@@ -26,9 +26,9 @@
       <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
       <div class="container">
         <div class="carousel-caption">
-          <h1>Another example headline.</h1>
-          <p>Some representative placeholder content for the second slide of the carousel.</p>
-          <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+          <h1>Aenean tincidunt accumsan massa, vel vehicula purus lobortis at</h1>
+          <p>Maecenas rhoncus efficitur eleifend. Duis scelerisque massa vel tortor pulvinar mattis. Ut vestibulum nisl in rutrum venenatis. </p>
+          <p><a class="btn btn-lg btn-primary" href="/findorder">Find your order</a></p>
         </div>
       </div>
     </div>
@@ -36,9 +36,9 @@
       <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
       <div class="container">
         <div class="carousel-caption text-end">
-          <h1>One more for good measure.</h1>
-          <p>Some representative placeholder content for the third slide of this carousel.</p>
-          <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
+          <h1>Fusce ullamcorper velit eu finibus tempor.</h1>
+          <p>Phasellus dolor metus, volutpat vel eros eget, feugiat eleifend risus. Aliquam aliquam lobortis porttitor. Duis vitae mauris sit amet ex convallis auctor. Fusce non nisl vel leo sollicitudin tempus. Proin vel porta est, in porttitor justo. Phasellus id eros ultrices, placerat mi quis, hendrerit nisl.</p>
+          <p><a class="btn btn-lg btn-primary" href="/products">Our products</a></p>
         </div>
       </div>
     </div>

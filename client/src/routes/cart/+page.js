@@ -12,7 +12,6 @@ export async function load(event) {
             
         }
     };
-    // TODO: aggiungi controllo su _id
 
     if (get(userStore)._id != null) {
         await fetch(`${env.host}/users/${get(userStore)._id}`)
@@ -32,10 +31,10 @@ export async function load(event) {
     return {
         order: {
             data: Date.now(),
-            products: [], // TODO:
-            sales: [], // TODO:
+            products: [],
+            sales: [],
             customer: {
-                _id: userInfo._id, //FIXME: type object id
+                _id: userInfo._id,
                 email: userInfo.email,
                 name: userInfo.name,
                 surname: userInfo.surname,

@@ -14,13 +14,15 @@
 
   async function submitLogin() {
     error = null;
+
+    const regexEmail = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
+
     try {
-      Object.values(user).forEach((element, index, array) => {
-        if (element === null || element.length === 0) {
-          throw new Error('All fields are mandatory!');
-        } 
-      })
-      
+
+      if (regexEmail.test(user.email) == false){
+        throw new Error('Email field is not valid!')
+      }
+
       await fetch(`${env.host}/users/login`, {
         method: 'POST',
         headers: {
@@ -57,8 +59,6 @@
     } catch (e){
       error = e.message;
     }
-
-
 
   }
 

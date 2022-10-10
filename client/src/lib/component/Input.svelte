@@ -20,15 +20,15 @@
             <label for={id} class="mb-1">{label}</label>
         {/if}
         {#if type === "text"}
-            <input type="text" {readonly} class={inputClass} id={id} bind:value placeholder={placeholder} required>
+            <input type="text" {readonly} class={inputClass} id={id} bind:value placeholder={placeholder} >
         {:else if type === "email"}
-            <input type="email" {readonly} class={inputClass} id={id} bind:value placeholder={placeholder} required>
+            <input type="email" {readonly} class={inputClass} id={id} bind:value placeholder={placeholder} >
         {:else if type === "textarea"}
             <textarea class={inputClass} id={id} rows="3" bind:value placeholder={placeholder}></textarea>
         {:else if type === "password"}
-            <input type="password" {readonly} class={inputClass} id={id} bind:value placeholder={placeholder} required>
+            <input type="password" {readonly} class={inputClass} id={id} bind:value placeholder={placeholder} >
         {:else if type === "number"}
-            <input type="number" {readonly} class={inputClass} id={id} bind:value placeholder={placeholder} required>
+            <input type="number" {readonly} class={inputClass} id={id} bind:value placeholder={placeholder} >
         {/if}
         <div class="invalid-feedback">
             {requiredText}
@@ -43,13 +43,13 @@
         {/if}
         <div class="col-sm-10">
             {#if type === "text"}
-                <input type="text" {readonly} class={inputClass} id={id} placeholder={placeholder} bind:value required>
+                <input type="text" {readonly} class={inputClass} id={id} placeholder={placeholder} bind:value >
             {:else if type === "password"}
-                <input type="password" {readonly} class={inputClass} id={id} placeholder={placeholder} bind:value required>
+                <input type="password" {readonly} class={inputClass} id={id} placeholder={placeholder} bind:value >
             {:else if type === "number"}
-                <input type="number" {readonly} class={inputClass} id={id} placeholder={placeholder} bind:value required>
+                <input type="number" {readonly} class={inputClass} id={id} placeholder={placeholder} bind:value >
             {:else if type === "email"}
-                <input type="email" {readonly} class={inputClass} id={id} placeholder={placeholder} bind:value required>
+                <input type="email" {readonly} class={inputClass} id={id} placeholder={placeholder} bind:value >
             {:else if type === "textarea"}
                 <textarea {readonly} class={inputClass} id={id} rows="3" placeholder={placeholder} bind:value></textarea>
             {/if}

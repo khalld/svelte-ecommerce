@@ -47,6 +47,11 @@
             }
         })
         .then(() => {
+            const indexOfObject = data.users.users.findIndex(object => {
+                return object._id === id;
+            });
+            data.users.users[indexOfObject].enabled = !enabled
+
             notifier.success('Operation successfully completed')
         })
         .catch(err => notifier.danger(err.message))

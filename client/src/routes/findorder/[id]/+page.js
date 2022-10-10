@@ -4,11 +4,9 @@ import env from '../../../lib/store/env.js';
 import userStore from '../../../lib/store/userStore.js';
 
 export async function load({url}) {
-
-    // TODO:
-    // if(get(userStore).loggedIn && get(userStore)._id != order.customer._id){
-    //     throw redirect(307, '/profile')
-    // }
+    if(get(userStore).loggedIn && get(userStore)._id != order.customer._id){
+        throw redirect(307, '/profile')
+    }
 
     const code = url.pathname.split("/")[url.pathname.split("/").length - 1]
 

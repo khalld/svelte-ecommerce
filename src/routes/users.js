@@ -305,7 +305,7 @@ router.post('', async (req, res) => {
 // Edit an existing element
 router.post('/:id', async (req, res) => {
     try {
-        var user = await User.findOne({_id: req.params.id})
+        var user = await User.findOne({_id: req.params.id}).select('-password')
 
         if (user == null){
             throw new Error(`Not found`)
@@ -315,7 +315,8 @@ router.post('/:id', async (req, res) => {
         user.surname = req.body.surname;
         user.email = req.body.email;
         user.address = req.body.address;
-
+        user.phone = req.body.phone;
+        
         await user.save()
         res.send(user);
 

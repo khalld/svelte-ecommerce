@@ -36,7 +36,19 @@
 
   async function sendOrder() {
     try {
-
+      
+      if (user.name == undefined || user.surname == undefined || user.email == undefined || user.phone == undefined || user.address.address == undefined || user.address.city == undefined || user.address.zip == undefined){
+        throw new Error('Fill all required fields!')
+      }
+      if (user.name.length == 0 || user.surname.length == 0 || user.address.address.length == 0 || user.address.city.length == 0){
+        throw new Error('Fill all required fields!')
+      }
+      if (regexEmail.test(user.email) == false){
+        throw new Error('Email field is not valid!')
+      }
+      if (user.phone.toString().length < 8){
+        throw new Error('Please insert a valid phone number')
+      }
       if (data.order.products.length === 0){
         throw new Error('How do you want to order witouth products?')
       }
@@ -84,7 +96,6 @@
       .then(() => {
         notifier.success('Order submitted successfully!')
         cartStore.set({products: [], amount: 0.0, n_elem: 0})
-        // TODO: rimanda al dettaglio dell'ordine (?)
       })
       .catch(err => notifier.danger(err.message))
 
@@ -160,7 +171,7 @@
       <p class="text-muted">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis tincidunt ex. Curabitur efficitur tincidunt enim nec efficitur. Proin in commodo mauris. Quisque ultrices metus eros, commodo tempus dui posuere quis
       </p>
-      <form on:submit|preventDefault={sendOrder} class="needs-validation" novalidate> <!-- TODO: che signfica ?? -->
+      <form on:submit|preventDefault={sendOrder} class="needs-validation">
         <div class="row g-3">
           <div class="col-sm-6">
             <Input id="name" label="Name" bind:value={data.order.customer.name} placeholder="Please insert your name"/>
@@ -208,7 +219,7 @@
 
         <hr class="my-4">
 
-        <!-- TODO: to enable -->
+        <!-- TODO: to enable in v2-->
         <!-- <div class="form-check">
           <input type="checkbox" class="form-check-input" id="same-address">
           <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>

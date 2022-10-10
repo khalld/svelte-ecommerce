@@ -30,7 +30,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto ">
-        <!-- TODO: categories -->
+        <!-- TODO: categories in v2-->
         <!-- <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"

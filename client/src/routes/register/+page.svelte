@@ -8,27 +8,46 @@
     let error;
     let info;
     let user = {
-        name: "Mimmo",
-        surname: "Lucifora",
-        email: "gatic20289@migonom.com",
-        password: "password01",
-        passwordConf: "password01",
-        phone: 123456789,
+        // name: "Mimmo",
+        // surname: "Lucifora",
+        // email: "gatic20289@migonom.com",
+        // password: "password01",
+        // passwordConf: "password01",
+        // phone: 123456789,
         address: {
-            address: "Via alcide de Gaspari",
-            address2: "N 23, interno 45",
+            // address: "Via alcide de Gaspari",
+            // address2: "N 23, interno 45",
             country: "Italy",
-            region: "Abruzzo",
-            city: "New York",
-            zip: 9999,
+            // region: "Abruzzo",
+            // city: "New York",
+            // zip: 9999,
         }
     }
 
     async function submit() {
         error = null;
         info = null;
+
+        const regexEmail = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
+
         try {
-            
+
+            if (user.name == undefined || user.surname == undefined || user.email == undefined || user.phone == undefined || user.address.address == undefined || user.address.city == undefined || user.address.zip == undefined){
+                throw new Error('Fill all required fields!')
+            }
+
+            if (user.name.length == 0 || user.surname.length == 0 || user.address.address.length == 0 || user.address.city.length == 0){
+                throw new Error('Fill all required fields!')
+            }
+
+            if (regexEmail.test(user.email) == false){
+                throw new Error('Email field is not valid!')
+            }
+
+            if (user.phone.toString().length < 8){
+                throw new Error('Please insert a valid phone number')
+            }
+
             if(user.password.length < 8){
                 throw new Error('Password must be at least of 8 character!')
             }

@@ -11,8 +11,10 @@
     let isNewOrder = data.order.status === "PENDING" ? true : false;
 
     async function submit() {
-
         try {
+            if ((data.order.shipment.trackingId == undefined || data.order.shipment.trackingId.toString().length == 0) && data.order.status == 'SHIPPED' ){
+                throw new Error('Need to insert tracking id')
+            }
 
             await fetch(`${env.host}/orders/${data.order._id}`, {
                 method: 'POST',

@@ -18,5 +18,3 @@
         </li>
     </ul>
 </nav>
-
-<!-- TODO: usa le classi di bootstrap 5!!! -->

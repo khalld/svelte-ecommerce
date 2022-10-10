@@ -1,26 +1,23 @@
 <script>
     import InfoPanelAdmin from "../../../../../lib/component/InfoPanelAdmin.svelte";
     import InfoPanelHeader from "../../../../../lib/component/InfoPanelHeader.svelte";
-    import InputFile from "../../../../../lib/component/InputFile.svelte";
     import Input from "../../../../../lib/component/Input.svelte";
     import Checkbox from "../../../../../lib/component/Checkbox.svelte";
     import env from "../../../../../lib/store/env.js";
     import { notifier } from '@beyonk/svelte-notifications';
-    import Carousel from "../../../../../lib/component/Carousel.svelte";
-    import calculateVat from "../../../../../lib/js/utils";
 
     export let data;
     
 	async function submit() {
 
         try {
-            // FIXME: aggiungi filtro per .png o .jpeg
+            if (product.name == undefined || product.code == undefined || product.description == undefined || product.longDescription == undefined || product.quantity == undefined || product.price == undefined ){
+                throw new Error('All fields are mandatory')
+            }
 
-            // Object.values(data.product).forEach((element, index, array) => {
-            //     if (element === null || element.length === 0) {
-            //         throw new Error('All fields are mandatory!');
-            //     } 
-            // })
+            if (product.photos[0].src.length == 0 || product.photos[1].src.length == 0 || product.photos[2].src.length == 0 || product.photos[3].src.length == 0 || product.photos[4].src.length == 0){
+                throw new Error('You must insert all pictures!')
+            }
             
             await fetch(`${env.host}/products/${data.product._id}`, {
                 method: 'POST',

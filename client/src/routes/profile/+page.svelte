@@ -43,7 +43,25 @@
 	}
 
     async function updateProfile(){
+        const regexEmail = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
+
         try {
+
+            if (data.user.name == undefined || data.user.surname == undefined || data.user.email == undefined || data.user.phone == undefined || data.user.address.address == undefined || data.user.address.city == undefined || data.user.address.zip == undefined){
+                throw new Error('Fill all required fields!')
+            }
+
+            if (data.user.name.length == 0 || data.user.surname.length == 0 || data.user.address.address.length == 0 || data.user.address.city.length == 0){
+                throw new Error('Fill all required fields!')
+            }
+
+            if (regexEmail.test(data.user.email) == false){
+                throw new Error('Email field is not valid!')
+            }
+
+            if (data.user.phone.toString().length < 8){
+                throw new Error('Please insert a valid phone number')
+            }
 
             await fetch(`${env.host}/users/${get(userStore)._id}`, {
                 method: 'POST',
@@ -53,12 +71,12 @@
                 body: JSON.stringify({
                     name: data.user.name,
                     surname: data.user.surname,
+                    phone: data.user.phone,
                     email: data.user.email,
-                    address: data.user.address
+                    address: data.user.address,
                 })
             })
             .then(res => {
-                console.log(res)
                 if (res.status == 400 || res.status == 404 ){
                     notifier.danger('Something wrong happened!')
                 } 
@@ -177,6 +195,7 @@
                         <Input id="zip" label="ZIP" bind:value={data.user.address.zip} placeholder="ZIP code" type="number"  colClass="mb-4"/>
                     </div>
                 </div>
+                <Hint str={error} />
                 <button class="w-100 btn btn-primary btn-lg mt-2" type="submit">Update profile</button>
             </form>
         
