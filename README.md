@@ -1,10 +1,3 @@
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 <div align="center">
   <a href="https://github.com/khalld/svelte-ecommerce">
     <img src="https://cdn4.iconfinder.com/data/icons/game-of-thrones-4/64/game_of_thrones_game_thrones_series_character_avatar_dragon-512.png" alt="Logo" width="80" height="80">
@@ -32,12 +25,19 @@
 
 Demo of a real case of ecommerce made for Web programming, Design & Usability (Università degli studi di Catania - Magistrale in Informatica (Curriculum Data Science) A.A. 2022-2023)
 
+<center>
 
-<img src="https://github.com/get-icon/geticon/raw/master/icons/nodejs-icon.svg" width=25>
+<img src="https://github.com/get-icon/geticon/raw/master/icons/javascript.svg" width=45>
+<a href="https://nodejs.org/en/"><img src="https://github.com/get-icon/geticon/raw/master/icons/nodejs-icon.svg" width=45></a> 
+<a href="https://expressjs.com/"><img src="https://github.com/get-icon/geticon/raw/master/icons/express.svg" width=45></a>
+<a href="https://kit.svelte.dev/"><img src="https://github.com/get-icon/geticon/raw/master/icons/svelte-icon.svg" width=45></a>
+<a href="https://getbootstrap.com/docs/5.2/getting-started/introduction/"><img src="https://github.com/get-icon/geticon/raw/master/icons/bootstrap.svg" width=45></a>
+<a href="https://sass-lang.com/"><img src="https://github.com/get-icon/geticon/raw/master/icons/sass.svg" width=45></a>
+<a href="https://vitejs.dev/"><img src="https://github.com/get-icon/geticon/raw/master/icons/vite.svg" width=45></a>
+
+</center>
 
 
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 
 ## Features
 
@@ -61,7 +61,7 @@ Server side
 - Nodemailer to sending emails
 
 Front end side
-- Svelte
+- SvelteKit
 - Bootstrap 5.2 with SASS integration
 
 # Getting started
