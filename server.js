@@ -2,11 +2,11 @@
 // import { handler } from "../client/build/handler.js";
 const express = require("express");
 const app = express();
-const env = require('./env.js');
-const {connectToDb} = require('./db/connection.js')
-const userRoute = require("./routes/users.js");
-const productRoute = require("./routes/products.js");
-const orderRoute = require("./routes/orders.js");
+const env = require('./src/env.js');
+const {connectToDb} = require('./src/db/connection.js')
+const userRoute = require("./src/routes/users.js");
+const productRoute = require("./src/routes/products.js");
+const orderRoute = require("./src/routes/orders.js");
 
 // necessario per runnare assieme al client
 // app.use(handler)
