@@ -28,30 +28,31 @@
     }) 
       
     amount = amount.toFixed(2)
-
+    
     cartStore.set({products: data.order.products, amount: amount, n_elem: nElem})
 
 	});
   
   let total = shipment.price + parseFloat(data.order.amount)
+  const regexEmail = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
 
   async function sendOrder() {
     try {
       
-      if (user.name == undefined || user.surname == undefined || user.email == undefined || user.phone == undefined || user.address.address == undefined || user.address.city == undefined || user.address.zip == undefined){
+      if (data.order.customer.name == undefined || data.order.customer.surname == undefined || data.order.customer.email == undefined || data.order.customer.phone == undefined || data.order.address.address == undefined || data.order.address.city == undefined || data.order.address.zip == undefined){
         throw new Error('Fill all required fields!')
       }
-      if (user.name.length == 0 || user.surname.length == 0 || user.address.address.length == 0 || user.address.city.length == 0){
+      if (data.order.customer.name.length == 0 || data.order.customer.surname.length == 0 || data.order.address.address.length == 0 || data.order.address.city.length == 0){
         throw new Error('Fill all required fields!')
       }
-      if (regexEmail.test(user.email) == false){
+      if (regexEmail.test(data.order.customer.email) == false){
         throw new Error('Email field is not valid!')
       }
-      if (user.phone.toString().length < 8){
+      if (data.order.customer.phone.toString().length < 8){
         throw new Error('Please insert a valid phone number')
       }
       if (data.order.products.length === 0){
-        throw new Error('How do you want to order witouth products?')
+        throw new Error('What do you want to order with empty cart?')
       }
 
       var products = []
@@ -97,6 +98,8 @@
       .then(() => {
         addNotification({ text: 'Order submitted successfully!', type: 'success', position: 'bottom-right' })
         cartStore.set({products: [], amount: 0.0, n_elem: 0})
+        data.order.customer = {}
+        data.order.address = {}
       })
       .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right' }))
 

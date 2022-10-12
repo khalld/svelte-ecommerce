@@ -52,8 +52,8 @@
                 throw new Error('All fields are mandatory')
             }
 
-            if (product.photos[0].src.length == 0 || product.photos[1].src.length == 0 || product.photos[2].src.length == 0 || product.photos[3].src.length == 0 || product.photos[4].src.length == 0){
-                throw new Error('You must insert all pictures!')
+            if (product.photos[0].src.length == 0){
+                throw new Error('You must insert at least the first picture!')
             }
             
             await fetch(`${env.host}/products/`, {
@@ -75,7 +75,7 @@
                 addNotification({ text: 'New product added', type: 'success', position: 'bottom-right' })
                 goto('/admin/warehouse')
             })
-            .catch(err => addNotification({ text: e.message, type: 'error', position: 'bottom-right' }))
+            .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right' }))
 
         } catch (e) {
             addNotification({ text: e.message, type: 'error', position: 'bottom-right' })
@@ -99,7 +99,7 @@
         </div>
     </div>
 
-    <Checkbox id="enabled" bind:value={product.enabled} label="Enable" />
+    <Checkbox id="enabled" bind:value={product.enabled} label="Enabled" />
 
     <Input id="description" label="Description" bind:value={product.description} type="textarea" />
 

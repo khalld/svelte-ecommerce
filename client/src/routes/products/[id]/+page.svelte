@@ -55,9 +55,9 @@
 			</div>
 			<div class="pro-img-list p-2">
 			{#each data.product.photos as pic, idx}
-				<!-- <a href="#"> -->
-				<img src="{pic.src}" class="w-25 m-2 tb-sel border border-secondary" alt="detail-{idx}" on:click={() => focusImg = pic.src}>
-				<!-- </a> -->
+				{#if pic.src.length > 0}
+					<img src="{pic.src}" class="w-25 m-2 tb-sel border border-secondary" alt="detail-{idx}" on:click={() => focusImg = pic.src}>
+				{/if}
 			{/each}
 			</div>
 		</div>

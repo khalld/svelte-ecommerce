@@ -94,7 +94,7 @@
                             <span class="fw-bold mb-1">Shipping information</span>
                             <div class="col-6">
                                 <span class="fw-bold">{order.customer.name} {order.customer.surname}</span> <br>
-                                {order.customer.phone} <br>
+                                Phone: {order.customer.phone} <br>
                             </div>
                             <div class="col-6">
                                 {order.address.country}, {order.address.region}<br>

@@ -57,7 +57,7 @@
 
             addNotification({ text: 'User disabled', type: 'success', position: 'bottom-right' })
         })
-        .catch(err => addNotification({ text: e.message, type: 'error', position: 'bottom-right' }))
+        .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right' }))
     }
 
 </script>
@@ -84,7 +84,7 @@
                     </div>    
                 </td>
                 <td>
-                    <i class="fas fa-pencil fa-lg tb-sel text-success" on:click={() => goto(`/admin/users/detail/${u._id}`)}/>
+                    <i class="fas fa-eye fa-lg tb-sel text-success" on:click={() => goto(`/admin/users/detail/${u._id}`)}/>
                     <i class="fa fa-exclamation fa-lg tb-sel {u.enabled == true ? "text-danger": "text-warning"}" aria-hidden="true" data-bs-target="#deleteModal-{u._id}" data-bs-toggle="modal" />
                     <Modal id="deleteModal-{u._id}" labeledby="modal-label-{u._id}" on:click={disableUser(u._id, u.enabled)} title="{u.enabled == true ? "Disable user" : "Enable user"} " body="Are you sure that you want to {u.enabled == true ? "disable" : "enable"} user {u.email} ?"/>
                 </td>

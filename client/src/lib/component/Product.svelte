@@ -21,7 +21,7 @@
         </div>
         {#if p.quantity <= 0}
           <span class="badge bg-danger rounded-pill">On stock</span>
-        {:else if p.quantity < 5}
+        {:else if p.quantity <= 5}
           <span class="badge bg-warning rounded-pill">Only {p.quantity} left</span>
         {/if}
 

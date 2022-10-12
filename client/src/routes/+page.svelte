@@ -1,17 +1,22 @@
 <script>
   import ProductHome from "../lib/component/ProductHome.svelte";
-
+  import userStore from '../lib/store/userStore.js';
 
   export let data;
+
+  console.log(data)
 </script>
 
 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    {#if $userStore.loggedIn == false}
     <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    {/if}
   </div>
   <div class="carousel-inner">
+    {#if $userStore.loggedIn == false}
     <div class="carousel-item active">
       <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
       <div class="container">
@@ -22,7 +27,8 @@
         </div>
       </div>
     </div>
-    <div class="carousel-item">
+    {/if}
+    <div class="carousel-item {$userStore.loggedIn == true ? "active" : ""}">
       <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
       <div class="container">
         <div class="carousel-caption">
@@ -54,7 +60,7 @@
 </div>
 
 
-<div class="container marketing">
+<div class="container marketing row">
   <!-- Three columns of text below the carousel -->
   {#if data.products.length > 0}
   <div class="row">

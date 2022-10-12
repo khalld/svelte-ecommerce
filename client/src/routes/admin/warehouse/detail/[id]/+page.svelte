@@ -4,19 +4,20 @@
     import Input from "../../../../../lib/component/Input.svelte";
     import Checkbox from "../../../../../lib/component/Checkbox.svelte";
     import env from "../../../../../lib/store/env.js";
-    import { notifier } from '@beyonk/svelte-notifications';
+    import { getNotificationsContext } from 'svelte-notifications';
+    const { addNotification } = getNotificationsContext();
 
     export let data;
     
 	async function submit() {
 
         try {
-            if (product.name == undefined || product.code == undefined || product.description == undefined || product.longDescription == undefined || product.quantity == undefined || product.price == undefined ){
+            if (data.product.name == undefined || data.product.code == undefined || data.product.description == undefined || data.product.longDescription == undefined || data.product.quantity == undefined || data.product.price == undefined ){
                 throw new Error('All fields are mandatory')
             }
 
-            if (product.photos[0].src.length == 0 || product.photos[1].src.length == 0 || product.photos[2].src.length == 0 || product.photos[3].src.length == 0 || product.photos[4].src.length == 0){
-                throw new Error('You must insert all pictures!')
+            if (data.product.photos[0].src.length == 0 ){
+                throw new Error('You must insert at least the first picture')
             }
             
             await fetch(`${env.host}/products/${data.product._id}`, {
@@ -37,7 +38,7 @@
             .then(() => {
                 addNotification({ text: 'Product edited', type: 'success', position: 'bottom-right' })
             })
-            .catch(err => addNotification({ text: e.message, type: 'error', position: 'bottom-right' }))
+            .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right' }))
             
         } catch (e){
             console.error(e)
@@ -59,7 +60,7 @@
         </div>
     </div>
 
-    <Checkbox id="enabled" bind:value={data.product.enabled} label="Enable" />
+    <Checkbox id="enabled" bind:value={data.product.enabled} label="Enabled" />
 
     <Input id="description" label="Description" bind:value={data.product.description} type="textarea" />
 

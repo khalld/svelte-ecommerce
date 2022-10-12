@@ -4,10 +4,6 @@ import env from '../../../lib/store/env.js';
 import userStore from '../../../lib/store/userStore.js';
 
 export async function load({url}) {
-    if(get(userStore).loggedIn && get(userStore)._id != order.customer._id){
-        throw redirect(307, '/profile')
-    }
-
     const code = url.pathname.split("/")[url.pathname.split("/").length - 1]
 
     var order = null
@@ -23,6 +19,10 @@ export async function load({url}) {
         order = data;
     })
     .catch(err => console.log(err))
+
+    if(get(userStore).loggedIn && get(userStore)._id != order.customer._id){
+        throw redirect(307, '/profile')
+    }
 
     return {
         order: order

@@ -267,6 +267,7 @@ router.post('', async (req, res) => {
             email: req.body.email,
             password: cryptedPwd,
             address: req.body.address,
+            phone: req.body.phone,
             token: null,
             enabled: true,
             role: "user"

@@ -34,7 +34,7 @@
                 addNotification({ text: 'Info submitted successfully!', type: 'success', position: 'bottom-right' })
 
             })
-            .catch(err => addNotification({ text: e.message, type: 'error', position: 'bottom-right' }))
+            .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right' }))
     
     
             if (isNewOrder && data.order.status === "SHIPPED"){
@@ -56,12 +56,12 @@
                         addNotification({ text: `Quantity of ${element.code} updated successfully`, type: 'success', position: 'bottom-right' })
 
                     })
-                    .catch(err => addNotification({ text: e.message, type: 'error', position: 'bottom-right' }))
+                    .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right' }))
                 });
             }
         
         } catch (e){
-            console.error(e)
+            addNotification({ text: e.message, type: 'error', position: 'bottom-right' })
         }
     }
 

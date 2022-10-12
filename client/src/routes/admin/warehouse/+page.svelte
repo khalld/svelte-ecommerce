@@ -56,7 +56,7 @@
             addNotification({ text: 'Product deleted', type: 'success', position: 'bottom-right' })
 
         })
-        .catch(err => addNotification({ text: e.message, type: 'error', position: 'bottom-right' }))
+        .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right' }))
 
 
     }
@@ -90,7 +90,7 @@
                     </div>    
                 </td>
                 <td>{p.description}</td>
-                <td>{p.price}</td>
+                <td>{p.price} €</td>
                 <td>{p.quantity}</td>
                 <td>
                     <i class="tb-sel fas fa-edit fa-lg tb-sel text-success" on:click={() => goto(`/admin/warehouse/detail/${p._id}`)} />

@@ -8,6 +8,7 @@ export async function load(event) {
         email: null,
         name: null,
         surname: null,
+        phone: null,
         address: {
             
         }

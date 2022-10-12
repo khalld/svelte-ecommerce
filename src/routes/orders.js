@@ -146,14 +146,16 @@ router.post('/:id', async (req, res) => {
             throw new Error(`Not found`)
         }
 
+        // TODO: redo in v2
         // some logical base controls to avoid illogical status
-        if ((order.status == "DELIVERED" || order.status == "SHIPPED") && (req.body.status == "REJECTED" || req.body.status == "PENDING")){
-            throw new Error("That's bad!")
-        }
+        // if ((order.status == "DELIVERED" || order.status == "SHIPPED") && (req.body.status == "REJECTED" || req.body.status == "PENDING")){
+        //     throw new Error("That's bad!")
+        // }
 
-        if ((order.status == "PENDING" || order.status == "REJECTED") && req.body.status == "RETURNED" || req.body.status == "DELIVERED" ){
-            throw new Error("That's bad!")
-        }
+
+        // if ((order.status == "PENDING" || order.status == "REJECTED") && req.body.status == "RETURNED" || req.body.status == "DELIVERED" ){
+        //     throw new Error("That's bad!")
+        // }
 
         order.status = req.body.status;
         order.shipment.trackingId = req.body.shipment.trackingId;
@@ -161,7 +163,7 @@ router.post('/:id', async (req, res) => {
         await order.save()
 
         // Send email to confirm that the order was shipped or rejected
-        if (order.status == "PENDING" && (req.body.status == "REJECTED" || req.body.status == "SHIPPED")){
+        if (req.body.status == "SHIPPED"){
             var mailOptions = {
                 from: env.mail.auth.user,
                 to: order.customer.email,

@@ -45,8 +45,11 @@
         <div class="col-sm-6">
             <Input id="surname" label="Surname" bind:value={data.user.surname} placeholder="Please insert your surname" readonly/>
         </div>
-        <div class="col-12">
+        <div class="col-6">
             <Input id="email" label="Email" bind:value={data.user.email} placeholder="Please insert your email" type="email" readonly/>
+        </div>
+        <div class="col-6">
+            <Input id="phone" label="Phone" bind:value={data.user.phone} placeholder="Please insert your phone number" type="number " readonly/>
         </div>
         <div class="col-12">
             <Input id="address" label="Address" bind:value={data.user.address.address} placeholder="Please insert your shipping address" readonly/>
