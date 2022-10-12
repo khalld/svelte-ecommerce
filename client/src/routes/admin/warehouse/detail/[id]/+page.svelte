@@ -35,9 +35,9 @@
                 return res.json();
             })
             .then(() => {
-                notifier.success('Product edited')
+                addNotification({ text: 'Product edited', type: 'success', position: 'bottom-right' })
             })
-            .catch(err => notifier.danger(err.message))
+            .catch(err => addNotification({ text: e.message, type: 'error', position: 'bottom-right' }))
             
         } catch (e){
             console.error(e)

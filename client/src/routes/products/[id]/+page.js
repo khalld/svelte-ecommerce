@@ -1,5 +1,4 @@
 import env from '../../../lib/store/env.js'
-import {get} from 'svelte/store'
 import { error, redirect } from '@sveltejs/kit';
 
 export async function load({ url, event }) { 

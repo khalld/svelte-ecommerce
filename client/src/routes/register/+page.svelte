@@ -8,19 +8,8 @@
     let error;
     let info;
     let user = {
-        // name: "Mimmo",
-        // surname: "Lucifora",
-        // email: "gatic20289@migonom.com",
-        // password: "password01",
-        // passwordConf: "password01",
-        // phone: 123456789,
         address: {
-            // address: "Via alcide de Gaspari",
-            // address2: "N 23, interno 45",
             country: "Italy",
-            // region: "Abruzzo",
-            // city: "New York",
-            // zip: 9999,
         }
     }
 

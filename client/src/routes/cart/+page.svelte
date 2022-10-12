@@ -2,11 +2,12 @@
   import CheckoutProduct from "../../lib/component/CheckoutProduct.svelte";
   import cartStore from "../../lib/store/cartStore";
   import { onMount } from 'svelte';
-  import { notifier } from '@beyonk/svelte-notifications';
   import env from "../../lib/store/env";
   import utils from "../../lib/store/utils";
   import Input from "../../lib/component/Input.svelte";
   import Select from "../../lib/component/Select.svelte";
+  import { getNotificationsContext } from 'svelte-notifications';
+  const { addNotification } = getNotificationsContext();
   
   export let data;
   const shipment = env.shipment[0];
@@ -94,13 +95,13 @@
         return res.json();
       })
       .then(() => {
-        notifier.success('Order submitted successfully!')
+        addNotification({ text: 'Order submitted successfully!', type: 'success', position: 'bottom-right' })
         cartStore.set({products: [], amount: 0.0, n_elem: 0})
       })
-      .catch(err => notifier.danger(err.message))
+      .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right' }))
 
     } catch (e) {
-      notifier.danger(e.message)
+      addNotification({ text: e.message, type: 'error', position: 'bottom-right' })
     }
 
   }

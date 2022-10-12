@@ -5,7 +5,8 @@
     import Checkbox from "../../../../lib/component/Checkbox.svelte";
     import env from "../../../../lib/store/env.js";
     import { goto } from '$app/navigation';    
-    import { notifier } from '@beyonk/svelte-notifications';
+    import { getNotificationsContext } from 'svelte-notifications';
+    const { addNotification } = getNotificationsContext();
 
     let product = {
         // name: "Product 1",
@@ -71,19 +72,23 @@
                 return res.json();
             })
             .then(() => {
-                notifier.success('New product added!')
+                addNotification({ text: 'New product added', type: 'success', position: 'bottom-right' })
                 goto('/admin/warehouse')
             })
-            .catch(err => notifier.danger(err.message))
+            .catch(err => addNotification({ text: e.message, type: 'error', position: 'bottom-right' }))
 
         } catch (e) {
-            console.error(e);
+            addNotification({ text: e.message, type: 'error', position: 'bottom-right' })
         }
 	}
 </script>
 
 <InfoPanelAdmin on:click={submit}>
-    <InfoPanelHeader text="Detail of product {product._id}" />
+    {#if product._id == undefined}
+        <InfoPanelHeader text="Create new product" />
+    {:else}
+        <InfoPanelHeader text="Detail of product {product._id}" />
+    {/if}
 
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12">

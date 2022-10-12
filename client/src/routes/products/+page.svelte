@@ -1,6 +1,5 @@
 <script>
 	import Product from "../../lib/component/Product.svelte";
-	import cartStore from '../../lib/store/cartStore.js';
 	import Searchbar from "../../lib/component/Searchbar.svelte";
 	import Hint from "../../lib/component/Hint.svelte";
 	import env from "../../lib/store/env.js";
@@ -13,42 +12,6 @@
 
 	let currPage = data.products.currentPage;
 	let productsPage = [...Array(data.products.totalPages).keys() ]
-
-	// function addToCart (p) {
-	// 	var currentCart = [];
-
-	// 	cartStore.subscribe((cart) => {
-	// 		currentCart = cart.products;
-	// 	});
-
-	// 	let filteredCart = currentCart.filter(o => o._id === p._id)
-
-	// 	// product is already in our cart
-	// 	if(filteredCart.length > 0){			
-	// 		currentCart.forEach((element, idx, arr) => {
-	// 			if(element._id === filteredCart[0]._id){
-	// 				element.quantity += 1
-	// 			}
-	// 		})
-	// 	} else {
-	// 		currentCart.push({
-	// 			_id: p._id,
-	// 			name: p.name,
-	// 			code: p.code,
-	// 			quantity: 1,
-	// 			price: p.price
-	// 		});
-	// 	}
-
-	// 	var elements_num = 0;
-
-	// 	for (let i = 0; i < currentCart.length; i++){
-	// 		elements_num += currentCart[i].quantity 
-	// 	}
-
-	// 	cartStore.set({products: currentCart, amount: 0.0, n_elem: elements_num})
-
-	// }
 
 	async function changePage(selPage){
 		const limit = 10
@@ -156,7 +119,7 @@
 
 			<div class="mt-5 p-2">
 				
-				{#if !isSearch}
+				{#if !isSearch && data.products.products.length > 0}
 				<div class="row">
 					<div class="col-sm-12">
 						<Pagenavigation>

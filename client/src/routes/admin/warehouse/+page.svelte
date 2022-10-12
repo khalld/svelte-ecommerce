@@ -3,7 +3,8 @@
     import Table from '../../../lib/component/Table.svelte';
     import Tr from '../../../lib/component/Tr.svelte';
     import env from '../../../lib/store/env.js';
-    import {notifier} from '@beyonk/svelte-notifications';
+    import { getNotificationsContext } from 'svelte-notifications';
+    const { addNotification } = getNotificationsContext();
     import { goto } from '$app/navigation';
     import Pagenavigation from '../../../lib/component/PageNavigation.svelte';
 
@@ -52,9 +53,10 @@
 
             data.products.products = data.products.products
 
-            notifier.success('Product deleted successfully')
+            addNotification({ text: 'Product deleted', type: 'success', position: 'bottom-right' })
+
         })
-        .catch(err => notifier.danger(err.message))
+        .catch(err => addNotification({ text: e.message, type: 'error', position: 'bottom-right' }))
 
 
     }
@@ -70,9 +72,9 @@
 
 <Table headers={['Code', 'Name', 'Enabled' ,'Price', 'Description', 'Quantity', 'Actions']}>
     {#if data.products.products.length == 0}
-        <div class="spinner-border mt-2">
-            <span class="visually-hidden">Loading...</span>
-        </div>
+        <Tr>
+            <td colspan="7" style="text-align:center;">No products</td>
+        </Tr>
     {:else}
         {#each data.products.products as p}
             <Tr>

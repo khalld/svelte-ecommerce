@@ -56,6 +56,7 @@
 
 <div class="container marketing">
   <!-- Three columns of text below the carousel -->
+  {#if data.products.length > 0}
   <div class="row">
     {#each data.products as p}
       <div class="col-lg-4">
@@ -65,6 +66,7 @@
   </div>
   <!-- START THE FEATURETTES -->
   <hr class="featurette-divider">
+  {/if}
   <div class="row featurette">
     <div class="col-md-7">
       <h2 class="featurette-heading fw-normal lh-1">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>

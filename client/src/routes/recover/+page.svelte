@@ -4,9 +4,7 @@
     import Input from '../../lib/component/Input.svelte';
     import Hint from '../../lib/component/Hint.svelte';
 
-    let user = {
-        email: 'admin@email.it'
-    }
+    let user = { }
 
     let error = null;
     let info = null;

@@ -3,12 +3,8 @@
     import Hint from '../../../lib/component/Hint.svelte';
     import Input from '../../../lib/component/Input.svelte';
     import env from '../../../lib/store/env.js';
-    import { goto } from '$app/navigation';
 
-    let user = {
-        password: "password02",
-        passwordConf: "password02"
-    }
+    let user = { }
 
     let error = null;
     let info = null;

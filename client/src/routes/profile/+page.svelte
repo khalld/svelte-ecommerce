@@ -2,10 +2,10 @@
     import Input from "../../lib/component/Input.svelte";
     import Select from "../../lib/component/Select.svelte";
     import utils from "../../lib/store/utils";
-    import InfoPanel from "../../lib/component/InfoPanel.svelte";
     import env from "../../lib/store/env";
     import Hint from "../../lib/component/Hint.svelte";
-    import { notifier } from "@beyonk/svelte-notifications";
+    import { getNotificationsContext } from 'svelte-notifications';
+    const { addNotification } = getNotificationsContext();
     import userStore from "../../lib/store/userStore";
     import {get} from 'svelte/store';
     import OrderList from "../../lib/component/OrderList.svelte";
@@ -14,32 +14,25 @@
 
     export let data;
     let error;
-    let pwd = {
-        // oldPassword: 'password012345',
-        // newPassword: 'password02',
-        // passwordConf: 'password02'
-    }
+    let pwd = { }
 
 	let currPage = data.orders.currentPage;
 	let ordersPage = [...Array(data.orders.totalPages).keys() ]
 
     async function changePage(selPage){
 		const limit = 10
-
 		await fetch(`${env.host}/orders/user/${get(userStore)._id}?page=${selPage}&limit=${limit}`)
-			.then(res => {
-				if (res.status == 400){
-					throw new Error('Something wrong happened')
-				}
-				return res.json();
-			})
-			.then(data2 => {
-				data.orders = data2;
-			})
-			.catch(err => console.log(err))
-
+		.then(res => {
+			if (res.status == 400){
+				throw new Error('Something wrong happened')
+			}
+			return res.json();
+		})
+		.then(data2 => {
+			data.orders = data2;
+		})
+		.catch(err => console.log(err))
 		currPage = selPage;
-
 	}
 
     async function updateProfile(){
@@ -78,11 +71,11 @@
             })
             .then(res => {
                 if (res.status == 400 || res.status == 404 ){
-                    notifier.danger('Something wrong happened!')
-                } 
+                    addNotification({ text: 'Something wrong happened', type: 'danger', position: 'bottom-right' })
+                }
 
                 if (res.status == 200){
-                    notifier.success('Information update')
+                    addNotification({ text: 'Information update', type: 'success', position: 'bottom-right' })
                 }
 
             })
@@ -125,11 +118,11 @@
             })
             .then(data => {
                 if (data.status == 409 || data.status == 404 || data.status == 401 || data.status == 400){
-                    notifier.danger('Something wrong happened!')
+                    addNotification({ text:'Something wrong happened!', type: 'error', position: 'bottom-right' })
                 } 
 
                 if (data.status == 202){
-                    notifier.success('Password changes successfully')
+                    addNotification({ text: 'Password changes successfully', type: 'success', position: 'bottom-right' })
                 }
                 
                 pwd = {}

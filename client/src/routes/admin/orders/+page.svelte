@@ -36,9 +36,9 @@
 
 <Table headers={['Data', 'Name' ,'Email', 'Amount', 'Status', 'Actions']}>
     {#if data.orders.orders.length == 0}
-        <div class="spinner-border mt-2">
-            <span class="visually-hidden">Loading...</span>
-        </div>
+        <Tr>
+            <td colspan="6" style="text-align:center;">No orders</td>
+        </Tr>
     {:else}
         {#each data.orders.orders as o}
             <Tr>

@@ -1,11 +1,13 @@
 <script>
     import env from '../../../../../lib/store/env';
-    import { notifier } from '@beyonk/svelte-notifications';
+    import { getNotificationsContext } from 'svelte-notifications';
+    const { addNotification } = getNotificationsContext();
     import Input from '../../../../../lib/component/Input.svelte';
     import InfoPanel from '../../../../../lib/component/InfoPanel.svelte';
     import Select from '../../../../../lib/component/Select.svelte';
     import InfoPanelHeader from '../../../../../lib/component/InfoPanelHeader.svelte';
     import Order from '../../../../../lib/component/Order.svelte';
+
     export let data;
 
     let isNewOrder = data.order.status === "PENDING" ? true : false;
@@ -29,9 +31,10 @@
                 return res.json();
             })
             .then(() => {
-                notifier.success('Info submitted successfully')
+                addNotification({ text: 'Info submitted successfully!', type: 'success', position: 'bottom-right' })
+
             })
-            .catch(err => notifier.danger(err.message))
+            .catch(err => addNotification({ text: e.message, type: 'error', position: 'bottom-right' }))
     
     
             if (isNewOrder && data.order.status === "SHIPPED"){
@@ -50,9 +53,10 @@
                         }
                     })
                     .then(() => {
-                        notifier.success(`Quantity of ${element.code} updated successfully`)
+                        addNotification({ text: `Quantity of ${element.code} updated successfully`, type: 'success', position: 'bottom-right' })
+
                     })
-                    .catch(err => notifier.danger(err.message))
+                    .catch(err => addNotification({ text: e.message, type: 'error', position: 'bottom-right' }))
                 });
             }
         

@@ -12,7 +12,6 @@ export async function load({ url, event }) {
     const id = url.pathname.split("/")[url.pathname.split("/").length - 1]
 
     var order = {};
-    var user = {};
 
     await fetch(`${env.host}/orders/${id}`)
     .then(res => {

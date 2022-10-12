@@ -6,7 +6,7 @@
   import Hint from '../../lib/component/Hint.svelte';
 
   let user = {
-    email: 'user01@email.it',
+    email: 'admin@mail.it',
     password: 'password01'
   }
 

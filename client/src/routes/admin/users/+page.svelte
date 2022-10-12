@@ -5,9 +5,12 @@
     import Modal from '../../../lib/component/Modal.svelte';
     import env from '../../../lib/store/env';
     import {goto} from '$app/navigation';
-    import { notifier } from '@beyonk/svelte-notifications';
+    import { getNotificationsContext } from 'svelte-notifications';
+    const { addNotification } = getNotificationsContext();
+    
     export let data;
-	let currPage = data.users.currentPage;
+	
+    let currPage = data.users.currentPage;
 	let usersPage = [...Array(data.users.totalPages).keys() ]
 
     async function changePage(selPage){
@@ -52,9 +55,9 @@
             });
             data.users.users[indexOfObject].enabled = !enabled
 
-            notifier.success('Operation successfully completed')
+            addNotification({ text: 'User disabled', type: 'success', position: 'bottom-right' })
         })
-        .catch(err => notifier.danger(err.message))
+        .catch(err => addNotification({ text: e.message, type: 'error', position: 'bottom-right' }))
     }
 
 </script>
@@ -63,9 +66,9 @@
 
 <Table headers={['Name', 'Email', 'Enabled', 'Actions']}>
     {#if data.users.users.length == 0}
-        <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
+        <Tr>
+            <td colspan="4" style="text-align:center;">No orders</td>
+        </Tr>
     {:else}
         {#each data.users.users as u}
             <Tr>

@@ -1,6 +1,7 @@
 <script>
   import cartStore from "../store/cartStore";
-  import { notifier } from '@beyonk/svelte-notifications';
+  import { getNotificationsContext } from 'svelte-notifications';
+  const { addNotification } = getNotificationsContext();
   import { goto } from '$app/navigation';
 
   export let product;
@@ -70,7 +71,8 @@
         }
       });
     } else {
-      notifier.warning('Minimum requested quantity')
+      addNotification({ text: 'Minimum quantity requested', type: 'warning', position: 'bottom-right' })
+
     }
 
     let elements_num = 0;
