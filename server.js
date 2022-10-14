@@ -9,10 +9,6 @@ const productRoute = require("./src/routes/products.js");
 const orderRoute = require("./src/routes/orders.js");
 const imgRoute = require("./src/routes/images.js");
 
-
-// necessario per runnare assieme al client
-// app.use(handler)
-
 connectToDb();
 
 app.use(express.urlencoded({ extended: true }))
