@@ -25,7 +25,7 @@
 
 Demo of a real case of ecommerce made for Web programming, Design & Usability (Università degli studi di Catania - Magistrale in Informatica (Curriculum Data Science) A.A. 2022-2023)
 
-<center>
+<p align="center">
 
 <img src="https://github.com/get-icon/geticon/raw/master/icons/javascript.svg" width=45>
 <a href="https://nodejs.org/en/"><img src="https://github.com/get-icon/geticon/raw/master/icons/nodejs-icon.svg" width=45></a> 
@@ -35,7 +35,7 @@ Demo of a real case of ecommerce made for Web programming, Design & Usability (U
 <a href="https://sass-lang.com/"><img src="https://github.com/get-icon/geticon/raw/master/icons/sass.svg" width=45></a>
 <a href="https://vitejs.dev/"><img src="https://github.com/get-icon/geticon/raw/master/icons/vite.svg" width=45></a>
 
-</center>
+</p>
 
 
 
