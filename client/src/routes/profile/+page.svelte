@@ -146,7 +146,7 @@
             <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pwd-tab" data-bs-toggle="tab" data-bs-target="#pwd-tab-pane" type="button" role="tab" aria-controls="pwd-tab-pane" aria-selected="false">Contact</button>
+            <button class="nav-link" id="pwd-tab" data-bs-toggle="tab" data-bs-target="#pwd-tab-pane" type="button" role="tab" aria-controls="pwd-tab-pane" aria-selected="false">Change password</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="myorder-tab" data-bs-toggle="tab" data-bs-target="#myorder-tab-pane" type="button" role="tab" aria-controls="myorder-tab-pane" aria-selected="false">My orders</button>
@@ -158,13 +158,13 @@
             <form on:submit|preventDefault={updateProfile}>
                 <div class="row g-3">
                     <div class="col-sm-6">
-                        <Input id="name" label="Name" bind:value={data.user.name} placeholder="Please insert your name"/>
+                        <Input id="name" label="Name" bind:value={data.user.name} placeholder="Please insert your name" readonly/>
                     </div>
                     <div class="col-sm-6">
-                        <Input id="surname" label="Surname" bind:value={data.user.surname} placeholder="Please insert your surname"/>
+                        <Input id="surname" label="Surname" bind:value={data.user.surname} placeholder="Please insert your surname" readonly/>
                     </div>
                     <div class="col-6">
-                        <Input id="email" label="Email" bind:value={data.user.email} placeholder="Please insert your email" type="email"/>
+                        <Input id="email" label="Email" bind:value={data.user.email} placeholder="Please insert your email" type="email" readonly/>
                     </div>
                     <div class="col-6">
                         <Input id="phone" label="Phone" bind:value={data.user.phone} placeholder="Please insert your phone number" type="number"/>

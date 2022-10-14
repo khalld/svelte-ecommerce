@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Product = require('../db/models/product.js');
+const env = require('../env.js')
+const fs = require("fs");
 
 function getMultipleRandom(arr, num) {
     const shuffled = [...arr].sort(() => 0.5 - Math.random());
@@ -154,6 +156,28 @@ router.post('', async (req, res) => {
         var product = new Product(req.body)
         
         await product.save()
+
+        // create a directory where is possible upload the associated images
+        const newdir = `./${env.dir.upload}/${product._id}`;
+
+        fs.access(newdir, (error) => {
+            // To check if the given directory 
+            // already exists or not
+            if (error) {
+            // If current directory does not exist
+            // then create it
+                fs.mkdir(newdir, (error) => {
+                    if (error) {
+                        throw new Error('Something wrong happened');
+                    } // else {
+                        // do nothing...
+                    // }
+                });
+            } else {
+                throw new Error(`Directory ${product._id} already exist`)
+            }
+        });
+
         res.send(product);
     } catch (err) {
         if (err.message === 'Product code already used'){
@@ -207,6 +231,15 @@ router.delete('/:id', async (req, res) => {
         if (product == null){
             throw new Error('Not found')
         }
+
+        const dir = `./${env.dir.upload}/${req.params.id}`;
+
+        fs.rmdir(dir, { recursive: true }, err => {
+            if (err) {
+                throw new Error('Something wrong happened')
+            }
+        });
+        
         res.send({message: 'Product deleted successfully!'});
 
     } catch (err) {
@@ -219,4 +252,5 @@ router.delete('/:id', async (req, res) => {
     }
 
 })
+
 module.exports = router;

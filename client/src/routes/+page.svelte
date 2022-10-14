@@ -60,7 +60,7 @@
 </div>
 
 
-<div class="container marketing row">
+<div class="marketing row">
   <!-- Three columns of text below the carousel -->
   {#if data.products.length > 0}
   <div class="row">

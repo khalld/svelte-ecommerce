@@ -4,7 +4,8 @@
     import utils from '../../lib/store/utils.js';
     import Input from "../../lib/component/Input.svelte";
     import Select from "../../lib/component/Select.svelte";
-    
+    import { goto } from '$app/navigation';
+
     let error;
     let info;
     let user = {
@@ -60,8 +61,9 @@
                     throw new Error('Something wrong happened')
                 }
                 if (res.status == 201){
-                    info = 'Registered successfully! Now you can login'
+                    addNotification({ text: 'Registered successfully!', type: 'danger', position: 'bottom-right' })
                     user = { address: {}}
+                    goto('/login')
                 }
             })
             .catch(err => error = err.message)

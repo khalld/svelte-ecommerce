@@ -8,7 +8,8 @@
   import Select from "../../lib/component/Select.svelte";
   import { getNotificationsContext } from 'svelte-notifications';
   const { addNotification } = getNotificationsContext();
-  
+  import { goto } from '$app/navigation';
+
   export let data;
   const shipment = env.shipment[0];
   
@@ -96,7 +97,7 @@
         return res.json();
       })
       .then(() => {
-        addNotification({ text: 'Order submitted successfully!', type: 'success', position: 'bottom-right' })
+        addNotification({ text: 'Order submitted successfully! Check your email to find the info', type: 'success', position: 'bottom-right' })
         cartStore.set({products: [], amount: 0.0, n_elem: 0})
         data.order.customer = {}
         data.order.address = {}

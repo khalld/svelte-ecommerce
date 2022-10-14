@@ -24,7 +24,6 @@
 				return res.json();
 			})
 			.then(data2 => {
-				console.log("data2", data2)
 				data.products = data2;
 			})
 			.catch(err => console.log(err))

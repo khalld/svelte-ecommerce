@@ -7,6 +7,8 @@ const {connectToDb} = require('./src/db/connection.js')
 const userRoute = require("./src/routes/users.js");
 const productRoute = require("./src/routes/products.js");
 const orderRoute = require("./src/routes/orders.js");
+const imgRoute = require("./src/routes/images.js");
+
 
 // necessario per runnare assieme al client
 // app.use(handler)
@@ -18,6 +20,8 @@ app.use(express.json());
 app.use("/users", userRoute);
 app.use("/products", productRoute);
 app.use("/orders", orderRoute);
+app.use("/images", imgRoute);
+
 
 app.listen(env.port, () => {
     console.log(`Server listening on port ${env.port}`); 

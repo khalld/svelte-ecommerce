@@ -1,5 +1,8 @@
 module.exports = {
     port: 3000,
+    dir: {
+        upload: 'uploads',
+    },
     client: {
         host: 'http://localhost:5173/',
     },
