@@ -1,6 +1,7 @@
 <script>
     import InfoPanelAdmin from "../../../../../lib/component/InfoPanelAdmin.svelte";
     import InfoPanelHeader from "../../../../../lib/component/InfoPanelHeader.svelte";
+    import InfoPanel from "../../../../../lib/component/InfoPanel.svelte";
     import Input from "../../../../../lib/component/Input.svelte";
     import Checkbox from "../../../../../lib/component/Checkbox.svelte";
     import env from "../../../../../lib/store/env.js";
@@ -8,7 +9,17 @@
     const { addNotification } = getNotificationsContext();
 
     export let data;
-    
+    let currImg;
+
+	const onFileSelected =(e)=>{
+        let image = e.target.files[0];
+        let reader = new FileReader();
+        reader.readAsDataURL(image);
+        reader.onload = e => {
+            currImg = e.target.result
+        };
+    }
+
 	async function submit() {
 
         try {
@@ -46,6 +57,28 @@
 
 	}
 
+    async function uploadSingleImage() {
+        try {
+            const toSend = {}
+            const imgData = currImg.split(',');
+            toSend["image"] = imgData[1];
+    
+            await fetch(`${env.host}/images/upload/${data.product._id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(toSend)
+            })
+            .then(res =>  res.json())
+            .then(() => addNotification({ text: 'Image uploaded', type: 'success', position: 'bottom-right' }))
+            .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right' }))
+
+        } catch (e){
+            console.error(e)
+        }
+    }
+
 </script>
 
 <InfoPanelAdmin on:click={submit}>
@@ -75,49 +108,18 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-4">
-            <img src={data.product.photos[0].src} class="img-fluid w-50 border" alt="pic-n-{data.product.photos[0].id}" >
-        </div>
-        <div class="col-8">
-            <Input type="text" bind:value={data.product.photos[0].src} id="input-pic-{data.product.photos[0].id}" label="Pic n°{data.product.photos[0].id}"/>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-4">
-            <img src={data.product.photos[1].src} class="img-fluid w-50 border" alt="pic-n-{data.product.photos[1].id}" >
-        </div>
-        <div class="col-8">
-            <Input type="text" bind:value={data.product.photos[1].src} id="input-pic-{data.product.photos[1].id}" label="Pic n°{data.product.photos[1].id}"/>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-4">
-            <img src={data.product.photos[2].src} class="img-fluid w-50 border" alt="pic-n-{data.product.photos[2].id}" >
-        </div>
-        <div class="col-8">
-            <Input type="text" bind:value={data.product.photos[2].src} id="input-pic-{data.product.photos[2].id}" label="Pic n°{data.product.photos[2].id}"/>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-4">
-            <img src={data.product.photos[3].src} class="img-fluid w-50 border" alt="pic-n-{data.product.photos[3].id}" >
-        </div>
-        <div class="col-8">
-            <Input type="text" bind:value={data.product.photos[3].src} id="input-pic-{data.product.photos[3].id}" label="Pic n°{data.product.photos[3].id}"/>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-4">
-            <img src={data.product.photos[4].src} class="img-fluid w-50 border" alt="pic-n-{data.product.photos[4].id}" >
-        </div>
-        <div class="col-8">
-            <Input type="text" bind:value={data.product.photos[4].src} id="input-pic-{data.product.photos[4].id}" label="Pic n°{data.product.photos[4].id}"/>
-        </div>
-    </div>
-    
 </InfoPanelAdmin>
+
+
+<InfoPanel >
+    <InfoPanelHeader text="Upload images" />
+    <div class="row my-3">
+        <div class="col-8">
+            <input class="form-control" type="file" id="imageUpload" accept=".jpg, .jpeg, .png" on:change={(e)=>onFileSelected(e)} bind:this={currImg} >  
+        </div>
+        <div class="col-4">
+            <button class="btn btn-success" type="button" on:click={() => uploadSingleImage()} >Upload</button>
+        </div>
+    </div>
+
+</InfoPanel>

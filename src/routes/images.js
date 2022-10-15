@@ -5,28 +5,27 @@ const multer = require('multer');
 const path = require("path");
 const fs = require("fs");
 
-var upload = multer({
-    storage: multer.diskStorage({
-        destination: function (req, file, cb) {
-            const directory = `uploads/${req.params.prodId}`;
+router.post('/upload/:prodId', (req, res) => {
+    try {
 
-            if (!fs.existsSync(directory)) {
-                fs.mkdirSync(directory, { recursive: true })
-            }
-            cb(null, directory);
-        },
-        filename: function (req, file, cb) {
-            cb(null, Date.now() + '-' + file.originalname.toLocaleLowerCase().replaceAll(" ", ""));
+        const directory = path.join(__dirname, `../../${env.dir.upload}/${req.params.prodId}`)
+
+        if (!fs.existsSync(directory)) {
+            fs.mkdirSync(directory, { recursive: true })
         }
-    })
-});
 
-// TODO: è un form-data! Devi provare a vedere come funge
-router.post('/upload/:prodId', upload.single('image'),(req, res) => {
-    const image = req.image;
+        const buffer = Buffer.from(req.body.image, "base64");
 
-    res.status(201)
-    res.send({message: 'File uploaded successfully', type: 'info'})
+        fs.writeFileSync(path.join(directory, Date.now() + '.png' ), buffer);
+
+        res.status(201)
+        res.send({message: 'File uploaded successfully', type: 'info'})
+
+    } catch (e) {
+        res.status(500)
+        res.send({message: e.message, type: 'error'})
+    }
+
 });
 
 router.post('/delete', function (req, res) {
