@@ -4,7 +4,6 @@
 
   export let data;
 
-  console.log(data)
 </script>
 
 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">

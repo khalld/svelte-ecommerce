@@ -47,7 +47,11 @@ router.post('/delete', function (req, res) {
     }
 });
 
-router.post("/info", (req, res) => {
+router.post("/info", (req, res) => {    
+
+    // res.send({path: path.join(__dirname, `../../${env.dir.upload}/${req.body.prodId}/${req.body.name}`)});
+
+
     res.sendFile(path.join(__dirname, `../../${env.dir.upload}/${req.body.prodId}/${req.body.name}`));
 });
 
@@ -68,7 +72,7 @@ router.get("/list/:prodId", (req, res) => {
             });
 
             res.status(200);
-            res.send(JSON.stringify({images: images, tot: images.length}))
+            res.send(JSON.stringify({images: images }))
         });
     } catch (e){
         res.status(500)

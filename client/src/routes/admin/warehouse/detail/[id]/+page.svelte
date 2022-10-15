@@ -9,7 +9,14 @@
     const { addNotification } = getNotificationsContext();
 
     export let data;
+
     let currImg;
+
+    let imagesName = []; // array dei soli path
+    let imagesBlob = [];
+    let imgAreloaded = false;
+
+    $: getImages()
 
 	const onFileSelected =(e)=>{
         let image = e.target.files[0];
@@ -71,13 +78,57 @@
                 body: JSON.stringify(toSend)
             })
             .then(res =>  res.json())
-            .then(() => addNotification({ text: 'Image uploaded', type: 'success', position: 'bottom-right' }))
+            .then(() => {
+                addNotification({ text: 'Image uploaded', type: 'success', position: 'bottom-right' })
+                getImages()
+            })
             .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right' }))
 
         } catch (e){
             console.error(e)
         }
     }
+
+    async function getImages(){
+        imgAreloaded = false;
+        imagesName = [];
+        imagesBlob = [];
+        await fetch(`${env.host}/images/list/${data.product._id}`)
+        .then(res => {
+            if (res.status == 500){
+                throw new Error('Something wrong happened')
+            }
+            return res.json();
+        })
+        .then(data => {
+            imagesName = data.images;
+        })
+        .catch(err => console.log(err))
+
+        for (let i = 0; i < imagesName.length; i++){
+
+            await fetch(`${env.host}/images/info`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    prodId: data.product._id,
+                    name: imagesName[i]
+                })
+            })
+            .then(res => res.blob())
+            .then(imageBlob => {
+                // Then create a local URL for that image and print it 
+                const imageObjectURL = URL.createObjectURL(imageBlob);
+                console.log(imageObjectURL);
+                imagesBlob.push(URL.createObjectURL(imageBlob))
+            })
+            .catch(err => console.log(err))
+        }
+        imgAreloaded = true;
+    }
+
 
 </script>
 
@@ -122,4 +173,9 @@
         </div>
     </div>
 
+    {#if imgAreloaded == true}
+        {#each imagesBlob as im}
+            <img src="{im}" class="w-25 m-2 tb-sel border border-secondary" alt="alt-{im}" />
+        {/each}
+    {/if}
 </InfoPanel>
