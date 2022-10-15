@@ -4,6 +4,7 @@
     import InfoPanel from "../../../../../lib/component/InfoPanel.svelte";
     import Input from "../../../../../lib/component/Input.svelte";
     import Checkbox from "../../../../../lib/component/Checkbox.svelte";
+    import Modal from '../../../../../lib/component/Modal.svelte';
     import env from "../../../../../lib/store/env.js";
     import { getNotificationsContext } from 'svelte-notifications';
     const { addNotification } = getNotificationsContext();
@@ -129,6 +130,34 @@
         imgAreloaded = true;
     }
 
+    async function deleteImage(index){
+        try {
+
+            await fetch(`${env.host}/images/delete`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prodId: data.product._id,
+                    imagename: imagesName[index]
+                })
+            })
+            .then(res => {
+                if (res.status == 200){
+                    addNotification({ text: 'Image deleted', type: 'success', position: 'bottom-right' })
+                    getImages()
+                } else {
+                    throw new Error('Something wrong happened')
+                }
+            })
+            .catch(err => console.log(err))
+            
+        } catch (e) {
+            addNotification({ text: e.message, type: 'error', position: 'bottom-right' })
+        }
+
+    }
 
 </script>
 
@@ -174,8 +203,9 @@
     </div>
 
     {#if imgAreloaded == true}
-        {#each imagesBlob as im}
-            <img src="{im}" class="w-25 m-2 tb-sel border border-secondary" alt="alt-{im}" />
+        {#each imagesBlob as im, idx}
+            <img src="{im}" class="w-25 m-2 tb-sel border border-secondary" alt="alt-{idx}"  aria-hidden="true" data-bs-target="#deleteModal-{idx}" data-bs-toggle="modal" />
+            <Modal id="deleteModal-{idx}" labeledby="modal-label-{idx}" on:click={() => deleteImage(idx)} title="Delete image" body="Are you sure that you want to delete the selected image?"/>
         {/each}
     {/if}
 </InfoPanel>

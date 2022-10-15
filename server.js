@@ -11,6 +11,8 @@ const imgRoute = require("./src/routes/images.js");
 
 connectToDb();
 
+// app.use(express.static('uploads'))
+
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json({ limit: '50mb'}));
 app.use("/users", userRoute);
