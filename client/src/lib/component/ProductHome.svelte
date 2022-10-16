@@ -4,7 +4,7 @@
 
 
 <div class="card-body">
-    <img src={p.photos[0]} alt="img-{p.photos[0].id}" class="bd-placeholder-img rounded-circle" width="140" height="140"/>
+    <img src={p.mainPic} alt="img-{p._id}" class="bd-placeholder-img rounded-circle" width="140" height="140"/>
     <h2 class="fw-normal">{p.name}</h2>
     <p>{p.description}</p>
     <div class="card-footer">

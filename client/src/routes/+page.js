@@ -17,13 +17,19 @@ export async function load({url}) {
     .catch(err => console.log(err))
 
     var photosUrl = [];
-    var photosBlob = [];
+    var blob = null;
 
-    products.forEach(async (curr, idx, arr) => {
+    // products.forEach(async (curr, idx, arr) => {
+    for (let i = 0; i < products.length; i++){
+
+        let currId = products[i]._id;
+
+        console.log(currId)
+
         photosUrl = [];
-        photosBlob = [];
+        blob = null;
         
-        await fetch(`${env.host}/images/list/${curr._id}`)
+        await fetch(`${env.host}/images/list/${currId}`)
         .then(res => {
             if (res.status == 500){
                 throw new Error('Something wrong happened')
@@ -35,27 +41,25 @@ export async function load({url}) {
         })
         .catch(err => console.log(err))
     
-        for (let i = 0; i < photosUrl.length; i++){
-            await fetch(`${env.host}/images/info`, {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    prodId: curr._id,
-                    name: photosUrl[i]
-                })
+        // Carico solo la prima immagine
+        await fetch(`${env.host}/images/info`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                prodId: currId,
+                name: photosUrl[0]
             })
-            .then(res => res.blob())
-            .then(imageBlob => {
-                // Then create a local URL for that image and print it 
-                // const imageObjectURL = URL.createObjectURL(imageBlob);
-                photosBlob.push(URL.createObjectURL(imageBlob))
-            })
-            .catch(err => console.log(err))
-        }
-        curr.photos = photosBlob;
-    })
+        })
+        .then(res => res.blob())
+        .then(imageBlob => {
+            blob = URL.createObjectURL(imageBlob)
+        })
+        .catch(err => console.log(err))
+
+        products[i].mainPic = blob;
+    }
 
     return {
         products: products

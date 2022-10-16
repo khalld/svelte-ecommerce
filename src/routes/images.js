@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const env = require('../env.js')
-const multer = require('multer');
 const path = require("path");
 const fs = require("fs");
 
@@ -48,10 +47,6 @@ router.post('/delete', function (req, res) {
 });
 
 router.post("/info", (req, res) => {    
-
-    // res.send({path: path.join(__dirname, `../../${env.dir.upload}/${req.body.prodId}/${req.body.name}`)});
-
-
     res.sendFile(path.join(__dirname, `../../${env.dir.upload}/${req.body.prodId}/${req.body.name}`));
 });
 
@@ -63,17 +58,18 @@ router.get("/list/:prodId", (req, res) => {
         fs.readdir(mainPath, function (err, files) {
             //handling error
             if (err) {
-                throw new Error('Unable to scan directory: ' + err);
+                // throw new Error('Unable to scan directory: ' + err);
+                console.log(err)
             } 
             //listing all files using forEach
             files.forEach(function (file) {
                 // Do whatever you want to do with the file
                 images.push(file);
             });
-
             res.status(200);
             res.send(JSON.stringify({images: images }))
         });
+        
     } catch (e){
         res.status(500)
         res.send({message: e.message, type: 'error'})

@@ -16,33 +16,6 @@
         // quantity: 100,
         // price: 10.89,
         // category: [], // TODO: Enable logic in v2
-        photos: [
-            {
-                id: 1,
-                src: ''
-                // src: 'https://www.cameraegg.org/wp-content/uploads/2015/06/canon-powershot-g3-x-sample-images-1.jpg'
-            },
-            {
-                id: 2,
-                src: ''
-                // src: 'https://www.cameraegg.org/wp-content/uploads/2015/06/canon-powershot-g3-x-sample-images-1.jpg'
-            },
-            {
-                id: 3,
-                src: ''
-                // src: 'https://www.cameraegg.org/wp-content/uploads/2015/06/canon-powershot-g3-x-sample-images-1.jpg'
-            },
-            {
-                id: 4,
-                src: ''
-                // src: 'https://www.cameraegg.org/wp-content/uploads/2015/06/canon-powershot-g3-x-sample-images-1.jpg'
-            },
-            {
-                id: 5,
-                src: ''
-                // src: 'https://www.cameraegg.org/wp-content/uploads/2015/06/canon-powershot-g3-x-sample-images-1.jpg'
-            },
-        ],
         enabled: false
     };
 
@@ -50,10 +23,6 @@
         try {
             if (product.name == undefined || product.code == undefined || product.description == undefined || product.longDescription == undefined || product.quantity == undefined || product.price == undefined ){
                 throw new Error('All fields are mandatory')
-            }
-
-            if (product.photos[0].src.length == 0){
-                throw new Error('You must insert at least the first picture!')
             }
             
             await fetch(`${env.host}/products/`, {
@@ -114,51 +83,6 @@
             <Input id="price" label="Price" bind:value={product.price} type="number" />
         </div>
         <!-- TODO: Aggiungi 'simulatore del prezzo' in v2 -->
-    </div>
-
-    <div class="row">
-        <div class="col-4">
-            <img src={product.photos[0].src} class="img-fluid w-50 border" alt="pic-n-{product.photos[0].id}" >
-        </div>
-        <div class="col-8">
-            <Input type="text" bind:value={product.photos[0].src} id="input-pic-{product.photos[0].id}" label="Pic n°{product.photos[0].id}"/>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-4">
-            <img src={product.photos[1].src} class="img-fluid w-50 border" alt="pic-n-{product.photos[1].id}" >
-        </div>
-        <div class="col-8">
-            <Input type="text" bind:value={product.photos[1].src} id="input-pic-{product.photos[1].id}" label="Pic n°{product.photos[1].id}"/>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-4">
-            <img src={product.photos[2].src} class="img-fluid w-50 border" alt="pic-n-{product.photos[2].id}" >
-        </div>
-        <div class="col-8">
-            <Input type="text" bind:value={product.photos[2].src} id="input-pic-{product.photos[2].id}" label="Pic n°{product.photos[2].id}"/>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-4">
-            <img src={product.photos[3].src} class="img-fluid w-50 border" alt="pic-n-{product.photos[3].id}" >
-        </div>
-        <div class="col-8">
-            <Input type="text" bind:value={product.photos[3].src} id="input-pic-{product.photos[3].id}" label="Pic n°{product.photos[3].id}"/>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-4">
-            <img src={product.photos[4].src} class="img-fluid w-50 border" alt="pic-n-{product.photos[4].id}" >
-        </div>
-        <div class="col-8">
-            <Input type="text" bind:value={product.photos[4].src} id="input-pic-{product.photos[4].id}" label="Pic n°{product.photos[4].id}"/>
-        </div>
     </div>
 
 </InfoPanelAdmin>

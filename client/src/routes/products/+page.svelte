@@ -36,11 +36,13 @@
 	$: filterOverProducts(searchbar)
 
 	function filterOverProducts(value){
-		results = data.products.products.filter((prod, idx) => {
-			return searchbar.split("").every(internalItem => {
-				return prod.name.toLowerCase().indexOf(internalItem.toLowerCase()) !== -1
+		if (data.products.products != undefined) {
+			results = data.products.products.filter((prod, idx) => {
+				return searchbar.split("").every(internalItem => {
+					return prod.name.toLowerCase().indexOf(internalItem.toLowerCase()) !== -1
+				})
 			})
-		})
+		}
 	}
 
 </script>
@@ -99,22 +101,24 @@
 				<li><a href="#">Price (high)</a></li>
 			</ul> -->
 
-			<div class="row">
-				{#if isSearch}
-					{#if results.length === 0}
-						<Hint str="Sorry bro! Anything founded"/>
+			<!-- {#if imgAreloaded == true} -->
+				<div class="row">
+					{#if isSearch}
+						{#if results.length === 0}
+							<Hint str="Sorry bro! Anything founded"/>
+						{:else}
+							{#each results as prod}
+								<!-- <Product p={prod}/> -->
+							{/each}
+						{/if}
 					{:else}
-						{#each results as prod}
+						{#each data.products.products as prod}
 							<Product p={prod}/>
 						{/each}
 					{/if}
-				{:else}
-					{#each data.products.products as prod}
-						<Product p={prod}/>
-					{/each}
-				{/if}
-				
-			</div>
+					
+				</div>
+			<!-- {/if} -->
 
 			<div class="mt-5 p-2">
 				
