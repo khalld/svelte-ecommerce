@@ -4,7 +4,7 @@
 
     export let data;
 
-	let focusImg = data.product.photos[0].src;
+	let focusImg = data.product.photos[0];
 	let quantity = 1;
 
     function addToCart () {
@@ -51,13 +51,11 @@
 	<div class="row">
 		<div class="col-sm-12 col-lg-6 col-md-6">
 			<div class="pro-img-details">
-				<img src={focusImg} class="border border-secondary" alt="detail-0">
+				<img src="{focusImg}" class="border border-secondary" alt="detail-0">
 			</div>
 			<div class="pro-img-list p-2">
 			{#each data.product.photos as pic, idx}
-				{#if pic.src.length > 0}
-					<img src="{pic.src}" class="w-25 m-2 tb-sel border border-secondary" alt="detail-{idx}" on:click={() => focusImg = pic.src}>
-				{/if}
+				<img src="{pic}" class="w-25 m-2 tb-sel border border-secondary" alt="detail-{idx}" on:click={() => focusImg = pic}>
 			{/each}
 			</div>
 		</div>

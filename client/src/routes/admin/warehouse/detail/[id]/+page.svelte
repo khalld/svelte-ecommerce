@@ -121,8 +121,7 @@
             .then(res => res.blob())
             .then(imageBlob => {
                 // Then create a local URL for that image and print it 
-                const imageObjectURL = URL.createObjectURL(imageBlob);
-                console.log(imageObjectURL);
+                // const imageObjectURL = URL.createObjectURL(imageBlob);
                 imagesBlob.push(URL.createObjectURL(imageBlob))
             })
             .catch(err => console.log(err))
