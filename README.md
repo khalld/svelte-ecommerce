@@ -6,14 +6,10 @@
   <h3 align="center">Svelte e-commerce demo</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
-    <br />
     <!-- <a href=""><strong>Explore the docs »</strong></a> -->
-    <br />
-    <br />
     <!-- <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a> (SOON) -->
-    View Demo (SOON)
-    ·
+    <!-- Demo
+    · -->
     <a href="https://github.com/khalld/svelte-ecommerce/issues">Report Bug</a>
     ·
     <a href="https://github.com/khalld/svelte-ecommerce/issues">Request Feature</a>
@@ -52,6 +48,7 @@ Demo of a real case of ecommerce made for Web programming, Design & Usability (U
 - Order status
 - Notify with email for: password recovery, after checkout and when the status of order change
 - MongoDb (using <a href="https://cloud.mongodb.com/">MongoDb Cloud</a> )
+- Product's image upload
 
 ## Libraries
 
@@ -87,6 +84,28 @@ Run Chrome with disabled cors option (OS X)
 ```
 open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security
 ```
+
+## Docker
+
+### Build server:
+
+```bash
+docker image build . -t <your_dockerhub_name>/<container_name>:tag
+```
+
+Run
+
+```bash
+docker run -p 4000:3000 <image_name/image_id>
+```
+
+Stop
+
+```bash
+docker stop -t 10 18d2d8935a4f
+```
+
+### Build client
 
 ### Useful links
 

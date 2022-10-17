@@ -55,9 +55,9 @@
             });
             data.users.users[indexOfObject].enabled = !enabled
 
-            addNotification({ text: 'User disabled', type: 'success', position: 'bottom-right' })
+            addNotification({ text: 'User disabled', type: 'success', position: 'bottom-right', removeAfter: 3000 })
         })
-        .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right' }))
+        .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right', removeAfter: 3000 }))
     }
 
 </script>

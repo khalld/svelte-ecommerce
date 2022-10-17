@@ -97,15 +97,15 @@
         return res.json();
       })
       .then(() => {
-        addNotification({ text: 'Order submitted successfully! Check your email to find the info', type: 'success', position: 'bottom-right' })
+        addNotification({ text: 'Order submitted successfully! Check your email to find the info', type: 'success', position: 'bottom-right', removeAfter: 3000 })
         cartStore.set({products: [], amount: 0.0, n_elem: 0})
         data.order.customer = {}
         data.order.address = {}
       })
-      .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right' }))
+      .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right', removeAfter: 3000 }))
 
     } catch (e) {
-      addNotification({ text: e.message, type: 'error', position: 'bottom-right' })
+      addNotification({ text: e.message, type: 'error', position: 'bottom-right', removeAfter: 3000 })
     }
 
   }

@@ -71,11 +71,11 @@
             })
             .then(res => {
                 if (res.status == 400 || res.status == 404 ){
-                    addNotification({ text: 'Something wrong happened', type: 'danger', position: 'bottom-right' })
+                    addNotification({ text: 'Something wrong happened', type: 'danger', position: 'bottom-right', removeAfter: 3000 })
                 }
 
                 if (res.status == 200){
-                    addNotification({ text: 'Information update', type: 'success', position: 'bottom-right' })
+                    addNotification({ text: 'Information update', type: 'success', position: 'bottom-right', removeAfter: 3000 })
                 }
 
             })
@@ -118,11 +118,11 @@
             })
             .then(data => {
                 if (data.status == 409 || data.status == 404 || data.status == 401 || data.status == 400){
-                    addNotification({ text:'Something wrong happened!', type: 'error', position: 'bottom-right' })
+                    addNotification({ text:'Something wrong happened!', type: 'error', position: 'bottom-right', removeAfter: 3000})
                 } 
 
                 if (data.status == 202){
-                    addNotification({ text: 'Password changes successfully', type: 'success', position: 'bottom-right' })
+                    addNotification({ text: 'Password changes successfully', type: 'success', position: 'bottom-right', removeAfter: 3000 })
                 }
                 
                 pwd = {}

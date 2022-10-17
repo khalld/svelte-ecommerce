@@ -1,8 +1,10 @@
 <script>
     import Input from "../../../lib/component/Input.svelte";
     import cartStore from '../../../lib/store/cartStore.js';
-
-    export let data;
+	import { getNotificationsContext } from 'svelte-notifications';
+	const { addNotification } = getNotificationsContext();
+    
+	export let data;
 
 	let focusImg = data.product.photos[0];
 	let quantity = 1;
@@ -41,6 +43,7 @@
 
 		cartStore.set({products: currentCart, amount: 0.0, n_elem: elements_num})
 
+		addNotification({ text: 'Product added to cart', type: 'success', position: 'bottom-right' , removeAfter: 3000})
 	}
 
 
