@@ -189,22 +189,48 @@
 
 </InfoPanelAdmin>
 
-
-<InfoPanel >
+<InfoPanel>
     <InfoPanelHeader text="Upload images" />
     <div class="row my-3">
-        <div class="col-8">
+        <div class="col-10">
             <input class="form-control" type="file" id="imageUpload" accept=".jpg, .jpeg, .png" on:change={(e)=>onFileSelected(e)} bind:this={currImg} >  
         </div>
-        <div class="col-4">
-            <button class="btn btn-success" type="button" on:click={() => uploadSingleImage()} >Upload</button>
+        <div class="col-2 d-grid">
+            <button class="btn btn-success btn-block" type="button" on:click={() => uploadSingleImage()} >Upload</button>
         </div>
     </div>
 
     {#if imgAreloaded == true}
         {#each imagesBlob as im, idx}
-            <img src="{im}" class="w-25 m-2 tb-sel border border-secondary" alt="alt-{idx}"  aria-hidden="true" data-bs-target="#deleteModal-{idx}" data-bs-toggle="modal" />
-            <Modal id="deleteModal-{idx}" labeledby="modal-label-{idx}" on:click={() => deleteImage(idx)} title="Delete image" body="Are you sure that you want to delete the selected image?"/>
+            {#if idx == 0}
+                <InfoPanelHeader text="Main picture"/>
+            {:else if idx == 1}
+                <InfoPanelHeader text="Detail pictures"/>
+            {/if}
+
+            <div class="wrapper mt-2">
+                <div class="content">
+                    <img src="{im}" class="border border-secondary img-fluid mb-2" alt="alt-{im}" >
+                    <!-- <img src="{im}" class="w-25 m-2 tb-sel border border-secondary" alt="alt-{idx}"  aria-hidden="true" data-bs-target="#deleteModal-{idx}" data-bs-toggle="modal" /> -->
+                    <i class="fa-solid fa-x fa-lg text-danger tb-sel"  alt="alt-{idx}"  aria-hidden="true" data-bs-target="#deleteModal-{idx}" data-bs-toggle="modal"></i>
+                    <Modal id="deleteModal-{idx}" labeledby="modal-label-{idx}" on:click={() => deleteImage(idx)} title="Delete image" body="Are you sure that you want to delete the selected image?"/>
+                </div>
+            </div>
+        <!-- <img src="{im}" class="w-25 m-2 tb-sel border border-secondary" /> -->
         {/each}
     {/if}
 </InfoPanel>
+
+
+<style>
+    .wrapper { 
+        display: flex;
+        justify-content: center;
+    }    
+    .content { 
+        position: relative;
+        width: max-content
+    }
+    .content img { display: block; }
+    .content .fa-x { position: absolute; bottom:25px; right:10px; }
+</style>

@@ -18,7 +18,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary bg-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary bg-primary" data-bs-dismiss="modal" on:click>Save</button>
+        <button type="button" class="btn btn-primary bg-primary" data-bs-dismiss="modal" on:click>Confirm</button>
       </div>
     </div>
   </div>
