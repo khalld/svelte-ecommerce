@@ -22,6 +22,7 @@
   "dependencies": {
     "bootstrap": "^5.2.1",
     "svelte-notifications": "^0.9.97",
-    "svelte-persistent-store": "^0.1.6"
+    "svelte-persistent-store": "^0.1.6",
+    "sveltekit-i18n": "^2.2.2"
   }
 }

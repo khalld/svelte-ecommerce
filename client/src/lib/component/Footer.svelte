@@ -1,3 +1,6 @@
+<script>
+  import { t, locales, locale } from '$lib/translations'; 
+</script>
 <!-- Footer -->
 <footer class="text-center text-lg-start bg-dark text-muted">
     <!-- Section: Social media -->
@@ -69,8 +72,13 @@
           </div>
   
           <div class="col-md-4 col-lg-3 mx-auto mb-md-0 mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+            <h6 class="text-uppercase fw-bold">Choose language</h6>
+            <select class="form-select form-select-sm mb-2" bind:value="{$locale}">
+                {#each $locales as value}
+                    <option value="{value}">{$t(`lang.${value}`)}</option>
+                {/each}
+            </select>
+            <h6 class="text-uppercase fw-bold mb-2">Contact</h6>
             <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
             <p>
               <i class="fas fa-envelope me-3"></i>

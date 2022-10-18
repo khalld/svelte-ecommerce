@@ -55,7 +55,24 @@ export async function load(event) {
         products.products[i].mainPic = blob
     }
 
+    // necessary for search
+    let all = []
+    
+    await fetch(`${env.host}/products/enabled?page=0&limit=0`)
+    .then(res => {
+        if (res.status == 400){
+            throw new Error('Something wrong happened')
+        }
+        return res.json();
+    })
+    .then(data3 => {
+        all = data3;
+    })
+    .catch(err => console.log(err))
+
+
     return {
-        products: products
+        products: products,
+        all: all.products
     };
 }

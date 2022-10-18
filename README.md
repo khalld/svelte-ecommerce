@@ -60,7 +60,7 @@ Server side
 Front end side
 - SvelteKit
 - Bootstrap 5.2 with SASS integration
-
+- i18n (<a href="https://github.com/sveltekit-i18n/lib">sveltekit-i18n</a>)
 # Getting started
 
 To run the server side, in this folder:
@@ -105,13 +105,20 @@ Stop
 docker stop -t 10 18d2d8935a4f
 ```
 
-### Build client
+<!-- ### Build client -->
+
+## Nice to have
+
+- Dockerize all client side
+- Deploy on GitHub
+- Handle custom sale code shipping
+- Divide products in dynamic categories
+- Add 
 
 ### Useful links
 
 <ul>
-    <li><a href="https://github.com/svelte-add/bootstrap">Add bootstrap to svelte</a></li>
-    <li><a href="https://blog.logrocket.com/how-switch-node-js-versions-nvm/">Manage multiple version of Node.js with nvm</a></li>
-    <li><a href="https://www.youtube.com/watch?v=wCelDI_rPcY">Run svelte and express in same port</a> (necessario per dopo?)</li>
+  <li><a href="https://github.com/svelte-add/bootstrap">Add bootstrap to svelte</a></li>
+  <li><a href="https://blog.logrocket.com/how-switch-node-js-versions-nvm/">Manage multiple version of Node.js with nvm</a></li>
 </ul>
 

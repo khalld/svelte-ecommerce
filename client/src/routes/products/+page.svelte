@@ -10,6 +10,8 @@
 	let results = [];
 	let isSearch = false;
 
+	console.log(data)
+
 	let currPage = data.products.currentPage;
 	let productsPage = [...Array(data.products.totalPages).keys() ]
 
@@ -35,13 +37,58 @@
 	// execute the function every time searchbar value change
 	$: filterOverProducts(searchbar)
 
-	function filterOverProducts(value){
-		if (data.products.products != undefined) {
-			results = data.products.products.filter((prod, idx) => {
+	var firstImg = null;
+	var blob = null;
+
+	async function filterOverProducts(value){
+		if (data.all != undefined) {
+			results = data.all.filter((prod, idx) => {
 				return searchbar.split("").every(internalItem => {
 					return prod.name.toLowerCase().indexOf(internalItem.toLowerCase()) !== -1
 				})
 			})
+		}
+		
+		// FIXME: maybe is not a best practice fetch images here?
+		// this if allow to make one call when typing in the searchbar
+		if (firstImg == null && blob == null) {
+			for (let i = 0; i < results.length; i++){
+				firstImg = null;
+				blob = null;
+				
+				await fetch(`${env.host}/images/list/${results[i]._id}`)
+				.then(res => {
+					if (res.status == 500){
+						throw new Error('Something wrong happened')
+					}
+					return res.json();
+				})
+				.then(data => {
+					firstImg = data.images[0];
+				})
+				.catch(err => console.log(err))
+			
+				await fetch(`${env.host}/images/info`, {
+					method: 'POST',
+					headers: {
+						'Content-type': 'application/json'
+					},
+					body: JSON.stringify({
+						prodId: results[i]._id,
+						name: firstImg
+					})
+				})
+				.then(res => res.blob())
+				.then(imageBlob => {
+					// Then create a local URL for that image and print it 
+					// const imageObjectURL = URL.createObjectURL(imageBlob);
+					blob = URL.createObjectURL(imageBlob);
+				})
+				.catch(err => console.log(err))
+
+				results[i].mainPic = blob
+			}
+
 		}
 	}
 
@@ -108,7 +155,7 @@
 							<Hint str="Sorry bro! Anything founded"/>
 						{:else}
 							{#each results as prod}
-								<!-- <Product p={prod}/> -->
+								<Product p={prod}/>
 							{/each}
 						{/if}
 					{:else}
