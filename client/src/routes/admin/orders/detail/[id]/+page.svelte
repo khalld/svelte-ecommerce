@@ -31,10 +31,10 @@
                 return res.json();
             })
             .then(() => {
-                addNotification({ text: 'Info submitted successfully!', type: 'success', position: 'bottom-right', removeAfter: 3000 })
+                addNotification({ text: 'Info submitted successfully!', type: 'success', position: 'bottom-right', removeAfter: 6000 })
 
             })
-            .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right', removeAfter: 3000 }))
+            .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right', removeAfter: 6000 }))
     
     
             if (isNewOrder && data.order.status === "SHIPPED"){
@@ -53,15 +53,15 @@
                         }
                     })
                     .then(() => {
-                        addNotification({ text: `Quantity of ${element.code} updated successfully`, type: 'success', position: 'bottom-right', removeAfter: 3000 })
+                        addNotification({ text: `Quantity of ${element.code} updated successfully`, type: 'success', position: 'bottom-right', removeAfter: 6000 })
 
                     })
-                    .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right', removeAfter: 3000 }))
+                    .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right', removeAfter: 6000 }))
                 });
             }
         
         } catch (e){
-            addNotification({ text: e.message, type: 'error', position: 'bottom-right', removeAfter: 3000 })
+            addNotification({ text: e.message, type: 'error', position: 'bottom-right', removeAfter: 6000 })
         }
     }
 

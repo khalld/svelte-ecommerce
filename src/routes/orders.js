@@ -16,16 +16,20 @@ router.get('', async (req, res) => {
 
     try {
         const orders = await Order.find()
+            .sort({data: -1}) // sort from last to old
             .limit(limit * 1)
             .skip((page - 1) * limit)
             .exec();
 
         const count = await Order.countDocuments();
 
+        const pendingOrders = await Order.find({'status': 'PENDING'})
+
         res.send({
             orders,
             totalPages: Math.ceil(count / limit),
-            currentPage: page
+            currentPage: page,
+            'pending': pendingOrders.length
         })
     } catch (err) {
         res.status(404)

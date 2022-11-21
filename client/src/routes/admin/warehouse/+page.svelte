@@ -53,10 +53,10 @@
 
             data.products.products = data.products.products
 
-            addNotification({ text: 'Product deleted', type: 'success', position: 'bottom-right', removeAfter: 3000})
+            addNotification({ text: 'Product deleted', type: 'success', position: 'bottom-right', removeAfter: 6000})
 
         })
-        .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right', removeAfter: 3000 }))
+        .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right', removeAfter: 6000 }))
 
 
     }

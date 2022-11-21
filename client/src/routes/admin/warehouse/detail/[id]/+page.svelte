@@ -34,10 +34,6 @@
             if (data.product.name == undefined || data.product.code == undefined || data.product.description == undefined || data.product.longDescription == undefined || data.product.quantity == undefined || data.product.price == undefined ){
                 throw new Error('All fields are mandatory')
             }
-
-            if (data.product.photos[0].src.length == 0 ){
-                throw new Error('You must insert at least the first picture')
-            }
             
             await fetch(`${env.host}/products/${data.product._id}`, {
                 method: 'POST',
@@ -55,12 +51,12 @@
                 return res.json();
             })
             .then(() => {
-                addNotification({ text: 'Product edited', type: 'success', position: 'bottom-right', removeAfter: 3000 })
+                addNotification({ text: 'Product edited', type: 'success', position: 'bottom-right', removeAfter: 6000 })
             })
-            .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right', removeAfter: 3000 }))
+            .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right', removeAfter: 6000 }))
             
         } catch (e){
-            addNotification({ text: e.message, type: 'error', position: 'bottom-right', removeAfter: 3000 })
+            addNotification({ text: e.message, type: 'error', position: 'bottom-right', removeAfter: 6000 })
         }
 
 	}
@@ -80,10 +76,10 @@
             })
             .then(res =>  res.json())
             .then(() => {
-                addNotification({ text: 'Image uploaded', type: 'success', position: 'bottom-right', removeAfter: 3000 })
+                addNotification({ text: 'Image uploaded', type: 'success', position: 'bottom-right', removeAfter: 6000 })
                 getImages()
             })
-            .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right', removeAfter: 3000 }))
+            .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right', removeAfter: 6000 }))
 
         } catch (e){
             console.error(e)
@@ -144,7 +140,7 @@
             })
             .then(res => {
                 if (res.status == 200){
-                    addNotification({ text: 'Image deleted', type: 'success', position: 'bottom-right', removeAfter: 3000 })
+                    addNotification({ text: 'Image deleted', type: 'success', position: 'bottom-right', removeAfter: 6000 })
                     getImages()
                 } else {
                     throw new Error('Something wrong happened')
@@ -153,7 +149,7 @@
             .catch(err => console.log(err))
             
         } catch (e) {
-            addNotification({ text: e.message, type: 'error', position: 'bottom-right', removeAfter: 3000 })
+            addNotification({ text: e.message, type: 'error', position: 'bottom-right', removeAfter: 6000 })
         }
 
     }

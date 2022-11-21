@@ -41,13 +41,13 @@
                 return res.json();
             })
             .then(() => {
-                addNotification({ text: 'New product added', type: 'success', position: 'bottom-right', removeAfter: 3000 })
+                addNotification({ text: 'New product added', type: 'success', position: 'bottom-right', removeAfter: 6000 })
                 goto('/admin/warehouse')
             })
-            .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right', removeAfter: 3000 }))
+            .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right', removeAfter: 6000 }))
 
         } catch (e) {
-            addNotification({ text: e.message, type: 'error', position: 'bottom-right', removeAfter: 3000 })
+            addNotification({ text: e.message, type: 'error', position: 'bottom-right', removeAfter: 6000 })
         }
 	}
 </script>

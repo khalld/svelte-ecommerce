@@ -61,7 +61,7 @@
                     throw new Error('Something wrong happened')
                 }
                 if (res.status == 201){
-                    addNotification({ text: 'Registered successfully!', type: 'danger', position: 'bottom-right', removeAfter: 3000 })
+                    addNotification({ text: 'Registered successfully!', type: 'danger', position: 'bottom-right', removeAfter: 6000 })
                     user = { address: {}}
                     goto('/login')
                 }

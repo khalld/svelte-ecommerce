@@ -12,6 +12,7 @@
 
   export let data;
   const shipment = env.shipment[0];
+  let total = 0;
   
 	onMount(async () => {
     let nElem = 0;
@@ -33,8 +34,11 @@
     cartStore.set({products: data.order.products, amount: amount, n_elem: nElem})
 
 	});
-  
-  let total = shipment.price + parseFloat(data.order.amount)
+
+  cartStore.subscribe(value => {
+    total = shipment.price + parseFloat(value.amount)
+  })
+
   const regexEmail = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
 
   async function sendOrder() {
@@ -97,15 +101,15 @@
         return res.json();
       })
       .then(() => {
-        addNotification({ text: 'Order submitted successfully! Check your email to find the info', type: 'success', position: 'bottom-right', removeAfter: 3000 })
+        addNotification({ text: 'Order submitted successfully! Check your email to find the info', type: 'success', position: 'bottom-right', removeAfter: 6000 })
         cartStore.set({products: [], amount: 0.0, n_elem: 0})
         data.order.customer = {}
         data.order.address = {}
       })
-      .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right', removeAfter: 3000 }))
+      .catch(err => addNotification({ text: err.message, type: 'error', position: 'bottom-right', removeAfter: 6000 }))
 
     } catch (e) {
-      addNotification({ text: e.message, type: 'error', position: 'bottom-right', removeAfter: 3000 })
+      addNotification({ text: e.message, type: 'error', position: 'bottom-right', removeAfter: 6000 })
     }
 
   }

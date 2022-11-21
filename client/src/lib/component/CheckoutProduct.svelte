@@ -71,7 +71,7 @@
         }
       });
     } else {
-      addNotification({ text: 'Minimum quantity requested', type: 'warning', position: 'bottom-right', removeAfter: 3000 })
+      addNotification({ text: 'Minimum quantity requested', type: 'warning', position: 'bottom-right', removeAfter: 6000 })
 
     }
 

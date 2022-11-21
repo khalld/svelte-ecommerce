@@ -34,6 +34,16 @@
 
 <h1 class="mt-4">Orders list</h1>
 
+
+{#if data.orders.pending > 0}
+<div class="alert alert-warning d-flex align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+    <div>
+        You currently have {data.orders.pending} order to check
+    </div>
+</div>
+{/if}
+
 <Table headers={['Data', 'Name' ,'Email', 'Amount', 'Status', 'Actions']}>
     {#if data.orders.orders.length == 0}
         <Tr>

@@ -19,7 +19,7 @@
 		let filteredCart = currentCart.filter(o => o._id === data.product._id)
 
 		// product is already in our cart
-		if(filteredCart.length > 0){			
+		if(filteredCart.length > 0){
 			currentCart.forEach((element, idx, arr) => {
 				if(element._id === filteredCart[0]._id){
 					element.quantity += quantity
@@ -43,7 +43,7 @@
 
 		cartStore.set({products: currentCart, amount: 0.0, n_elem: elements_num})
 
-		addNotification({ text: 'Product added to cart', type: 'success', position: 'bottom-right' , removeAfter: 3000})
+		addNotification({ text: 'Product added to cart', type: 'success', position: 'bottom-right' , removeAfter: 6000})
 	}
 
 
@@ -75,7 +75,7 @@
 			<div class="m-bot15"> <strong>Price : </strong> <span > {data.product.price} €</span></div>
 			<div class="m-bot15"> <strong>Available quantity : </strong> 
 				{#if data.product.quantity <= 0}
-					<span> {data.product.quantity}</span>
+					<span>0</span>
 				{:else}
 					<span>{data.product.quantity}</span>
 				{/if}
