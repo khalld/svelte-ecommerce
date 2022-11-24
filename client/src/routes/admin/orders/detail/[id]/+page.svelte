@@ -79,7 +79,7 @@
                     
                     <Select labelAlign="horizontal" id="status-select" label="Current status" arialabel="Default select example" bind:value={data.order.status} elements={env.status} />
 
-                    <button class="w-100 btn btn-lg bg-success" on:click={submit}>Send</button>
+                    <button class="w-100 btn btn-lg bg-success" type="submit">Send</button>
 
                 </div>
             </div>

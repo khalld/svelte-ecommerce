@@ -25,7 +25,7 @@ export async function load(event) {
         .then(data => {
             userInfo = data;
         })
-        .catch(err => console.log(err))
+        .catch(err => console.error(err))
     }
 
 

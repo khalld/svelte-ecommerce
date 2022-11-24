@@ -18,7 +18,7 @@ export async function load({url}) {
     .then(data => {
         order = data;
     })
-    .catch(err => console.log(err))
+    .catch(err => console.error(err))
 
     if(get(userStore).loggedIn && get(userStore)._id != order.customer._id){
         throw redirect(307, '/profile')

@@ -20,7 +20,7 @@ export async function load(event) {
     .then(data => {
         users = data;
     })
-    .catch(err => console.log(err))
+    .catch(err => console.error(err))
 
 
     return {

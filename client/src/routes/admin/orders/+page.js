@@ -22,7 +22,7 @@ export async function load(event) {
     .then(data => {
         orders = data;
     })
-    .catch(err => console.log(err))
+    .catch(err => console.error(err))
 
     return {
         orders: orders

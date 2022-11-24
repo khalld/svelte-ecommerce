@@ -26,7 +26,7 @@
 			.then(data2 => {
 				data.users = data2;
 			})
-			.catch(err => console.log(err))
+			.catch(err => console.error(err))
         
 		currPage = selPage;
 	}

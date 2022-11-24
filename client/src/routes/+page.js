@@ -14,7 +14,7 @@ export async function load({url}) {
     .then(async data => {
         products = data;
     })
-    .catch(err => console.log(err))
+    .catch(err => console.error(err))
 
     var photosUrl = [];
     var blob = null;
@@ -23,8 +23,6 @@ export async function load({url}) {
     for (let i = 0; i < products.length; i++){
 
         let currId = products[i]._id;
-
-        console.log(currId)
 
         photosUrl = [];
         blob = null;
@@ -39,7 +37,7 @@ export async function load({url}) {
         .then(data => {
             photosUrl = data.images;
         })
-        .catch(err => console.log(err))
+        .catch(err => console.error(err))
     
         // Carico solo la prima immagine
         await fetch(`${env.host}/images/info`, {
@@ -56,7 +54,7 @@ export async function load({url}) {
         .then(imageBlob => {
             blob = URL.createObjectURL(imageBlob)
         })
-        .catch(err => console.log(err))
+        .catch(err => console.error(err))
 
         products[i].mainPic = blob;
     }

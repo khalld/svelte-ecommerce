@@ -20,7 +20,7 @@ export async function load(event) {
     .then(data => {
         userInfo = data;
     })
-    .catch(err => console.log(err))
+    .catch(err => console.error(err))
     
     var orders = null;
 
@@ -34,7 +34,7 @@ export async function load(event) {
     .then(data => {
         orders = data;
     })
-    .catch(err => console.log(err))
+    .catch(err => console.error(err))
 
 
     return {

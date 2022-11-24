@@ -8,12 +8,15 @@
   import Select from "../../lib/component/Select.svelte";
   import { getNotificationsContext } from 'svelte-notifications';
   const { addNotification } = getNotificationsContext();
+  import Order from "../../lib/component/Order.svelte";
   import { goto } from '$app/navigation';
 
   export let data;
   const shipment = env.shipment[0];
   let total = 0;
-  
+  let orderSubmitted = false;
+  let submittedOrder;
+
 	onMount(async () => {
     let nElem = 0;
     let amount = 0;
@@ -72,7 +75,7 @@
       .then(data => {
         products = data.products;
       })
-      .catch(err => console.log(err))
+      .catch(err => console.error(err))
 
       data.order.products.forEach((element) => {
         const indexOfObject = products.findIndex(object => {
@@ -100,9 +103,11 @@
         }
         return res.json();
       })
-      .then(() => {
-        addNotification({ text: 'Order submitted successfully! Check your email to find the info', type: 'success', position: 'bottom-right', removeAfter: 6000 })
+      .then((submOrdr) => {
+        submittedOrder = submOrdr;
+        addNotification({ text: 'Order submitted successfully!', type: 'success', position: 'bottom-right', removeAfter: 6000 })
         cartStore.set({products: [], amount: 0.0, n_elem: 0})
+        orderSubmitted = true;
         data.order.customer = {}
         data.order.address = {}
       })
@@ -116,127 +121,136 @@
 </script>
 
 <div class="container">
-  <div class="row g-5">
-    
-    <!-- List of products area -->
-    <div class="col-md-5 col-lg-4 order-md-last">
-      <h4 class="d-flex justify-content-between align-items-center mb-3">
-        <span class="text-primary">Your cart</span>
-        <span class="badge bg-primary rounded-pill">{$cartStore.n_elem}</span>
-      </h4>
+  {#if orderSubmitted == false}
+    <div class="row g-5">
       
-      {#if $cartStore.products.length == 0}
-        <div class="alert alert-danger text-center" role="alert">Empty cart!</div>
-      {:else}
-        <ul class="list-group mb-3">
-          
-          {#each $cartStore.products as elem}
-            <CheckoutProduct product={elem} /> 
-          {/each}
-
-          <!-- TODO: to enable in v2 -->
-          <!-- {#if promoCodes.length > 0}
-            {#each promoCodes as promo, idx}
-              <li class="list-group-item d-flex justify-content-between bg-light">
-                <div class="text-success">
-                  <h6 class="my-0">Promo code: {idx + 1}</h6>
-                  <small>{promo.code}</small>
-                </div>
-                <span class="text-success">{promo.amount * 100} %</span>
-              </li>
+      <!-- List of products area -->
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-primary">Your cart</span>
+          <span class="badge bg-primary rounded-pill">{$cartStore.n_elem}</span>
+        </h4>
+        
+        {#if $cartStore.products.length == 0}
+          <div class="alert alert-danger text-center" role="alert">Empty cart!</div>
+        {:else}
+          <ul class="list-group mb-3">
+            
+            {#each $cartStore.products as elem}
+              <CheckoutProduct product={elem} /> 
             {/each}
-          {/if} -->
 
-          {#if shipment != null}
-              <li class="list-group-item d-flex justify-content-between bg-light">
-                <div class="text-success">
-                  <h6 class="my-0">{shipment.code}</h6>
-                  <small>Spedizione</small>
-                </div>
-                <span class="text-success">{shipment.price} €</span>
-              </li>
-          {/if}
+            <!-- TODO: to enable in v2 -->
+            <!-- {#if promoCodes.length > 0}
+              {#each promoCodes as promo, idx}
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                  <div class="text-success">
+                    <h6 class="my-0">Promo code: {idx + 1}</h6>
+                    <small>{promo.code}</small>
+                  </div>
+                  <span class="text-success">{promo.amount * 100} %</span>
+                </li>
+              {/each}
+            {/if} -->
 
-          <li class="list-group-item d-flex justify-content-between">
-            <span>Total </span>
-            <strong>{total} €</strong>
-          </li>
-        </ul>
-      {/if}
+            {#if shipment != null}
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                  <div class="text-success">
+                    <h6 class="my-0">{shipment.code}</h6>
+                    <small>Spedizione</small>
+                  </div>
+                  <span class="text-success">{shipment.price} €</span>
+                </li>
+            {/if}
 
-      <!-- TODO: to enable in v2 -->
-      <!-- <form class="card p-2">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Promo code" readonly>
-          <button type="submit" class="btn btn-secondary" disabled>Redeem</button>
-        </div>
-      </form> -->
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Total </span>
+              <strong>{total} €</strong>
+            </li>
+          </ul>
+        {/if}
+
+        <!-- TODO: to enable in v2 -->
+        <!-- <form class="card p-2">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Promo code" readonly>
+            <button type="submit" class="btn btn-secondary" disabled>Redeem</button>
+          </div>
+        </form> -->
+      </div>
+      <!-- END list of products area -->
+
+
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Please insert your information for checkout</h4>
+        <p class="text-muted">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis tincidunt ex. Curabitur efficitur tincidunt enim nec efficitur. Proin in commodo mauris. Quisque ultrices metus eros, commodo tempus dui posuere quis
+        </p>
+        <form on:submit|preventDefault={sendOrder} class="needs-validation">
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <Input id="name" label="Name" bind:value={data.order.customer.name} placeholder="Please insert your name"/>
+            </div>
+
+            <div class="col-sm-6">
+              <Input id="surname" label="Surname" bind:value={data.order.customer.surname} placeholder="Please insert your surname"/>
+            </div>
+
+            <div class="col-6">
+              <Input id="email" label="Email" bind:value={data.order.customer.email} placeholder="Please insert your email" type="email"/>
+            </div>
+
+            <div class="col-6">
+              <Input id="phone" label="Phone" bind:value={data.order.customer.phone} placeholder="Please insert your phone number" type="number"/>
+          </div>
+            <div class="col-12">
+              <Input id="address" label="Address" bind:value={data.order.address.address} placeholder="Please insert your shipping address"/>
+            </div>
+
+            <div class="col-12">
+              <Input id="address2" bind:value={data.order.address.address2} placeholder="Apartment or suite"/>
+            </div>
+
+            <div class="col-12">
+              <Input id="additional-notes" label="Notes" bind:value={data.order.notes} placeholder="Write additional notes for the expedition" type="textarea" />
+            </div>
+
+            <div class="col-md-6">
+              <Select id="select-country" label="Country" arialabel="select country" bind:value={data.order.address.country} elements={utils.countries}/>
+            </div>
+
+            <div class="col-md-6">
+              <Select id="select-country" label="State/Region" arialabel="select region" bind:value={data.order.address.region} elements={utils.regions}/>
+            </div>
+
+            <div class="col-8">
+              <Input id="city" label="City" bind:value={data.order.address.city} placeholder="City" type="text" colClass="mb-4" />
+          </div>
+          <div class="col-4">
+              <Input id="zip" label="ZIP" bind:value={data.order.address.zip} placeholder="ZIP code" type="number"  colClass="mb-4"/>
+          </div>
+            
+          </div>
+
+          <hr class="my-4">
+
+          <!-- TODO: to enable in v2-->
+          <!-- <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="same-address">
+            <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
+          </div> -->
+          <button class="w-100 btn btn-primary btn-lg mt-2" type="submit">Continue to checkout</button>
+          <!-- <button class="w-100 btn btn-primary btn-lg mt-2" on:click={() => sendOrder()}>Continue to checkout</button> -->
+
+        </form>
+      </div>
     </div>
-    <!-- END list of products area -->
+  {:else}
+    <div class="row">
+      You order is successfully submitted. Here there are the details of you order. 
+      <Order order={submittedOrder} />
 
-
-    <div class="col-md-7 col-lg-8">
-      <h4 class="mb-3">Please insert your information for checkout</h4>
-      <p class="text-muted">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis tincidunt ex. Curabitur efficitur tincidunt enim nec efficitur. Proin in commodo mauris. Quisque ultrices metus eros, commodo tempus dui posuere quis
-      </p>
-      <form on:submit|preventDefault={sendOrder} class="needs-validation">
-        <div class="row g-3">
-          <div class="col-sm-6">
-            <Input id="name" label="Name" bind:value={data.order.customer.name} placeholder="Please insert your name"/>
-          </div>
-
-          <div class="col-sm-6">
-            <Input id="surname" label="Surname" bind:value={data.order.customer.surname} placeholder="Please insert your surname"/>
-          </div>
-
-          <div class="col-6">
-            <Input id="email" label="Email" bind:value={data.order.customer.email} placeholder="Please insert your email" type="email"/>
-          </div>
-
-          <div class="col-6">
-            <Input id="phone" label="Phone" bind:value={data.order.customer.phone} placeholder="Please insert your phone number" type="number"/>
-        </div>
-          <div class="col-12">
-            <Input id="address" label="Address" bind:value={data.order.address.address} placeholder="Please insert your shipping address"/>
-          </div>
-
-          <div class="col-12">
-            <Input id="address2" bind:value={data.order.address.address2} placeholder="Apartment or suite"/>
-          </div>
-
-          <div class="col-12">
-            <Input id="additional-notes" label="Notes" bind:value={data.order.notes} placeholder="Write additional notes for the expedition" type="textarea" />
-          </div>
-
-          <div class="col-md-6">
-            <Select id="select-country" label="Country" arialabel="select country" bind:value={data.order.address.country} elements={utils.countries}/>
-          </div>
-
-          <div class="col-md-6">
-            <Select id="select-country" label="State/Region" arialabel="select region" bind:value={data.order.address.region} elements={utils.regions}/>
-          </div>
-
-          <div class="col-8">
-            <Input id="city" label="City" bind:value={data.order.address.city} placeholder="City" type="text" colClass="mb-4" />
-        </div>
-        <div class="col-4">
-            <Input id="zip" label="ZIP" bind:value={data.order.address.zip} placeholder="ZIP code" type="number"  colClass="mb-4"/>
-        </div>
-          
-        </div>
-
-        <hr class="my-4">
-
-        <!-- TODO: to enable in v2-->
-        <!-- <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="same-address">
-          <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
-        </div> -->
-        <button class="w-100 btn btn-primary btn-lg mt-2" type="submit">Continue to checkout</button>
-        <!-- <button class="w-100 btn btn-primary btn-lg mt-2" on:click={() => sendOrder()}>Continue to checkout</button> -->
-
-      </form>
+      <a href="/products/">Continue your shopping</a>
     </div>
-  </div>
+  {/if}
 </div>

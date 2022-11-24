@@ -25,7 +25,7 @@
 			.then(data2 => {
 				data.products = data2;
 			})
-			.catch(err => console.log(err))
+			.catch(err => console.error(err))
         
 		currPage = selPage;
 	}

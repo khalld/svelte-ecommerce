@@ -13,7 +13,7 @@ export async function load(event) {
     .then(data => {
         products = data;
     })
-    .catch(err => console.log(err))
+    .catch(err => console.error(err))
 
     var firstImg = null;
     var blob = null;
@@ -32,7 +32,7 @@ export async function load(event) {
         .then(data => {
             firstImg = data.images[0];
         })
-        .catch(err => console.log(err))
+        .catch(err => console.error(err))
     
         await fetch(`${env.host}/images/info`, {
             method: 'POST',
@@ -50,7 +50,7 @@ export async function load(event) {
             // const imageObjectURL = URL.createObjectURL(imageBlob);
             blob = URL.createObjectURL(imageBlob);
         })
-        .catch(err => console.log(err))
+        .catch(err => console.error(err))
 
         products.products[i].mainPic = blob
     }
@@ -68,7 +68,7 @@ export async function load(event) {
     .then(data3 => {
         all = data3;
     })
-    .catch(err => console.log(err))
+    .catch(err => console.error(err))
 
 
     return {

@@ -19,7 +19,7 @@ export async function load({ url, event }) {
     .then(data => {
         product = data;
     })
-    .catch(err => console.log(err))
+    .catch(err => console.error(err))
 
     if (Object.keys(product).length === 0){
         throw redirect(307, '/products')
@@ -38,7 +38,7 @@ export async function load({ url, event }) {
     .then(data => {
         photosUrl = data.images;
     })
-    .catch(err => console.log(err))
+    .catch(err => console.error(err))
 
     for (let i = 0; i < photosUrl.length; i++){
         await fetch(`${env.host}/images/info`, {
@@ -57,7 +57,7 @@ export async function load({ url, event }) {
             // const imageObjectURL = URL.createObjectURL(imageBlob);
             photosBlob.push(URL.createObjectURL(imageBlob))
         })
-        .catch(err => console.log(err))
+        .catch(err => console.error(err))
     }
 
     product.photos = photosBlob;

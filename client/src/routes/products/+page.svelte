@@ -10,8 +10,6 @@
 	let results = [];
 	let isSearch = false;
 
-	console.log(data)
-
 	let currPage = data.products.currentPage;
 	let productsPage = [...Array(data.products.totalPages).keys() ]
 
@@ -28,7 +26,7 @@
 			.then(data2 => {
 				data.products = data2;
 			})
-			.catch(err => console.log(err))
+			.catch(err => console.error(err))
 
 		currPage = selPage;
 
@@ -66,7 +64,7 @@
 				.then(data => {
 					firstImg = data.images[0];
 				})
-				.catch(err => console.log(err))
+				.catch(err => console.error(err))
 			
 				await fetch(`${env.host}/images/info`, {
 					method: 'POST',
@@ -84,7 +82,7 @@
 					// const imageObjectURL = URL.createObjectURL(imageBlob);
 					blob = URL.createObjectURL(imageBlob);
 				})
-				.catch(err => console.log(err))
+				.catch(err => console.error(err))
 
 				results[i].mainPic = blob
 			}

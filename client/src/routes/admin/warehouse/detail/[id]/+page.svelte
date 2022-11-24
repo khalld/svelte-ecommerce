@@ -100,7 +100,7 @@
         .then(data => {
             imagesName = data.images;
         })
-        .catch(err => console.log(err))
+        .catch(err => console.error(err))
 
         for (let i = 0; i < imagesName.length; i++){
 
@@ -120,7 +120,7 @@
                 // const imageObjectURL = URL.createObjectURL(imageBlob);
                 imagesBlob.push(URL.createObjectURL(imageBlob))
             })
-            .catch(err => console.log(err))
+            .catch(err => console.error(err))
         }
         imgAreloaded = true;
     }
@@ -146,7 +146,7 @@
                     throw new Error('Something wrong happened')
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => console.error(err))
             
         } catch (e) {
             addNotification({ text: e.message, type: 'error', position: 'bottom-right', removeAfter: 6000 })
